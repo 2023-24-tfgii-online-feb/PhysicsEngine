@@ -4,7 +4,10 @@ import com.dmm.tfg.model.Body;
 import com.dmm.tfg.model.Vector2D;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,10 +33,6 @@ public class BodyService {
 
     public Body getBody(Long id) {
         return bodies.get(id);
-    }
-
-    public Collection<Body> getAllBodies() {
-        return bodies.values();
     }
 
     public Body updateBody(Long id, Body body) {
@@ -70,4 +69,29 @@ public class BodyService {
         return new Body(position, velocity, mass, radius);
     }
 
+    public Body updateBody(Body body) {
+        // Update the body's position based on its velocity
+        body.getPosition().add(body.getVelocity());
+        return body;
+    }
+
+    public List<Body> updateBodies() {
+        List<Body> updatedBodies = new ArrayList<>();
+        for (Body body : bodies.values()) {
+            // Update the body's position based on its velocity
+            body.getPosition().add(body.getVelocity());
+            updatedBodies.add(body);
+        }
+        return updatedBodies;
+    }
+
+    public void addRandomBody() {
+        Body randomBody = getRandomBody();
+        long randomKey = ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
+        bodies.put(randomKey, randomBody);
+    }
+
+    public List<Body> getAllBodies() {
+        return new ArrayList<>(bodies.values());
+    }
 }

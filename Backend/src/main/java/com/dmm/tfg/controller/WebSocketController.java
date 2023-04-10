@@ -7,6 +7,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 @Controller
 public class WebSocketController {
 
@@ -19,7 +21,15 @@ public class WebSocketController {
 
     @MessageMapping("/random-body")
     @SendTo("/topic/bodies")
-    public Body getRandomBody() {
-        return bodyService.getRandomBody();
+    public void addRandomBody() {
+        bodyService.addRandomBody();
     }
+
+
+    @MessageMapping("/update-bodies")
+    @SendTo("/topic/bodies")
+    public List<Body> updateBodies() {
+        return bodyService.updateBodies();
+    }
+
 }
