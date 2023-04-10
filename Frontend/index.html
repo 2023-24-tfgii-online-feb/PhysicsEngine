@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Physics Engine</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="libs/p5.js"></script>
     <script src="js/main.js" defer></script>
     <script>
       const apiUrl = "http://localhost:3100";
-    </script>    
-</head>
-<body>
+    </script>
+  </head>
+  <body>
     <div id="topbar">
-        <div class="project-name">My Physics Engine</div>
-        <div class="user-info">
-          <span class="username">Username</span>
-          <button id="logout">Logout</button>
-        </div>
+      <div class="project-name">My Physics Engine</div>
+      <div class="user-info">
+        <span class="username">Username</span>
+        <button id="logout">Logout</button>
       </div>
-    
-      <div id="main-container">
-        <div id="left-section">
-          <div id="canvas-container"></div>
-          <div id="buttons-container">
-            <button id="addRandomFigure">Add random figure</button>
-            <button id="getRandomBody">Get random body</button>
-            <button id="toggleUpdates">Toggle updates</button>
-          </div>
-        </div>
-        <div id="right-section">
-          <!-- New section for displaying body properties -->
-        </div>
-      </div>
+    </div>
 
-</body>
+    <div id="main-container">
+      <div id="left-section">
+        <div id="canvas-container"></div>
+        <div id="buttons-container">
+          <button id="addRandomFigure">Add random figure</button>
+          <button id="getRandomBody">Get random body</button>
+          <button id="toggleUpdates">Toggle updates</button>
+        </div>
+      </div>
+      <div id="right-section">
+        <!-- New section for displaying body properties -->
+      </div>
+    </div>
+  </body>
 </html>
