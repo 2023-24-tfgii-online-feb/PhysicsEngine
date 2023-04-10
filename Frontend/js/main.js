@@ -12,7 +12,7 @@ function setupWebSocket() {
   });
 
   document.getElementById('getRandomBody').addEventListener('click', () => {
-    stompClient.send('/app/random-body', {}, '');
+    stompClient.send('/app/random-body', {}, 'Requested a random body.');
   });
 }
 
@@ -23,7 +23,7 @@ const sketch = (p) => {
 
       setupWebSocket();
   
-      // Move the event listener inside the setup function
+      // TODO: Move function body to a genRandomFigure() function.
       document.getElementById('addRandomFigure').addEventListener('click', () => {
         const randomRadius = Math.random() * 50 + 20;
         const randomX = Math.random() * (p.width - randomRadius) + randomRadius / 2;
@@ -49,6 +49,7 @@ const sketch = (p) => {
         drawBody(p, body);
       }
     };
+    console.log("Tick.")
   };
 
   function drawBody(p, body) {

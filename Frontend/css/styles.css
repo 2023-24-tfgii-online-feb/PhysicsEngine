@@ -6,11 +6,37 @@ body {
     flex-direction: column;
     align-items: center;
   }
+
+  #main-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  #left-section {
+    display: inline-block;
+  }
+
+  #right-section {
+    display: inline-flex;
+    margin-top: 30px;
+    align-items: flex-start;
+    width: 400px;
+    height: 604px; /* adjust to your canvas height */
+    border: 2px solid #000;
+    margin-left: 20px;
+  }
   
   #canvas-container {
     margin-top: 30px;
     border: 2px solid #000;
     display: inline-block;
+  }
+
+  #buttons-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
   }
   
   button {

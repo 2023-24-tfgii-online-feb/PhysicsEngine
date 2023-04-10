@@ -70,5 +70,4 @@ public class BodyService {
         return new Body(position, velocity, mass, radius);
     }
 
-    // Add any additional methods needed to manage the bodies
 }
