@@ -7,6 +7,7 @@ public class Body {
     private String id;
     private Vector2D position;
     private Vector2D velocity;
+    private Vector2D acceleration;
     private float mass;
     private float radius;
 
@@ -74,6 +75,8 @@ public class Body {
         Vector2D acceleration = Vector2D.divide(force, mass);
         velocity.add(acceleration);
     }
+
+
 }
 
 

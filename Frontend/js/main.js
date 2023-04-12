@@ -1,10 +1,12 @@
 let bodies = [];
-let freeze = false;
+let connectionEstablished = false;
+let freeze = true;
 const socket = new SockJS(`${apiUrl}/physics-engine-websocket`);
 const stompClient = Stomp.over(socket);
 
 function setupWebSocket() {
   stompClient.connect({}, () => {
+    connectionEstablished = true;
     stompClient.subscribe("/topic/bodies", (message) => {
       const updatedBodies = JSON.parse(message.body);
       bodies.length = 0; // Clear the existing bodies array
@@ -27,6 +29,10 @@ const sketch = (p) => {
   };
 
   p.draw = () => {
+    if (!connectionEstablished) {
+      return;
+    }
+
     p.background(255);
 
     // Draw all received bodies
