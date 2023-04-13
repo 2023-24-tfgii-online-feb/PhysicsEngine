@@ -87,4 +87,23 @@ body {
   #topbar button:hover {
     background-color: #555;
   }
+
+    #content-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+  
+    #main-container {
+      flex-grow: 1;
+    }
+  
+    #bottom-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7f7f7;
+      padding: 1rem;
+      border-top: 1px solid #ccc;
+    }
     

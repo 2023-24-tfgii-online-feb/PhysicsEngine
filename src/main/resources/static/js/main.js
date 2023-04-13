@@ -86,4 +86,6 @@ function toggleUpdates() {
   freezeUpdates = !document.getElementById("toggleUpdates").checked;
 }
 
+
+
 const myP5 = new p5(sketch, "canvas-container");
