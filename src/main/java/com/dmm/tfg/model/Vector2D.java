@@ -30,6 +30,18 @@ public class Vector2D {
         this.y = y;
     }
 
+    public float magnitude(){
+        return (float) Math.sqrt(Math.pow(getX(), 2) + Math.pow(getY(), 2));
+    }
+
+    public void normalize(){
+        float magnitude = this.magnitude();
+        this.divide(magnitude);
+    }
+
+    public void applyForce(){
+
+    }
     public void add(Vector2D other) {
         this.x += other.x;
         this.y += other.y;
@@ -38,6 +50,12 @@ public class Vector2D {
     public void subtract(Vector2D other) {
         this.x -= other.x;
         this.y -= other.y;
+    }
+
+    public static Vector2D sub(Vector2D vec1, Vector2D vec2){
+        float x = vec1.getX() - vec2.getX();
+        float y = vec1.getY() - vec2.getY();
+        return new Vector2D(x,y);
     }
 
     public void multiply(float scalar) {

@@ -9,5 +9,5 @@ public interface BodyDAO {
     void addBody(Body body);
     List<Body> getAllBodies();
     void updateBodies();
-    void deleteBody(Long id);
+    void removeBody(Long id);
 }

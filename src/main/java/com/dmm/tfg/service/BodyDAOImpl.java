@@ -21,6 +21,7 @@ public class BodyDAOImpl implements BodyDAO {
 
     @Override
     public void addBody(@NonNull Body body) {
+        body.setId(idCounter.get());
         bodies.put(idCounter.getAndIncrement(), body);
     }
 
@@ -38,7 +39,7 @@ public class BodyDAOImpl implements BodyDAO {
     }
 
     @Override
-    public void deleteBody(Long id) {
+    public void removeBody(Long id) {
         bodies.remove(id);
     }
 

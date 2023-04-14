@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +15,10 @@ public class DataService {
 
     public void addBody(@NonNull Body body){
         bodyDAO.addBody(body);
+    }
+
+    public void removeBody(long id){
+        bodyDAO.removeBody(id);
     }
     public Body genRandomBody() {
         return bodyDAO.randomBody();

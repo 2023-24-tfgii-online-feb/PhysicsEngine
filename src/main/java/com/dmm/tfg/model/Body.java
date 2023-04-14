@@ -7,9 +7,12 @@ import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
 import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
 
 public abstract class Body {
-    private String id;
+    private long id;
     private Vector2D position;
     private Vector2D velocity;
+
+
+
     private Vector2D acceleration;
     private float mass;
 
@@ -17,23 +20,25 @@ public abstract class Body {
 
 
     public Body() {
-        this.id = UUID.randomUUID().toString();
+        this.id = 0;
         this.position = new Vector2D();
         this.velocity = new Vector2D();
+        this.acceleration = new Vector2D();
     }
 
-    public Body(Vector2D position, Vector2D velocity, float mass) {
-        this.id = UUID.randomUUID().toString();
+    public Body(Vector2D position, Vector2D velocity, Vector2D acceleration, float mass) {
+        this.id = 0;
         this.position = position;
         this.velocity = velocity;
+        this.acceleration = acceleration;
         this.mass = mass;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -53,6 +58,14 @@ public abstract class Body {
         this.velocity = velocity;
     }
 
+    public Vector2D getAcceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(Vector2D acceleration) {
+        this.acceleration = acceleration;
+    }
+
     public float getMass() {
         return mass;
     }
@@ -68,8 +81,8 @@ public abstract class Body {
 
     // Apply a force to the body
     public void applyForce(Vector2D force) {
-        Vector2D acceleration = Vector2D.divide(force, mass);
-        velocity.add(acceleration);
+        force.divide(getMass());
+        acceleration.add(force);
     }
 
     public void checkEdges(){

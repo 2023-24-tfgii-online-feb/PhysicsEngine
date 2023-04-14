@@ -4,7 +4,7 @@ public class Asteroid extends Body{
 
     private float radius;
     public Asteroid(Vector2D position, Vector2D velocity, float mass, float radius) {
-        super(position, velocity, mass);
+        super(position, velocity, new Vector2D(), mass);
         this.radius = radius;
         this.bodyType = BodyType.ASTEROID;
     }

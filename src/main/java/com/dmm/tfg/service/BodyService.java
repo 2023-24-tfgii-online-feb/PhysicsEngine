@@ -1,17 +1,10 @@
 package com.dmm.tfg.service;
 
 import com.dmm.tfg.model.Body;
-import com.dmm.tfg.model.Vector2D;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 @Service
@@ -26,6 +19,10 @@ public class BodyService {
 
     public void updateBodies(){
         dataService.updateBodies();
+    }
+
+    public void removeBody(long id){
+        dataService.removeBody(id);
     }
 
     public List<Body> retrieveBodies(){
