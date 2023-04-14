@@ -41,7 +41,7 @@ const sketch = (p) => {
       return;
     }
 
-    requestUpdate();
+    //requestUpdate();
     requestBodies();
     p.background(255);
 

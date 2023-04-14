@@ -22,6 +22,10 @@ public class WebSocketController {
         bodyService.addRandomBody();
     }
 
+    @MessageMapping("/add-body")
+    @SendTo("/topic/bodies")
+    public void addBody(){ bodyService.addBody();}
+
 
     @MessageMapping("/retrieve-bodies")
     @SendTo("/topic/bodies")

@@ -29,4 +29,6 @@ public class BodyService {
         return dataService.getAllBodies();
     }
 
+    public void addBody() {
+    }
 }

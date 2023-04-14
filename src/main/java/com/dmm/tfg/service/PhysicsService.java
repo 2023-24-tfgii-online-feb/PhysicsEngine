@@ -3,6 +3,7 @@ package com.dmm.tfg.service;
 import com.dmm.tfg.model.Body;
 import com.dmm.tfg.model.Vector2D;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ public class PhysicsService {
      * Gravitational constant translated into a float.
      */
     private final double GRAVITATIONAL_CONST = 6.67428e-11;
-    private DataService dataService;
+
+
+    private final DataService dataService;
 
     public void calculateAttractions() {
         ArrayList<Body> bodies = new ArrayList<>(dataService.getAllBodies());
@@ -49,4 +52,7 @@ public class PhysicsService {
     }
 
 
+    public void update() {
+        dataService.updateBodies();
+    }
 }
