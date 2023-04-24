@@ -34,6 +34,7 @@ public class BodyDAOImpl implements BodyDAO {
     public void updateBodies() {
         for (Body body : bodies.values()){
             body.checkEdges();
+            body.getVelocity().add(body.getAcceleration());
             body.getPosition().add(body.getVelocity());
         }
     }

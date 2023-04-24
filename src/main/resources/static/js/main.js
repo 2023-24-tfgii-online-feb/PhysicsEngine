@@ -10,6 +10,7 @@ function setupWebSocket() {
     connectionEstablished = true;
     stompClient.subscribe("/topic/bodies", (message) => {
       const updatedBodies = JSON.parse(message.body);
+      console.log(updatedBodies);
       bodies.length = 0; // Clear the existing bodies array
       Array.prototype.push.apply(bodies, updatedBodies); // Add the new bodies to the array
 
@@ -29,7 +30,7 @@ function setupWebSocket() {
 
 const sketch = (p) => {
   p.setup = () => {
-    p.createCanvas(800, 600);
+    p.createCanvas(1240,720);
     setupWebSocket();
   };
   document.getElementById("toggleRendering").checked = !freezeRendering;

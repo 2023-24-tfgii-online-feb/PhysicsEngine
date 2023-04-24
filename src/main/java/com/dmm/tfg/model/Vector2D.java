@@ -1,32 +1,32 @@
 package com.dmm.tfg.model;
 
 public class Vector2D {
-    private float x;
-    private float y;
+    private double x;
+    private double y;
 
     public Vector2D() {
         this.x = 0;
         this.y = 0;
     }
 
-    public Vector2D(float x, float y) {
+    public Vector2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -53,8 +53,8 @@ public class Vector2D {
     }
 
     public static Vector2D sub(Vector2D vec1, Vector2D vec2){
-        float x = vec1.getX() - vec2.getX();
-        float y = vec1.getY() - vec2.getY();
+        double x = vec1.getX() - vec2.getX();
+        double y = vec1.getY() - vec2.getY();
         return new Vector2D(x,y);
     }
 
@@ -63,7 +63,7 @@ public class Vector2D {
         this.y *= scalar;
     }
 
-    public void divide(float scalar) {
+    public void divide(double scalar) {
         this.x /= scalar;
         this.y /= scalar;
     }

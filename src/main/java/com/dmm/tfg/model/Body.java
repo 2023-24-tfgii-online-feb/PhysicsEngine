@@ -1,7 +1,4 @@
 package com.dmm.tfg.model;
-import java.util.UUID;
-
-import java.util.UUID;
 
 import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
 import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
@@ -10,14 +7,10 @@ public abstract class Body {
     private long id;
     private Vector2D position;
     private Vector2D velocity;
-
-
-
     private Vector2D acceleration;
-    private float mass;
-
+    private double mass;
+    private BoundingBox bbox;
     protected BodyType bodyType;
-
 
     public Body() {
         this.id = 0;
@@ -66,17 +59,12 @@ public abstract class Body {
         this.acceleration = acceleration;
     }
 
-    public float getMass() {
+    public double getMass() {
         return mass;
     }
 
-    public void setMass(float mass) {
+    public void setMass(double mass) {
         this.mass = mass;
-    }
-
-    // Move the body according to its velocity and a time step
-    public void update(float deltaTime) {
-        position.add(Vector2D.multiply(velocity, deltaTime));
     }
 
     // Apply a force to the body
@@ -86,16 +74,12 @@ public abstract class Body {
     }
 
     public void checkEdges(){
-        if (position.getX() > SPACE_WIDTH) {
-            position.setX(0);
-        } else if (position.getX() < 0){
-            position.setX(SPACE_WIDTH);
+        if (position.getX()  > SPACE_WIDTH || position.getX() < 0) {
+            velocity.setX(velocity.getX() * -1);
         }
 
-        if (position.getY() > SPACE_HEIGHT) {
-            position.setY(0);
-        } else if (position.getY() < 0){
-            position.setY(SPACE_HEIGHT);
+        if (position.getY() > SPACE_HEIGHT || position.getY() < 0) {
+            velocity.setY(velocity.getY() * -1);
         }
     }
 

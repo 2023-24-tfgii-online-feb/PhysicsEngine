@@ -1,9 +1,10 @@
 package com.dmm.tfg.service;
 
+import com.dmm.tfg.model.Asteroid;
 import com.dmm.tfg.model.Body;
+import com.dmm.tfg.model.Planet;
 import com.dmm.tfg.model.Vector2D;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +22,18 @@ public class PhysicsService {
 
     private final DataService dataService;
 
+
+    public void setup(){
+        dataService.addBody(new Planet(new Vector2D(400, 300), 100000000, 100));
+        dataService.addBody(new Asteroid(new Vector2D(), new Vector2D(1,1), 100, 25));
+    }
+
     public void calculateAttractions() {
         ArrayList<Body> bodies = new ArrayList<>(dataService.getAllBodies());
         for (int i = 0; i < bodies.size(); i++) {
             for (int j = i + 1; j < bodies.size(); j++) {
                 Vector2D pull = gravitationalPull(bodies.get(i), bodies.get(j));
+                bodies.get(i).applyForce(pull);
             }
         }
     }
@@ -52,7 +60,8 @@ public class PhysicsService {
     }
 
 
-    public void update() {
+    public void tick() {
+        calculateAttractions();
         dataService.updateBodies();
     }
 }
