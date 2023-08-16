@@ -24,11 +24,13 @@ public class PhysicsService {
     }
 
     private void applyAcceleration(){
-
+        dataService.getAllBodies().forEach(body -> body.getVelocity().add(body.getAcceleration()));
     }
 
     public void tick() {
+        collisionResolver.checkEdges(dataService.getAllBodies());
         attractionResolver.calculateAttractions(dataService.getAllBodies());
+        applyAcceleration();
         dataService.updateBodies();
     }
 }

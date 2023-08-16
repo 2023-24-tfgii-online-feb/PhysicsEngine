@@ -2,15 +2,17 @@ package com.dmm.tfg.engine;
 
 import com.dmm.tfg.engine.model.Body;
 import com.dmm.tfg.engine.model.Vector2D;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 @Component
 public class AttractionResolver {
 
 
+    /**
+     *
+     * @param bodies List of bodies of the system, all bodies are attracted among them.
+     */
     public void calculateAttractions(List<Body> bodies) {
         for (int i = 0; i < bodies.size(); i++) {
             for (int j = i + 1; j < bodies.size(); j++) {
