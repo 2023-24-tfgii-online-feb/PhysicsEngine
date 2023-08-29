@@ -1,4 +1,4 @@
-package com.dmm.tfg.model;
+package com.dmm.tfg.engine.model;
 
 public class Vector2D {
     private double x;

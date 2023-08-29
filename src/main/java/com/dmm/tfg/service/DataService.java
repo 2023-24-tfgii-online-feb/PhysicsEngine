@@ -1,6 +1,7 @@
 package com.dmm.tfg.service;
 
-import com.dmm.tfg.model.Body;
+import com.dmm.tfg.engine.dao.BodyDAOImpl;
+import com.dmm.tfg.engine.model.Body;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

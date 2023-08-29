@@ -1,4 +1,4 @@
-package com.dmm.tfg.model;
+package com.dmm.tfg.engine.model;
 
 public class BoundingBox {
     Vector2D min;

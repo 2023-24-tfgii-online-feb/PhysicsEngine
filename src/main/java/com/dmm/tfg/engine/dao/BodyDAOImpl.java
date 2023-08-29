@@ -1,6 +1,6 @@
-package com.dmm.tfg.service;
+package com.dmm.tfg.engine.dao;
 
-import com.dmm.tfg.model.*;
+import com.dmm.tfg.engine.model.*;
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository
 public class BodyDAOImpl implements BodyDAO {
     private final ConcurrentHashMap<Long, Body> bodies = new ConcurrentHashMap<>();
-    final AtomicLong idCounter = new AtomicLong();
+    private final AtomicLong idCounter = new AtomicLong();
 
     @Override
     public Body getBody(Long id) {
