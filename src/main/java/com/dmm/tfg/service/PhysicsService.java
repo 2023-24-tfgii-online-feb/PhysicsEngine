@@ -20,7 +20,7 @@ public class PhysicsService {
 
     public void setup(){
         dataService.addBody(new Planet(new Vector2D(400, 300), 100000000, 100));
-        dataService.addBody(new Asteroid(new Vector2D(), new Vector2D(1,1), 100, 25));
+        dataService.addBody(new Asteroid(new Vector2D(1,1), new Vector2D(1,1), 100, 25));
     }
 
     private void applyAcceleration(){
