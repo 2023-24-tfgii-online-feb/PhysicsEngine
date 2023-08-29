@@ -1,5 +1,11 @@
 package com.dmm.tfg.engine.model;
 
+import lombok.Getter;
+
+import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
+import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
+
+@Getter
 public class Planet extends Body{
     private float radius;
 
@@ -7,11 +13,25 @@ public class Planet extends Body{
         super(position, new Vector2D(), new Vector2D(), mass); //Stationary object, no velocity.
         this.radius = radius;
         this.bodyType = BodyType.PLANET;
+        this.checkSizeConstraints();
     }
+    @Override
+    protected void checkSizeConstraints(){
+        Vector2D position = getPosition();
+        if (position.getX() < radius){
+            position.setX(position.getX() + radius);
+        }
+        if (position.getY() < radius){
+            position.setY(position.getY() + radius);
+        }
 
+        if (position.getX() + radius > SPACE_WIDTH){
+            position.setX(position.getX() - radius);
+        }
 
-    public float getRadius() {
-        return radius;
+        if (position.getY() + radius > SPACE_HEIGHT){
+            position.setY(position.getY() - radius);
+        }
     }
 
     public void setRadius(float radius) {

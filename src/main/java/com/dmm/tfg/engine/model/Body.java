@@ -1,7 +1,6 @@
 package com.dmm.tfg.engine.model;
 
 import lombok.Data;
-import lombok.Getter;
 
 import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
 import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
@@ -48,6 +47,7 @@ public abstract class Body {
         }
     }
 
+    protected abstract void checkSizeConstraints();
 }
 
 

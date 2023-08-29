@@ -5,5 +5,23 @@ public class Spaceship extends Body{
         super(position, velocity, new Vector2D(), mass);
     }
 
+    @Override
+    protected void checkSizeConstraints(){
+        Vector2D position = getPosition();
+        if (position.getX() < 0){
+            position.setX(position.getX() + 1);
+        }
+        if (position.getY() < 0){
+            position.setY(position.getY() + 1);
+        }
+
+        if (position.getX() + 1 > 100){
+            position.setX(position.getX() - 1);
+        }
+
+        if (position.getY() + 1 > 100){
+            position.setY(position.getY() - 1);
+        }
+    }
 
 }
