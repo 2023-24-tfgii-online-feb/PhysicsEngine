@@ -1,3 +1,7 @@
+import { drawBody } from './draw.js';
+import { parseJsonWithFloats } from './json-parser.js';
+
+
 let bodies = [];
 let connectionEstablished = false;
 let freezeUpdates = false;
@@ -9,7 +13,7 @@ function setupWebSocket() {
   stompClient.connect({}, () => {
     connectionEstablished = true;
     stompClient.subscribe("/topic/bodies", (message) => {
-      const updatedBodies = JSON.parse(message.body);
+      const updatedBodies = parseJsonWithFloats(message.body);
       console.log(updatedBodies);
       bodies.length = 0; // Clear the existing bodies array
       Array.prototype.push.apply(bodies, updatedBodies); // Add the new bodies to the array
@@ -19,8 +23,8 @@ function setupWebSocket() {
   });
 
   document
-    .getElementById("getRandomBody")
-    .addEventListener("click", addRandomBody);
+      .getElementById("getRandomBody")
+      .addEventListener("click", addRandomBody);
 
   document.getElementById("toggleUpdates").addEventListener("change", toggleUpdates);
   document.getElementById("toggleRendering").addEventListener("change", toggleRendering);
@@ -42,7 +46,6 @@ const sketch = (p) => {
       return;
     }
 
-    //requestUpdate();
     requestBodies();
     p.background(255);
 
@@ -52,16 +55,6 @@ const sketch = (p) => {
     }
   };
 };
-
-function drawBody(p, body) {
-  const { position, radius } = body;
-
-  // Draw the body as a circle with a border
-  p.noFill();
-  p.stroke(0);
-  p.strokeWeight(2);
-  p.ellipse(position.x, position.y, radius * 2, radius * 2);
-}
 
 function requestBodies() {
   if (!freezeRendering) {
@@ -73,11 +66,6 @@ function addRandomBody() {
   stompClient.send("/app/random-body", {}, "Requested a random body.");
 }
 
-function requestUpdate() {
-  if (!freezeUpdates) {
-    stompClient.send("/app/update-bodies", {}, "tick.");
-  }
-}
 
 function toggleRendering() {
   freezeRendering = !document.getElementById("toggleRendering").checked;
