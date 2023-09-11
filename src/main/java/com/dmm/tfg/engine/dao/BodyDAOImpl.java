@@ -33,12 +33,9 @@ public class BodyDAOImpl implements BodyDAO {
     @Override
     public void updateBodies() {
         for (Body body : bodies.values()){
-            body.checkEdges();
-            body.getVelocity().add(body.getAcceleration());
-            body.getPosition().add(body.getVelocity());
+            body.update();
         }
     }
-
     @Override
     public void removeBody(Long id) {
         bodies.remove(id);
@@ -68,7 +65,6 @@ public class BodyDAOImpl implements BodyDAO {
             case PLANET -> new Planet(position, mass, radius);
             case ASTEROID -> new Asteroid(position, velocity, mass, radius);
             case SPACESHIP -> new Spaceship(position, velocity, mass);
-            default -> throw new IllegalStateException("Unexpected value: " + bodyType);
         };
     }
 

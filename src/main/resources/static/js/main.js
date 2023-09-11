@@ -14,7 +14,6 @@ function setupWebSocket() {
     connectionEstablished = true;
     stompClient.subscribe("/topic/bodies", (message) => {
       const updatedBodies = parseJsonWithFloats(message.body);
-      console.log(updatedBodies);
       bodies.length = 0; // Clear the existing bodies array
       Array.prototype.push.apply(bodies, updatedBodies); // Add the new bodies to the array
 
@@ -53,8 +52,12 @@ const sketch = (p) => {
     for (const body of bodies) {
       drawBody(p, body);
     }
+
   };
 };
+
+
+
 
 function requestBodies() {
   if (!freezeRendering) {
@@ -69,10 +72,6 @@ function addRandomBody() {
 
 function toggleRendering() {
   freezeRendering = !document.getElementById("toggleRendering").checked;
-}
-
-function toggleUpdates() {
-  freezeUpdates = !document.getElementById("toggleUpdates").checked;
 }
 
 

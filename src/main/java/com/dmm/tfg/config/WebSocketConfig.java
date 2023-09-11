@@ -21,9 +21,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/physics-engine-websocket")
-                .setAllowedOrigins("http://localhost:3100", "http://example.com")
+                .setAllowedOrigins("http://localhost:3100")
                 .withSockJS();
     }
-
-
 }

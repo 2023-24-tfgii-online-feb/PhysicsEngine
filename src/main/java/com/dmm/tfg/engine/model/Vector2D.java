@@ -83,4 +83,11 @@ public class Vector2D {
     public static Vector2D divide(Vector2D a, float scalar) {
         return new Vector2D(a.x / scalar, a.y / scalar);
     }
+
+    public float distance(Vector2D other) {
+        double dx = this.x - other.x;
+        double dy = this.y - other.y;
+        return (float) Math.sqrt(dx * dx + dy * dy);
+    }
+
 }

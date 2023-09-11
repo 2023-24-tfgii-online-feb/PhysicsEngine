@@ -1,17 +1,20 @@
 package com.dmm.tfg.engine.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
 import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
 
 @Getter
+@Setter
 public class Planet extends Body{
     private float radius;
 
     public Planet(Vector2D position, float mass, float radius) {
         super(position, new Vector2D(), new Vector2D(), mass); //Stationary object, no velocity.
         this.radius = radius;
+        this.setBbox(new BoundingBox(this.getPosition(), radius));
         this.bodyType = BodyType.PLANET;
         this.checkSizeConstraints();
     }
@@ -33,11 +36,4 @@ public class Planet extends Body{
             position.setY(position.getY() - radius);
         }
     }
-
-    public void setRadius(float radius) {
-        this.radius = radius;
-    }
-
-
-
 }

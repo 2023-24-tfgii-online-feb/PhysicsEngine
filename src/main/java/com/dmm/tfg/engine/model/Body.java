@@ -48,6 +48,12 @@ public abstract class Body {
     }
 
     protected abstract void checkSizeConstraints();
+
+    public void update() {
+        this.getVelocity().add(this.getAcceleration());
+        this.getPosition().add(this.getVelocity());
+        this.acceleration.multiply(0);
+    }
 }
 
 
