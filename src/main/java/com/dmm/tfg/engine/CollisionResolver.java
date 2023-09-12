@@ -74,26 +74,32 @@ public class CollisionResolver {
 
 
     public void resolveCollision(Body body1, Body body2) {
-        Vector2D vel1Initial = body1.getVelocity();
-        Vector2D vel2Initial = body2.getVelocity();
+        // Step 1: Calculate the normal and relative velocity
+        Vector2D normal = Vector2D.normalize(Vector2D.sub(body2.getPosition(), body1.getPosition()));
+        Vector2D relVel = Vector2D.sub(body2.getVelocity(), body1.getVelocity());
 
-        double m1 = body1.getMass();
-        double m2 = body2.getMass();
+        // Step 2: Find the relative velocity along the normal
+        double relVelAlongNormal = Vector2D.dot(relVel, normal);
 
-        // Relative velocity
-        Vector2D relVelInitial = Vector2D.sub(vel1Initial, vel2Initial);
+        // Step 3: Early exit if bodies are separating
+        if (relVelAlongNormal > 0) {
+            return;
+        }
 
-        // Coefficient of restitution
-        float e = 0.8f;  // Choose a value between 0 and 1
+        // Step 4: Calculate the impulse
+        double restitution = 0.8; // Adjust this value to get the desired bounce effect
+        double impulseScalar = -(1 + restitution) * relVelAlongNormal;
+        impulseScalar /= (1 / body1.getMass()) + (1 / body2.getMass());
 
-        // New velocities after collision
-        Vector2D term1 = Vector2D.multiply(relVelInitial, (float) ((1 + e) * m2 / (m1 + m2)));
-        Vector2D vel1Final = Vector2D.sub(vel1Initial, term1);
+        // Step 5: Find the impulse vector and apply the impulse
+        Vector2D impulseVector = Vector2D.multiply(normal, (float) impulseScalar);
+        Vector2D velocityChange1 = Vector2D.multiply(impulseVector, (float) (1 / body1.getMass()));
+        Vector2D velocityChange2 = Vector2D.multiply(impulseVector, (float) (1 / body2.getMass()));
 
-        Vector2D term2 = Vector2D.multiply(relVelInitial, (float) ((1 + e) * m1 / (m1 + m2)));
-        Vector2D vel2Final = Vector2D.add(vel2Initial, term2);
+        body1.setVelocity(Vector2D.sub(body1.getVelocity(), velocityChange1));
+        body2.setVelocity(Vector2D.add(body2.getVelocity(), velocityChange2));
 
-        body1.setVelocity(vel1Final);
-        body2.setVelocity(vel2Final);
     }
+
+
 }

@@ -1,5 +1,12 @@
 package com.dmm.tfg.engine.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Objects;
+
+@Getter
+@Setter
 public class Vector2D {
     private double x;
     private double y;
@@ -14,20 +21,25 @@ public class Vector2D {
         this.y = y;
     }
 
-    public double getX() {
-        return x;
+    /**
+     * Calculates the dot product of this vector and another vector.
+     *
+     * @param other The other vector.
+     * @return The dot product of the two vectors.
+     */
+    public double dot(Vector2D other) {
+        return this.x * other.x + this.y * other.y;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
+    /**
+     * Calculates the dot product of two vectors.
+     *
+     * @param v1 The first vector.
+     * @param v2 The second vector.
+     * @return The dot product of the two vectors.
+     */
+    public static double dot(Vector2D v1, Vector2D v2) {
+        return v1.x * v2.x + v1.y * v2.y;
     }
 
     public float magnitude(){
@@ -38,10 +50,12 @@ public class Vector2D {
         float magnitude = this.magnitude();
         this.divide(magnitude);
     }
-
-    public void applyForce(){
-
+    
+    public static Vector2D normalize(Vector2D vec){
+        float magnitude = vec.magnitude();
+        return Vector2D.divide(vec, magnitude);
     }
+
     public void add(Vector2D other) {
         this.x += other.x;
         this.y += other.y;
@@ -89,5 +103,32 @@ public class Vector2D {
         double dy = this.y - other.y;
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Vector2D vector2D = (Vector2D) obj;
+        return Double.compare(vector2D.x, x) == 0 &&
+                Double.compare(vector2D.y, y) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Vector2D{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
 
 }

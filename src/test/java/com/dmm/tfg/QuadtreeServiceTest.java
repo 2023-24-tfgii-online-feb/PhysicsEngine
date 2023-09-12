@@ -6,6 +6,7 @@ import com.dmm.tfg.engine.model.Vector2D;
 import com.dmm.tfg.service.QuadtreeService;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,6 +62,31 @@ public class QuadtreeServiceTest {
         // Verification
         List<Body> retrievedBodies = quadtreeService.queryNearbyBodies(body);
         assertTrue(retrievedBodies.isEmpty());
+    }
+
+    @Test
+    public void testQueryNearbyBodies() {
+        // Setup
+        QuadtreeService quadtreeService = new QuadtreeService();
+
+        // Create and insert 20 bodies with different positions into the quadtree
+        List<Body> bodies = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            Body body = new Planet(new Vector2D(i * 5, i * 5), 10, 10);
+            bodies.add(body);
+            quadtreeService.insertBody(body);
+        }
+
+        // Execution
+        // Query nearby bodies for a body positioned at (50, 50) with a bounding box of radius 10
+        Body queryBody = new Planet(new Vector2D(50, 50), 10, 10);
+        List<Body> nearbyBodies = quadtreeService.queryNearbyBodies(queryBody);
+
+        // Verification
+        // Verify that the correct bodies are identified as nearby
+        // In this case, we know the bodies positioned at (45, 45) and (50, 50) should be nearby
+        assertTrue(nearbyBodies.contains(bodies.get(9)));
+        assertTrue(nearbyBodies.contains(bodies.get(10)));
     }
 
 
