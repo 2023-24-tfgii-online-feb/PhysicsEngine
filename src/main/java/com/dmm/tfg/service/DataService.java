@@ -1,7 +1,9 @@
 package com.dmm.tfg.service;
 
 import com.dmm.tfg.engine.dao.BodyDAOImpl;
+import com.dmm.tfg.engine.model.Asteroid;
 import com.dmm.tfg.engine.model.Body;
+import com.dmm.tfg.engine.model.Planet;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,14 @@ public class DataService {
     }
     public Body genRandomBody() {
         return bodyDAO.randomBody();
+    }
+
+    public Planet genRandomPlanet() {
+        return (Planet) bodyDAO.randomPlanet();
+    }
+
+    public Asteroid genRandomAsteroid() {
+        return (Asteroid) bodyDAO.randomAsteroid();
     }
 
     public void updateBodies() {

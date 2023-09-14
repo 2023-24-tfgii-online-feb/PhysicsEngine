@@ -31,4 +31,12 @@ public class BodyService {
 
     public void addBody() {
     }
+
+    public void addRandomPlanet() {
+        dataService.addBody(dataService.genRandomPlanet());
+    }
+
+    public void addRandomAsteorid() {
+        dataService.addBody(dataService.genRandomAsteroid());
+    }
 }

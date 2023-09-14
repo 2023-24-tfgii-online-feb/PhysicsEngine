@@ -30,24 +30,30 @@ public abstract class Body {
         this.mass = mass;
     }
 
-
     // Apply a force to the body
     public void applyForce(Vector2D force) {
         force.divide(getMass());
         acceleration.add(force);
     }
 
-    public void checkEdges(){
-        if (position.getX()  > SPACE_WIDTH || position.getX() < 0) {
-            velocity.setX(velocity.getX() * -1);
+    protected void checkSizeConstraints(){
+        Vector2D position = getPosition();
+        float radius = this.bbox.getRadius();
+        if (position.getX() < radius){
+            position.setX(position.getX() + radius);
+        }
+        if (position.getY() < radius){
+            position.setY(position.getY() + radius);
         }
 
-        if (position.getY() > SPACE_HEIGHT || position.getY() < 0) {
-            velocity.setY(velocity.getY() * -1);
+        if (position.getX() + radius > SPACE_WIDTH){
+            position.setX(position.getX() - radius);
+        }
+
+        if (position.getY() + radius > SPACE_HEIGHT){
+            position.setY(position.getY() - radius);
         }
     }
-
-    protected abstract void checkSizeConstraints();
 
     public void update() {
         this.getVelocity().add(this.getAcceleration());

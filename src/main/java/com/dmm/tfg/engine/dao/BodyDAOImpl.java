@@ -43,29 +43,57 @@ public class BodyDAOImpl implements BodyDAO {
 
     public Body randomBody() {
         // Generate random position
-        float posX = ThreadLocalRandom.current().nextFloat() * 800; // Assuming canvas width is 800
-        float posY = ThreadLocalRandom.current().nextFloat() * 600; // Assuming canvas height is 600
-        Vector2D position = new Vector2D(posX, posY);
-
+        Vector2D position = genRandomPos();
         // Generate random velocity
-        float velX = ThreadLocalRandom.current().nextFloat() * 2 - 1; // Random float between -1 and 1
-        float velY = ThreadLocalRandom.current().nextFloat() * 2 - 1; // Random float between -1 and 1
-        Vector2D velocity = new Vector2D(velX, velY);
-
+        Vector2D velocity = genRandomVel();
         // Generate random mass
         float mass = ThreadLocalRandom.current().nextFloat() * 10 + 1; // Random float between 1 and 11
-
         // Generate random radius
         float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
-
         // Choose a random body type
         BodyType bodyType = BodyType.values()[ThreadLocalRandom.current().nextInt(3)];
-
         return switch (bodyType) {
             case PLANET -> new Planet(position, mass, radius);
             case ASTEROID -> new Asteroid(position, velocity, mass, radius);
             case SPACESHIP -> new Spaceship(position, velocity, mass);
         };
+    }
+
+    public Body randomPlanet() {
+
+        Vector2D position = genRandomPos();
+        // Generate random mass
+        float mass = ThreadLocalRandom.current().nextFloat() * 1000 + 1;
+        // Generate random radius
+        float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
+        return new Planet(position, mass, radius);
+
+    }
+
+    public Body randomAsteroid() {
+
+        Vector2D position = genRandomPos();
+        Vector2D velocity = genRandomVel();
+        // Generate random mass
+        float mass = ThreadLocalRandom.current().nextFloat() * 10 + 1; // Random float between 1 and 11
+        // Generate random radius
+        float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
+        return new Asteroid(position, velocity, mass, radius);
+
+    }
+
+    private Vector2D genRandomPos(){
+        // Generate random position
+        float posX = ThreadLocalRandom.current().nextFloat() * 800; // Assuming canvas width is 800
+        float posY = ThreadLocalRandom.current().nextFloat() * 600; // Assuming canvas height is 600
+        return new Vector2D(posX, posY);
+    }
+
+    private Vector2D genRandomVel(){
+        // Generate random velocity
+        float velX = ThreadLocalRandom.current().nextFloat() * 2 - 1; // Random float between -1 and 1
+        float velY = ThreadLocalRandom.current().nextFloat() * 2 - 1; // Random float between -1 and 1
+        return new Vector2D(velX, velY);
     }
 
 }

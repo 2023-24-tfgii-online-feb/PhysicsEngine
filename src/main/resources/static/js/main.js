@@ -4,8 +4,6 @@ import { parseJsonWithFloats } from './json-parser.js';
 
 let bodies = [];
 let connectionEstablished = false;
-let freezeUpdates = false;
-let freezeRendering = false;
 const socket = new SockJS('/physics-engine-websocket');
 const stompClient = Stomp.over(socket);
 
@@ -24,11 +22,12 @@ function setupWebSocket() {
   document
       .getElementById("getRandomBody")
       .addEventListener("click", addRandomBody);
-
-  document.getElementById("toggleUpdates").addEventListener("change", toggleUpdates);
-  document.getElementById("toggleRendering").addEventListener("change", toggleRendering);
-
-
+  document
+      .getElementById("getRandomPlanet")
+      .addEventListener("click", addRandomPlanet);
+  document
+      .getElementById("getRandomAsteroid")
+      .addEventListener("click", addRandomAsteroid);
 }
 
 const sketch = (p) => {
@@ -36,9 +35,6 @@ const sketch = (p) => {
     p.createCanvas(1240,720);
     setupWebSocket();
   };
-  document.getElementById("toggleRendering").checked = !freezeRendering;
-  document.getElementById("toggleUpdates").checked = !freezeUpdates;
-
 
   p.draw = () => {
     if (!connectionEstablished) {
@@ -56,24 +52,18 @@ const sketch = (p) => {
   };
 };
 
-
-
-
 function requestBodies() {
-  if (!freezeRendering) {
     stompClient.send("/app/retrieve-bodies", {}, "");
-  }
 }
 
 function addRandomBody() {
   stompClient.send("/app/random-body", {}, "Requested a random body.");
 }
-
-
-function toggleRendering() {
-  freezeRendering = !document.getElementById("toggleRendering").checked;
+function addRandomPlanet() {
+  stompClient.send("/app/random-planet", {}, "Requested a random planet.");
 }
-
-
+function addRandomAsteroid() {
+  stompClient.send("/app/random-asteroid", {}, "Requested a random asteroid.");
+}
 
 const myP5 = new p5(sketch, "canvas-container");

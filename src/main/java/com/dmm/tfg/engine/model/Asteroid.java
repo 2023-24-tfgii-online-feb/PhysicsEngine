@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
-import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
-
 @Getter
 @Setter
 public class Asteroid extends Body{
@@ -24,8 +21,8 @@ public class Asteroid extends Body{
         this.radius = radius;
         this.bodyType = BodyType.ASTEROID;
         this.vertices = generateRandomVertices(radius);
-        this.checkSizeConstraints();
         this.setBbox(new BoundingBox(this.getPosition(), radius));
+        this.checkSizeConstraints();
         this.spin = new Random().nextFloat(1,5);
     }
 
@@ -54,7 +51,6 @@ public class Asteroid extends Body{
         return generatedVertices;
     }
 
-
     public void computeVertices() {
         double anglePerTickRadians = Math.toRadians(this.spin * (1.0 / 1000)); // Convert to radians
         for (Vector2D vertex : this.vertices) {  // Changed Vertex to Vector2D for consistency
@@ -64,23 +60,4 @@ public class Asteroid extends Body{
             vertex.setY(newY);
         }
     }
-    @Override
-    protected void checkSizeConstraints(){
-        Vector2D position = getPosition();
-        if (position.getX() < radius){
-            position.setX(position.getX() + radius);
-        }
-        if (position.getY() < radius){
-            position.setY(position.getY() + radius);
-        }
-
-        if (position.getX() + radius > SPACE_WIDTH){
-            position.setX(position.getX() - radius);
-        }
-
-        if (position.getY() + radius > SPACE_HEIGHT){
-            position.setY(position.getY() - radius);
-        }
-    }
-
 }

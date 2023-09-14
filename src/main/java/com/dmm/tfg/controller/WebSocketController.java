@@ -21,6 +21,18 @@ public class WebSocketController {
         bodyService.addRandomBody();
     }
 
+    @MessageMapping("/random-planet")
+    @SendTo("/topic/bodies")
+    public void addRandomPlanet() {
+        bodyService.addRandomPlanet();
+    }
+
+    @MessageMapping("/random-asteroid")
+    @SendTo("/topic/bodies")
+    public void addRandomAsteroid() {
+        bodyService.addRandomAsteorid();
+    }
+
     @MessageMapping("/add-body")
     @SendTo("/topic/bodies")
     public void addBody(){ bodyService.addBody();}
