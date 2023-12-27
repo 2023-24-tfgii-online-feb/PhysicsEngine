@@ -1,0 +1,6 @@
+.InfoSection{
+    flex-grow: 1; /* Takes up remaining space */
+    height: 720px; /* Same height as canvas */
+    overflow-y: auto; /* Enables scrolling if content is too long */
+    background-color: brown;
+}
