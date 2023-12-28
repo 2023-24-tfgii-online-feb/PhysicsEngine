@@ -22,8 +22,9 @@ const Canvas = ({ stompClient }) => {
           };
   
           p.draw = () => {
-            p.background(255);
+            p.background(0);
             requestBodies(stompClient);
+            console.log(bodiesRef.current);
             for (const body of bodiesRef.current) {
                 drawBody(p, body);
               }

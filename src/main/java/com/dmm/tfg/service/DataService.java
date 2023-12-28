@@ -4,6 +4,7 @@ import com.dmm.tfg.engine.dao.BodyDAOImpl;
 import com.dmm.tfg.engine.model.Asteroid;
 import com.dmm.tfg.engine.model.Body;
 import com.dmm.tfg.engine.model.Planet;
+import com.dmm.tfg.engine.model.Spaceship;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class DataService {
 
     public void removeBody(long id){
         bodyDAO.removeBody(id);
+    }
+
+    public Body getBody(long id) {
+        return bodyDAO.getBody(id);
     }
     public Body genRandomBody() {
         return bodyDAO.randomBody();
@@ -42,4 +47,10 @@ public class DataService {
     public List<Body> getAllBodies() {
         return bodyDAO.getAllBodies();
     }
+
+    public Body genRandomSpaceship() {
+        return (Spaceship) bodyDAO.randomSpaceship();
+    }
+
+
 }

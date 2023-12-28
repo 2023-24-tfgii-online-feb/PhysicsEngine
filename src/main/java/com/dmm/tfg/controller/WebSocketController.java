@@ -1,5 +1,6 @@
 package com.dmm.tfg.controller;
 
+import com.dmm.tfg.engine.dao.BodyIdDTO;
 import com.dmm.tfg.engine.model.Body;
 import com.dmm.tfg.service.BodyService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,14 @@ public class WebSocketController {
         bodyService.addRandomAsteorid();
     }
 
-    @MessageMapping("/add-body")
+    @MessageMapping("/random-spaceship")
     @SendTo("/topic/bodies")
+    public void addRandomSpaceship() {
+        bodyService.addRandomSpaceship();
+    }
+
+
+    @MessageMapping("/add-body")
     public void addBody(){ bodyService.addBody();}
 
 
@@ -44,8 +51,19 @@ public class WebSocketController {
         return bodyService.retrieveBodies();
     }
 
-    @MessageMapping("/update-bodies")
+    @MessageMapping("/remove-body")
+    public void removeBody(BodyIdDTO bodyIdDTO) {
+        bodyService.removeBody(bodyIdDTO.getId());
+    }
+
+    @MessageMapping("/toggle-select-body")
     @SendTo("/topic/bodies")
+    public void toggleSelectBody(BodyIdDTO bodyIdDTO) {
+        bodyService.toggleSelectBody(bodyIdDTO.getId());
+    }
+
+
+    @MessageMapping("/update-bodies")
     public void updateBodies() {
         bodyService.updateBodies();
     }

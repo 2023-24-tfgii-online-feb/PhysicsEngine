@@ -1,0 +1,17 @@
+.simulationControl {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.simulationControl button {
+    margin: 0 10px;
+    background-color: #1e81b0; /* Button background color */
+    color: black; /* Button text color */
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
