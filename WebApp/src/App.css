@@ -1,0 +1,26 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+  margin: 0; /* Remove default margin */
+  background-color: #183d5d; /* Darker shade of blue */
+  color: #ffffff; /* Adjust text color for readability */
+}
+
+#content {
+  display: flex;
+  flex-direction: row; /* Stack children vertically */
+  justify-content: center; /* Center children horizontally */
+  align-items: start; /* Center children vertically */
+  margin: 30px; /* Margin around the entire content area */
+  height: calc(100vh - 10%); /* Adjust based on header and footer height */
+  /* Ensure that it takes up the remaining space */
+  gap: 30px;
+  flex: 1; 
+}
+
+.simulationContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,33 @@
+.InfoSection{
+    flex-grow: 1; /* Takes up remaining space */
+    min-height: 720px;
+    max-height: 720px;
+    width: 500px; /* Fixed width */
+    overflow-y: auto; /* Enables scrolling if content is too long */
+    background-color: #3a6f89; /* Lighter blue */
+    border-radius: 10px; /* Rounded edges */
+    overflow-y: auto; /* Make content scrollable */
+    padding: 15px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+}
+
+.InfoSection .card {
+    background-color: rgb(8, 216, 243); /* White background for each card */
+    margin-bottom: 15px; /* Space between cards */
+    border-radius: 8px; /* Rounded corners for cards */
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+  }
+  
+  .InfoSection .card-body {
+    margin-bottom: 10px;
+    color: black;
+  }
+
+  .InfoSection .card.selected {
+    border: 2px solid black; /* Black border for selected card */
+    background-color: rgb(8, 216, 243); /* Keep the original background color */
+  }
+
+  
+  

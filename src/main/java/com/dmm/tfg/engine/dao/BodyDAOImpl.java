@@ -82,6 +82,13 @@ public class BodyDAOImpl implements BodyDAO {
 
     }
 
+    public Spaceship randomSpaceship() {
+        Vector2D position = genRandomPos();
+        Vector2D velocity = genRandomVel();
+        float mass = ThreadLocalRandom.current().nextFloat() * 0.1f + 1; // Random float between 0.1 and 1
+        return new Spaceship(position, velocity, mass);
+    }
+
     private Vector2D genRandomPos(){
         // Generate random position
         float posX = ThreadLocalRandom.current().nextFloat() * 800; // Assuming canvas width is 800
@@ -95,5 +102,6 @@ public class BodyDAOImpl implements BodyDAO {
         float velY = ThreadLocalRandom.current().nextFloat() * 2 - 1; // Random float between -1 and 1
         return new Vector2D(velX, velY);
     }
+
 
 }

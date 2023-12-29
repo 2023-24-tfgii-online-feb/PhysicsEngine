@@ -1,0 +1,6 @@
+.canvas {
+    width: 1240px;
+    height: 720px;
+    margin-right: 20px; /* Margin between canvas and info component */
+    background-color: rgb(127, 148, 255); 
+}

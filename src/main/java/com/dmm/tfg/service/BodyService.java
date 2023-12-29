@@ -11,6 +11,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BodyService {
 
+
+
     private final DataService dataService;
 
     public void addRandomBody() {
@@ -39,4 +41,16 @@ public class BodyService {
     public void addRandomAsteorid() {
         dataService.addBody(dataService.genRandomAsteroid());
     }
+
+    public void addRandomSpaceship() {
+        dataService.addBody(dataService.genRandomSpaceship());
+    }
+
+    public void toggleSelectBody(long id) {
+        Body body = dataService.getBody(id);
+        if (body != null) {
+            body.setSelected(!body.isSelected());
+        }
+    }
 }
+

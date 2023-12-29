@@ -1,11 +1,14 @@
 package com.dmm.tfg.engine.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
 import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
 
-@Data
+@Getter
+@Setter
 public abstract class Body {
     private long id;
     private Vector2D position;
@@ -14,6 +17,7 @@ public abstract class Body {
     private double mass;
     private BoundingBox bbox;
     protected BodyType bodyType;
+    private boolean selected;
 
     public Body() {
         this.id = 0;
@@ -28,6 +32,11 @@ public abstract class Body {
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.mass = mass;
+        this.selected = false;
+    }
+
+    public void setSelected(boolean selected){
+        this.selected = selected;
     }
 
     // Apply a force to the body
