@@ -2,13 +2,13 @@ package com.dmm.tfg.service;
 
 import com.dmm.tfg.engine.AttractionResolver;
 import com.dmm.tfg.engine.CollisionResolver;
-import com.dmm.tfg.engine.model.Asteroid;
-import com.dmm.tfg.engine.model.Body;
-import com.dmm.tfg.engine.model.Planet;
-import com.dmm.tfg.engine.model.Vector2D;
+import com.dmm.tfg.engine.MovementResolver;
+import com.dmm.tfg.engine.model.*;
 import lombok.RequiredArgsConstructor;
-import org.locationtech.jts.index.quadtree.Quadtree;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 
 
 @Service
@@ -18,7 +18,10 @@ public class PhysicsService {
     private final DataService dataService;
     private final AttractionResolver attractionResolver;
     private final CollisionResolver collisionResolver;
+    private final MovementResolver movementResolver;
     private final QuadtreeService quadtreeService;
+
+
 
 
     public void setup(){
@@ -36,7 +39,7 @@ public class PhysicsService {
         collisionResolver.checkEdges(dataService.getAllBodies());
         attractionResolver.calculateAttractions(dataService.getAllBodies(), quadtreeService);
         collisionResolver.checkCollisions(dataService.getAllBodies(), quadtreeService);
-
+        movementResolver.resolveSpaceshipMovement(dataService.getAllBodies(), quadtreeService);
         dataService.updateBodies();
     }
 }

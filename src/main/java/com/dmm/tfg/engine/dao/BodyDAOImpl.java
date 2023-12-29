@@ -1,7 +1,10 @@
 package com.dmm.tfg.engine.dao;
 
+import com.dmm.tfg.controller.WebSocketController;
 import com.dmm.tfg.engine.model.*;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 @Repository
 public class BodyDAOImpl implements BodyDAO {
+
+    Logger logger = LoggerFactory.getLogger(BodyDAOImpl.class);
     private final ConcurrentHashMap<Long, Body> bodies = new ConcurrentHashMap<>();
     private final AtomicLong idCounter = new AtomicLong();
 
@@ -52,6 +57,8 @@ public class BodyDAOImpl implements BodyDAO {
         float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
         // Choose a random body type
         BodyType bodyType = BodyType.values()[ThreadLocalRandom.current().nextInt(3)];
+
+        logger.info("Random body generated with this properties: Position:{}, velocity:{}, mass:{}, radius:{}, bodyType:{}", position.toString(), velocity.toString(), mass, radius, bodyType.toString());
         return switch (bodyType) {
             case PLANET -> new Planet(position, mass, radius);
             case ASTEROID -> new Asteroid(position, velocity, mass, radius);
@@ -66,6 +73,9 @@ public class BodyDAOImpl implements BodyDAO {
         float mass = ThreadLocalRandom.current().nextFloat() * 1000 + 1;
         // Generate random radius
         float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
+
+        logger.info("Planet generated with this properties: Position:{}, mass:{}, radius:{}", position.toString(),mass, radius);
+
         return new Planet(position, mass, radius);
 
     }
@@ -78,14 +88,17 @@ public class BodyDAOImpl implements BodyDAO {
         float mass = ThreadLocalRandom.current().nextFloat() * 10 + 1; // Random float between 1 and 11
         // Generate random radius
         float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
-        return new Asteroid(position, velocity, mass, radius);
 
+        logger.info("Asteroid generated with this properties: Position:{}, velocity:{}, mass:{}, radius:{}", position.toString(), velocity.toString(), mass, radius);
+        return new Asteroid(position, velocity, mass, radius);
     }
 
     public Spaceship randomSpaceship() {
         Vector2D position = genRandomPos();
         Vector2D velocity = genRandomVel();
         float mass = ThreadLocalRandom.current().nextFloat() * 0.1f + 1; // Random float between 0.1 and 1
+
+        logger.info("Spaceship generated with this properties: Position:{}, velocity:{}, mass:{}", position.toString(), velocity.toString(), mass);
         return new Spaceship(position, velocity, mass);
     }
 
