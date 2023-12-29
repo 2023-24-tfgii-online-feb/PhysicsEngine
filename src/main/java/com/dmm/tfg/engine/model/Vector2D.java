@@ -130,5 +130,7 @@ public class Vector2D {
                 '}';
     }
 
-
+    public boolean isZero() {
+        return getX() == 0 && getY() == 0;
+    }
 }
