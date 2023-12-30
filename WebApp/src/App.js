@@ -11,8 +11,15 @@ import { Stomp } from "@stomp/stompjs";
 function App() {
   const [stompClient, setStompClient] = useState(null);
 
+  function getWebSocketUrl() {
+    const protocol = "http:";
+    const host = window.location.hostname;
+    const port = window.location.port ? `:${window.location.port}` : ":3100";
+    return `${protocol}//${host}${port}/physics-engine-websocket`;
+}
+
   useEffect(() => {
-    const socket = new SockJS("http://localhost:3100/physics-engine-websocket");
+    const socket = new SockJS(getWebSocketUrl());
     const client = Stomp.over(socket);
 
     client.connect({}, () => {
