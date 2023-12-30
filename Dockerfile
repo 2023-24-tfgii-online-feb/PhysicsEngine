@@ -19,6 +19,7 @@ RUN git clone https://github.com/dmm1005/PhysicsEngine && \
     gradle build
 
 WORKDIR /opt/PhysicsEngine
+EXPOSE 3100
 # Set the command to run your app
 CMD ["java", "-jar", "/opt/PhysicsEngine/build/libs/TFG-1.0.0-RELEASE.jar"]
 
