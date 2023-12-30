@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.dmm'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-RELEASE'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
@@ -15,6 +15,12 @@ targetCompatibility = '17'
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.dmm.tfg.PhysicsEngine'
     }
 }
 
