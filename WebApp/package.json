@@ -1,12 +1,9 @@
 {
   "name": "webapp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@stomp/stompjs": "^7.0.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "p5": "^1.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -18,7 +15,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "cp -R build/* ../src/main/resources/static/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -39,8 +35,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "ncp": "^2.0.0"
   }
 }
