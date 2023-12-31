@@ -3,10 +3,7 @@ package com.dmm.tfg.controller;
 import com.dmm.tfg.engine.dao.BodyIdDTO;
 import com.dmm.tfg.engine.model.Body;
 import com.dmm.tfg.service.BodyService;
-import com.dmm.tfg.service.PhysicsService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -18,12 +15,10 @@ import java.util.List;
 public class WebSocketController {
 
     private final BodyService bodyService;
-    Logger logger = LoggerFactory.getLogger(WebSocketController.class);
 
     @MessageMapping("/random-body")
     @SendTo("/topic/bodies")
     public void addRandomBody() {
-        Logger logger = LoggerFactory.getLogger(PhysicsService.class);
         bodyService.addRandomBody();
     }
 
@@ -36,7 +31,7 @@ public class WebSocketController {
     @MessageMapping("/random-asteroid")
     @SendTo("/topic/bodies")
     public void addRandomAsteroid() {
-        bodyService.addRandomAsteorid();
+        bodyService.addRandomAsteroid();
     }
 
     @MessageMapping("/random-spaceship")
@@ -44,11 +39,6 @@ public class WebSocketController {
     public void addRandomSpaceship() {
         bodyService.addRandomSpaceship();
     }
-
-
-    @MessageMapping("/add-body")
-    public void addBody(){ bodyService.addBody();}
-
 
     @MessageMapping("/retrieve-bodies")
     @SendTo("/topic/bodies")
@@ -65,12 +55,6 @@ public class WebSocketController {
     @SendTo("/topic/bodies")
     public void toggleSelectBody(BodyIdDTO bodyIdDTO) {
         bodyService.toggleSelectBody(bodyIdDTO.getId());
-    }
-
-
-    @MessageMapping("/update-bodies")
-    public void updateBodies() {
-        bodyService.updateBodies();
     }
 
 }

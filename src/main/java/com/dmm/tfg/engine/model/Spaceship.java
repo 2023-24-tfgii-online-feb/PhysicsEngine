@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Spaceship extends Body{
     private static final float WANDER_FORCE_MAGNITUDE = 0.1f;
-    private static final float AVOIDANCE_FORCE_MAGNITUDE = 0.5f;
     private static final float AVOIDANCE_RANGE = 50.0f;
     private static final float MAX_AVOIDANCE_FORCE = 10f;
     private static final float MAX_VELOCITY = 5.0f;

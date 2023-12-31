@@ -31,14 +31,11 @@ public class BodyService {
         return dataService.getAllBodies();
     }
 
-    public void addBody() {
-    }
-
     public void addRandomPlanet() {
         dataService.addBody(dataService.genRandomPlanet());
     }
 
-    public void addRandomAsteorid() {
+    public void addRandomAsteroid() {
         dataService.addBody(dataService.genRandomAsteroid());
     }
 

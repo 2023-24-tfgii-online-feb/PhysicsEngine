@@ -20,7 +20,8 @@ public class PhysicsEngine {
     }
 
     @Bean
-    public ScheduledExecutorService scheduledExecutorService(PhysicsService physicsService) {
+    public ScheduledExecutorService
+    scheduledExecutorService(PhysicsService physicsService) {
         physicsService.setup();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         int tickRate = 150; // 100Hz tick rate

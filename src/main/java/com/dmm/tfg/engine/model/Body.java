@@ -1,6 +1,5 @@
 package com.dmm.tfg.engine.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

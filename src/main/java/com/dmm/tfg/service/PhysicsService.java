@@ -3,13 +3,12 @@ package com.dmm.tfg.service;
 import com.dmm.tfg.engine.AttractionResolver;
 import com.dmm.tfg.engine.CollisionResolver;
 import com.dmm.tfg.engine.MovementResolver;
-import com.dmm.tfg.engine.model.*;
+import com.dmm.tfg.engine.model.Asteroid;
+import com.dmm.tfg.engine.model.Body;
+import com.dmm.tfg.engine.model.Planet;
+import com.dmm.tfg.engine.model.Vector2D;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 @RequiredArgsConstructor

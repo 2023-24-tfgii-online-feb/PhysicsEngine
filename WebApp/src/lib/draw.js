@@ -1,20 +1,19 @@
 export function drawBody(p, body) {
-    const { position, radius, bodyType, vertices, selected } = body;
-  
-    if (bodyType === "ASTEROID") {
-      drawAsteroid(p, position, vertices, selected);
-    } else if (bodyType === "SPACESHIP") {
-      drawSpaceship(p, position, selected);
+
+    if (body.bodyType === "ASTEROID") {
+      drawAsteroid(p, body.position, body.vertices, body.selected);
+    } else if (body.bodyType === "SPACESHIP") {
+      drawSpaceship(p, body.position, body.selected);
     }
     else {
-      if (selected) {
+      if (body.selected) {
         p.fill(255, 234, 0);
       } else {
         p.noFill();
       }
       p.stroke(255);
       p.strokeWeight(2);
-      p.ellipse(position.x, position.y, radius * 2, radius * 2);
+      p.ellipse(body.position.x, body.position.y, body.radius * 2, body.radius * 2);
     }
   }
   
