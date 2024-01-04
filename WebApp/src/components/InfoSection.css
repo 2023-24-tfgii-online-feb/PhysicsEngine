@@ -41,7 +41,7 @@
 
   .InfoSection .card.selected {
     border: 2px solid black; /* Black border for selected card */
-    background-color: rgb(8, 216, 243); /* Keep the original background color */
+    background-color: rgb(8, 243, 196) /* Keep the original background color */
   }
 
   
