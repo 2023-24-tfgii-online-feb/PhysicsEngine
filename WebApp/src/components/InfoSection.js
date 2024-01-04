@@ -49,13 +49,15 @@ const InfoSection = ({ stompClient }) => {
           <div className="card-body">
             {/* Display body information */}
             <p>
-              Body ID: {body.id} Body Type: {body.bodyType}
+              Body ID: {body.id} - Type: {body.bodyType}
             </p>
             <p>Body Mass: {body.mass}</p>
             <p>
-              Body Velocity: x:{body.velocity.x},y:{body.velocity.y}
+              Body Velocity: 
             </p>
-            <p>Is selected? {body.selected}</p>
+            <p>
+            x: {body.velocity.x.toFixed(7)},y: {body.velocity.y.toFixed(7)}
+              </p>
             {/* Other information */}
           </div>
           <button

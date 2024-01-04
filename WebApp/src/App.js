@@ -19,7 +19,8 @@ function App() {
 }
 
   useEffect(() => {
-    const socket = new SockJS(getWebSocketUrl());
+    //const socket = new SockJS(getWebSocketUrl());
+    const socket = new SockJS("http://localhost:3100/physics-engine-websocket");
     const client = Stomp.over(socket);
 
     client.connect({}, () => {

@@ -3,7 +3,25 @@ footer {
     height: 5%; 
     width: 100%;
     display: flex;
-    flex-direction: row;
     align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
     margin-top: auto;
+    
   }
+
+.footer-left, .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1px 20px;
+}
+
+.footer-right {
+    align-items: flex-end; /* Align right content to the right */
+}
+
+footer h3, footer p {
+    margin: 0;
+    color: white;
+}
