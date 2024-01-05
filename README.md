@@ -45,7 +45,7 @@ Donde 'nombre de la imagen' es el tag que le queréis dar a vuestra imagen.
 
 Una vez tengáis la imagen generada, tenéis que ejecutar este comando para crear un contenedor y ejecutar el proyecto:
 
-`docker run -P <puerto>:3100 <nombre de la imagen> <nombre del contenedor>`
+`docker run -P <puerto>:3100 <nombre de la imagen>`
 
 Donde 'puerto' es el puerto de vuestra máquina anfitrión donde queréis publicar el proyecto.'nombre de la imagen' es el nombre (tag) que habéis usado en el comando anterior y 'nombre del contenedor' es el nombre que le queréis dar.
 

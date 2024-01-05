@@ -15,6 +15,10 @@ RUN git clone https://github.com/dmm1005/PhysicsEngine && \
     cd /opt/PhysicsEngine/WebApp && \
     npm install && \
     npm run build && \
+    echo "Removing old static files" && \
+    rm -rf /opt/PhysicsEngine/src/main/resources/static && \
+    echo "Copying new static files" && \
+    cp -r /opt/PhysicsEngine/WebApp/build /opt/PhysicsEngine/src/main/resources/static && \
     cd /opt/PhysicsEngine && \
     gradle build
 
