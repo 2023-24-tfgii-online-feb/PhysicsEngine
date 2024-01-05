@@ -19,13 +19,14 @@ function App() {
 }
 
   useEffect(() => {
-    const socket = new SockJS(getWebSocketUrl());
-    const client = Stomp.over(socket);
-
+    const client = Stomp.over(function(){
+      return new SockJS(getWebSocketUrl());
+    });
+    client.reconnect_delay = 5000;
+    client.debug = () => {};
     client.connect({}, () => {
       setStompClient(client);
     });
-
     return () => {
       if (client) {
         client.disconnect();
