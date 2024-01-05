@@ -15,8 +15,8 @@ public class MovementResolver {
         for (Body body : allBodies){
             if (body instanceof Spaceship spaceship){
                 List<Body> nearbyBodies = quadtreeService.queryNearbyBodies(spaceship);
-                spaceship.avoidCollisions(nearbyBodies);
                 spaceship.wander();
+                spaceship.avoidCollisions(nearbyBodies);
                 spaceship.applyDamping();
                 spaceship.capVelocity();
             }

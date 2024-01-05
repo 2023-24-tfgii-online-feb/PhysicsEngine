@@ -37,8 +37,8 @@ public class PhysicsService {
 
         collisionResolver.checkEdges(dataService.getAllBodies());
         attractionResolver.calculateAttractions(dataService.getAllBodies(), quadtreeService);
-        collisionResolver.checkCollisions(dataService.getAllBodies(), quadtreeService);
         movementResolver.resolveSpaceshipMovement(dataService.getAllBodies(), quadtreeService);
+        collisionResolver.checkCollisions(dataService.getAllBodies(), quadtreeService);
         dataService.updateBodies();
     }
 }

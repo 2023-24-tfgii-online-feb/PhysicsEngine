@@ -69,9 +69,13 @@ public class BodyDAOImpl implements BodyDAO {
 
         Vector2D position = genRandomPos();
         // Generate random mass
-        float mass = ThreadLocalRandom.current().nextFloat() * 1000 + 1;
+        float max = 100000000;
+        float min = 50000000;
+        float range = max - min;
+
+        float mass = ThreadLocalRandom.current().nextFloat() * range + min;
         // Generate random radius
-        float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
+        float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5;
 
         logger.info("Planet generated with this properties: Position:{}, mass:{}, radius:{}", position.toString(),mass, radius);
 
@@ -83,8 +87,14 @@ public class BodyDAOImpl implements BodyDAO {
 
         Vector2D position = genRandomPos();
         Vector2D velocity = genRandomVel();
+
         // Generate random mass
-        float mass = ThreadLocalRandom.current().nextFloat() * 10 + 1; // Random float between 1 and 11
+        float max = 100000;
+        float min = 50000;
+        float range = max - min;
+
+        float mass = ThreadLocalRandom.current().nextFloat() * range + min;
+
         // Generate random radius
         float radius = ThreadLocalRandom.current().nextFloat() * 30 + 5; // Random float between 5 and 35
 
