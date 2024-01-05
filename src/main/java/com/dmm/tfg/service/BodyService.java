@@ -1,9 +1,11 @@
 package com.dmm.tfg.service;
 
 import com.dmm.tfg.engine.model.Body;
+import com.dmm.tfg.engine.model.Spaceship;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,6 +50,17 @@ public class BodyService {
         if (body != null) {
             body.setSelected(!body.isSelected());
         }
+    }
+
+
+    public List<Spaceship> getSelectedSpaceships() {
+        List<Spaceship> selectedSpaceships = new ArrayList<>();
+        for (Body body : dataService.getAllBodies()){
+            if (body instanceof Spaceship && body.isSelected()){
+                selectedSpaceships.add((Spaceship) body);
+            }
+        }
+        return selectedSpaceships;
     }
 }
 

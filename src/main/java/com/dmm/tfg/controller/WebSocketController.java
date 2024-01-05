@@ -1,7 +1,10 @@
 package com.dmm.tfg.controller;
 
 import com.dmm.tfg.engine.dao.BodyIdDTO;
+import com.dmm.tfg.engine.dao.TargetPositionDTO;
 import com.dmm.tfg.engine.model.Body;
+import com.dmm.tfg.engine.model.Spaceship;
+import com.dmm.tfg.engine.model.Vector2D;
 import com.dmm.tfg.service.BodyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -55,6 +58,15 @@ public class WebSocketController {
     @SendTo("/topic/bodies")
     public void toggleSelectBody(BodyIdDTO bodyIdDTO) {
         bodyService.toggleSelectBody(bodyIdDTO.getId());
+    }
+
+    @MessageMapping("/move-selected-spaceships")
+    public void moveSelectedSpaceships(TargetPositionDTO positionDTO) {
+        List<Spaceship> selectedSpaceships = bodyService.getSelectedSpaceships();
+        Vector2D target = new Vector2D(positionDTO.getX(), positionDTO.getY());
+        for (Spaceship spaceship : selectedSpaceships) {
+            spaceship.seek(target);
+        }
     }
 
 }

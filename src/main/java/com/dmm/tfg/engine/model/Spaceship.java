@@ -6,8 +6,9 @@ public class Spaceship extends Body{
     private static final float WANDER_FORCE_MAGNITUDE = 0.1f;
     private static final float AVOIDANCE_RANGE = 50.0f;
     private static final float MAX_AVOIDANCE_FORCE = 10f;
-    private static final float MAX_VELOCITY = 5.0f;
+    private static final float MAX_VELOCITY = 3.0f;
     private static final float DAMPING_FACTOR = 0.99f;
+    private static final float MAX_FORCE = 0.3f;
 
     public Spaceship(Vector2D position, Vector2D velocity, float mass) {
         super(position, velocity, new Vector2D(), mass);
@@ -77,6 +78,37 @@ public class Spaceship extends Body{
 
     public void applyDamping() {
         this.getVelocity().multiply(DAMPING_FACTOR);
+    }
+
+    public void seek(Vector2D target) {
+        float slowingRadius = 100f;
+        this.seek(target, slowingRadius);
+    }
+
+    public void seek(Vector2D target, float slowingRadius) {
+        Vector2D desired = Vector2D.sub(target, this.getPosition());
+        float distance = desired.magnitude();
+        desired.normalize();
+
+        if (distance < slowingRadius) {
+            // Inside the slowing area (Arrive behavior)
+            float m = map(distance, 0, slowingRadius, 0, MAX_VELOCITY);
+            desired.multiply(m);
+        } else {
+            // Outside the slowing area (Seek behavior)
+            desired.multiply(MAX_VELOCITY);
+        }
+
+        // Steering force calculation
+        Vector2D steer = Vector2D.sub(desired, this.getVelocity());
+        steer.limit(MAX_FORCE);
+
+        // Apply the combined steering force
+        this.applyForce(steer);
+    }
+
+    private static float map(float value, float start1, float stop1, float start2, float stop2) {
+        return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
     }
 
 }

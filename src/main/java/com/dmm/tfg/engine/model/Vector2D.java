@@ -104,6 +104,20 @@ public class Vector2D {
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
 
+
+    /**
+     * Limits the magnitude of this vector to a maximum value.
+     *
+     * @param max The maximum magnitude.
+     */
+    public void limit(float max) {
+        if (this.magnitude() > max) {
+            this.normalize();
+            this.multiply(max);
+        }
+    }
+
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -116,6 +130,9 @@ public class Vector2D {
         return Double.compare(vector2D.x, x) == 0 &&
                 Double.compare(vector2D.y, y) == 0;
     }
+
+
+
 
     @Override
     public int hashCode() {
