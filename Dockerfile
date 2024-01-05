@@ -13,14 +13,18 @@ ENV PATH=${GRADLE_HOME}/bin:${PATH}
 WORKDIR /opt
 RUN git clone https://github.com/dmm1005/PhysicsEngine && \
     cd /opt/PhysicsEngine/WebApp && \
-    npm install && \
-    npm run build && \
+    echo "Building WebApp..." && \
+    npm install &> /dev/null && \
+    npm run build &> /dev/null && \
+    echo "Building WebApp done!" && \
     echo "Removing old static files" && \
     rm -rf /opt/PhysicsEngine/src/main/resources/static && \
     echo "Copying new static files" && \
     cp -r /opt/PhysicsEngine/WebApp/build /opt/PhysicsEngine/src/main/resources/static && \
     cd /opt/PhysicsEngine && \
-    gradle build
+    echo "Building Server..." && \
+    gradle build &> /dev/null && \
+    echo "Building Server done!"
 
 WORKDIR /opt/PhysicsEngine
 EXPOSE 3100
