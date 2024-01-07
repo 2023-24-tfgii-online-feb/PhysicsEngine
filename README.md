@@ -1,4 +1,4 @@
-# TFG - Motor de físicas basado en Java
+# TFG - Motor de físicas basado en Java - GII_O_MC_23.01
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/c1b194d066f24fcd4a6a/maintainability)](https://codeclimate.com/github/dmm1005/PhysicsEngine/maintainability)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a5e2610aeed14440b8dc4b68a5134c52)](https://app.codacy.com/gh/dmm1005/PhysicsEngine/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
@@ -27,6 +27,10 @@ Actualmente, existen tres tipos de cuerpos:
                     planetas, que provocan una multitud de colisiones sobre el resto de los cuerpos.
     * Aeronaves: agentes que se mueven autonomámente, aplicando comportamientos y estrategias de guiado
                     con el objetivo de esquivar el resto de cuerpos.
+
+Se pueden seleccionar cuerpos desde la lista de cuerpos en la derecha y se mostrarán en amarillo en la simulación para una más sencilla localización.
+Si se seleccionan Aeronaves, cuando el usuario haga click en un punto de la simulación, estas interrumpirán sus rutinas de movimiento para dirigirse hacia ese punto. Este proceso
+de "búsqueda" solo se activa mientras se mantenga el click en la simulación. 
 
 ## Proceso de despliegue
 
