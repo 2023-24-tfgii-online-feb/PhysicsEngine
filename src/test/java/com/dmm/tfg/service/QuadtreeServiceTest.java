@@ -24,7 +24,6 @@ class QuadtreeServiceTest {
     @Test
     void testInsertAndQueryBody() {
         Vector2D position = new Vector2D(50, 50);
-        BoundingBox bbox = new BoundingBox(position, 10);
         Body body = new Planet( position, 10000000, 100);
         quadtreeService.insertBody(body);
         List<Body> result = quadtreeService.queryNearbyBodies(body);

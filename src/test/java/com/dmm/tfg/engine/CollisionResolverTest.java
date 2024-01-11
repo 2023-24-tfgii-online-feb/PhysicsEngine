@@ -4,10 +4,8 @@ import com.dmm.tfg.engine.model.Asteroid;
 import com.dmm.tfg.engine.model.Body;
 import com.dmm.tfg.engine.model.BoundingBox;
 import com.dmm.tfg.engine.model.Vector2D;
-import com.dmm.tfg.service.QuadtreeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -18,12 +16,10 @@ import static org.mockito.Mockito.*;
 class CollisionResolverTest {
 
     private CollisionResolver collisionResolver;
-    private QuadtreeService quadtreeService;
 
     @BeforeEach
     void setUp() {
         collisionResolver = new CollisionResolver();
-        quadtreeService = Mockito.mock(QuadtreeService.class);
     }
 
     private Body createMockBody(double x, double y, double mass, float radius) {

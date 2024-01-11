@@ -16,35 +16,53 @@ public class CollisionResolver {
 
     public void checkEdges(List<Body> bodies) {
         for (Body b : bodies) {
-            float radius = b.getBbox().getRadius();
-
             if (b instanceof Spaceship) {
-                if (b.getPosition().getX() < 0) {
-                    b.getPosition().setX(SPACE_WIDTH);
-                }
-                if (b.getPosition().getY() < 0) {
-                    b.getPosition().setY(SPACE_HEIGHT);
-                }
-                if (b.getPosition().getX() > SPACE_WIDTH) {
-                    b.getPosition().setX(0);
-                }
-                if (b.getPosition().getY() > SPACE_HEIGHT) {
-                    b.getPosition().setY(0);
-                }
-            } else{
-                if (b instanceof Planet) {
-                    radius = (int) ((Planet) b).getRadius();
-                }
-                if (b instanceof Asteroid) {
-                    radius = (int) ((Asteroid) b).getRadius();
-                }
-                if (b.getPosition().getX() + radius > SPACE_WIDTH || b.getPosition().getX() - radius < 0) {
-                    b.getVelocity().setX(b.getVelocity().getX() * -1);
-                }
-                if (b.getPosition().getY() + radius > SPACE_HEIGHT || b.getPosition().getY() - radius < 0) {
-                    b.getVelocity().setY(b.getVelocity().getY() * -1);
-                }
+                handleSpaceshipEdge(b);
+            } else {
+                handleBodyEdge(b);
             }
+        }
+    }
+
+    private void handleSpaceshipEdge(Body b) {
+        wrapPosition(b, SPACE_WIDTH, SPACE_HEIGHT);
+    }
+
+    private void handleBodyEdge(Body b) {
+        float radius = getAdjustedRadius(b);
+        reflectVelocityIfEdgeReached(b, radius, SPACE_WIDTH, SPACE_HEIGHT);
+    }
+
+    private float getAdjustedRadius(Body b) {
+        if (b instanceof Planet) {
+            return ((Planet) b).getRadius();
+        } else if (b instanceof Asteroid) {
+            return ((Asteroid) b).getRadius();
+        }
+        return b.getBbox().getRadius();
+    }
+
+    private void wrapPosition(Body b, double maxWidth, double maxHeight) {
+        Vector2D position = b.getPosition();
+        position.setX(wrapCoordinate(position.getX(), maxWidth));
+        position.setY(wrapCoordinate(position.getY(), maxHeight));
+    }
+
+    private double wrapCoordinate(double coordinate, double max) {
+        if (coordinate < 0) return max;
+        if (coordinate > max) return 0;
+        return coordinate;
+    }
+
+    private void reflectVelocityIfEdgeReached(Body b, float radius, float maxWidth, float maxHeight) {
+        Vector2D position = b.getPosition();
+        Vector2D velocity = b.getVelocity();
+
+        if (position.getX() + radius > maxWidth || position.getX() - radius < 0) {
+            velocity.setX(velocity.getX() * -1);
+        }
+        if (position.getY() + radius > maxHeight || position.getY() - radius < 0) {
+            velocity.setY(velocity.getY() * -1);
         }
     }
 

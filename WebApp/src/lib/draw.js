@@ -2,10 +2,11 @@ export function drawBody(p, body) {
 
     if (body.bodyType === "ASTEROID") {
       drawAsteroid(p, body.position, body.vertices, body.selected);
-    } else if (body.bodyType === "SPACESHIP") {
+    }
+    if (body.bodyType === "SPACESHIP") {
       drawSpaceship(p, body.position, body.selected);
     }
-    else {
+    if (body.bodyType === "PLANET") {
       if (body.selected) {
         p.fill(255, 234, 0);
       } else {

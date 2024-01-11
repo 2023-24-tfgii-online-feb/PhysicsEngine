@@ -5,7 +5,6 @@ import com.dmm.tfg.engine.model.Vector2D;
 import com.dmm.tfg.service.QuadtreeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +21,7 @@ class AttractionResolverTest {
     @BeforeEach
     void setUp() {
         attractionResolver = new AttractionResolver();
-        quadtreeService = Mockito.mock(QuadtreeService.class);
+        quadtreeService = mock(QuadtreeService.class);
     }
 
     private Body createMockBody(double x, double y, double mass) {
