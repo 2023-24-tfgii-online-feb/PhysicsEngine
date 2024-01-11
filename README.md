@@ -2,6 +2,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/c1b194d066f24fcd4a6a/maintainability)](https://codeclimate.com/github/dmm1005/PhysicsEngine/maintainability)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a5e2610aeed14440b8dc4b68a5134c52)](https://app.codacy.com/gh/dmm1005/PhysicsEngine/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/a5e2610aeed14440b8dc4b68a5134c52)](https://app.codacy.com/gh/dmm1005/PhysicsEngine/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 Trabajo de Fin de Grado - Motor de físicas basando en Java (Spring + React)
 ## Autor: 
