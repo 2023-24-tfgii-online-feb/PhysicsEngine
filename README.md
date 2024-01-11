@@ -65,7 +65,7 @@ Requerimientos:
 
 Es necesario ejecutar los scripts en la raíz del proyecto.
 
-_AVISO: Debido a un bug con Lombok, no se puede compilar el proyecto en Windows. He probado a compilar (gradle build) en Linux y todo funciona correctamente. También he comprobado que puedo compilar el proyecto con Windows si lo hago a través de IntelliJ IDEA. Cuando se solucione el bug, subiré una versión actualizada del script._
+_AVISO: Debido a un bug con Lombok, no se puede compilar el proyecto con JDK 21. Aseguraos de que la variable de entorno JAVA_HOME está apuntando a un JDK inferior a la versión 21._
 
 En cualquier caso, los pasos para una instalación y despliegue manual serían:
 - npm install y npm build de la aplicación web.
