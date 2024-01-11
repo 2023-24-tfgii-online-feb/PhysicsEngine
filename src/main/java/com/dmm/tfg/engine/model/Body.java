@@ -38,7 +38,6 @@ public abstract class Body {
         this.selected = selected;
     }
 
-    // Apply a force to the body
     public void applyForce(Vector2D force) {
         force.divide(getMass());
         acceleration.add(force);
@@ -48,18 +47,18 @@ public abstract class Body {
         Vector2D position = getPosition();
         float radius = this.bbox.getRadius();
         if (position.getX() < radius){
-            position.setX(position.getX() + radius);
+            position.setX(radius);
         }
         if (position.getY() < radius){
-            position.setY(position.getY() + radius);
+            position.setY(radius);
         }
 
         if (position.getX() + radius > SPACE_WIDTH){
-            position.setX(position.getX() - radius);
+            position.setX(SPACE_WIDTH - radius);
         }
 
         if (position.getY() + radius > SPACE_HEIGHT){
-            position.setY(position.getY() - radius);
+            position.setY(SPACE_HEIGHT - radius);
         }
     }
 

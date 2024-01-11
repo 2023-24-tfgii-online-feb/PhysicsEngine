@@ -16,7 +16,6 @@ import java.util.List;
 public class DataService {
     private final BodyDAOImpl bodyDAO;
 
-
     public void addBody(@NonNull Body body){
         bodyDAO.addBody(body);
     }
@@ -51,6 +50,4 @@ public class DataService {
     public Body genRandomSpaceship() {
         return (Spaceship) bodyDAO.randomSpaceship();
     }
-
-
 }

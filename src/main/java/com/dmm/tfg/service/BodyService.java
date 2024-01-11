@@ -13,8 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BodyService {
 
-
-
     private final DataService dataService;
 
     public void addRandomBody() {
@@ -51,7 +49,6 @@ public class BodyService {
             body.setSelected(!body.isSelected());
         }
     }
-
 
     public List<Spaceship> getSelectedSpaceships() {
         List<Spaceship> selectedSpaceships = new ArrayList<>();

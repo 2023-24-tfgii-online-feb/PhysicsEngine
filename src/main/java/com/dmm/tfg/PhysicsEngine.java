@@ -24,7 +24,7 @@ public class PhysicsEngine {
     scheduledExecutorService(PhysicsService physicsService) {
         physicsService.setup();
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        int tickRate = 150; // 100Hz tick rate
+        int tickRate = 150;
         executor.scheduleAtFixedRate(physicsService::tick, 0, 1000 / tickRate, TimeUnit.MILLISECONDS);
         return executor;
     }

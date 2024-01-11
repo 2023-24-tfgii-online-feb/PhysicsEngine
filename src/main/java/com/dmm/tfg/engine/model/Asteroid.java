@@ -12,8 +12,8 @@ import java.util.Random;
 public class Asteroid extends Body{
 
     private float radius;
-    private List<Vector2D> vertices; // New attribute
-    private float spin; // New attribute
+    private List<Vector2D> vertices;
+    private float spin;
 
 
     public Asteroid(Vector2D position, Vector2D velocity, float mass, float radius) {
@@ -52,8 +52,8 @@ public class Asteroid extends Body{
     }
 
     public void computeVertices() {
-        double anglePerTickRadians = Math.toRadians(this.spin * (1.0 / 1000)); // Convert to radians
-        for (Vector2D vertex : this.vertices) {  // Changed Vertex to Vector2D for consistency
+        double anglePerTickRadians = Math.toRadians(this.spin * (1.0 / 10));
+        for (Vector2D vertex : this.vertices) {
             double newX = vertex.getX() * Math.cos(anglePerTickRadians) - vertex.getY() * Math.sin(anglePerTickRadians);
             double newY = vertex.getX() * Math.sin(anglePerTickRadians) + vertex.getY() * Math.cos(anglePerTickRadians);
             vertex.setX(newX);
