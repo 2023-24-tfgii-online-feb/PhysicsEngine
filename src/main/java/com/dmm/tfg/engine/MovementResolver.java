@@ -4,6 +4,7 @@ import com.dmm.tfg.engine.model.Body;
 import com.dmm.tfg.engine.model.Spaceship;
 import com.dmm.tfg.service.QuadtreeService;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MovementResolver {
 
-    public void resolveSpaceshipMovement(List<Body> allBodies, QuadtreeService quadtreeService) {
+    public void resolveSpaceshipMovement(List<Body> allBodies, @NonNull QuadtreeService quadtreeService) {
         for (Body body : allBodies){
             if (body instanceof Spaceship spaceship){
                 List<Body> nearbyBodies = quadtreeService.queryNearbyBodies(spaceship);

@@ -3,6 +3,7 @@ package com.dmm.tfg.engine;
 import com.dmm.tfg.engine.model.*;
 import com.dmm.tfg.service.QuadtreeService;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class CollisionResolver {
     }
 
 
-    public void checkCollisions(List<Body> bodies, QuadtreeService quadtreeService) {
+    public void checkCollisions(List<Body> bodies, @NonNull QuadtreeService quadtreeService) {
         for (Body body1 : bodies) {
             // Query Quadtree for nearby bodies
             List<Body> nearbyBodies = quadtreeService.queryNearbyBodies(body1);
@@ -86,7 +87,7 @@ public class CollisionResolver {
         }
     }
 
-    public boolean isColliding(Body body1, Body body2) {
+    public boolean isColliding(@NonNull Body body1, @NonNull Body body2) {
         // Get the center and radius from the bounding boxes
         Vector2D center1 = body1.getBbox().getCenter();
         Vector2D center2 = body2.getBbox().getCenter();
@@ -101,7 +102,7 @@ public class CollisionResolver {
     }
 
 
-    public void resolveCollision(Body body1, Body body2) {
+    public void resolveCollision(@NonNull Body body1, @NonNull Body body2) {
         // Step 1: Calculate the normal and relative velocity
         Vector2D normal = Vector2D.normalize(Vector2D.sub(body2.getPosition(), body1.getPosition()));
         Vector2D relVel = Vector2D.sub(body2.getVelocity(), body1.getVelocity());
