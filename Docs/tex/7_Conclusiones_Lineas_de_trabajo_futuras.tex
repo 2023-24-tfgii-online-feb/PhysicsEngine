@@ -1,4 +1,31 @@
-\capitulo{7}{Conclusiones y Líneas de trabajo futuras}
+\capitulo{7}{Conclusiones y líneas de trabajo futuras}
 
-Todo proyecto debe incluir las conclusiones que se derivan de su desarrollo. Éstas pueden ser de diferente índole, dependiendo de la tipología del proyecto, pero normalmente van a estar presentes un conjunto de conclusiones relacionadas con los resultados del proyecto y un conjunto de conclusiones técnicas. 
-Además, resulta muy útil realizar un informe crítico indicando cómo se puede mejorar el proyecto, o cómo se puede continuar trabajando en la línea del proyecto realizado. 
+En esta sección se presentan las observaciones y conclusiones derivadas de la finalización del proyecto, así como las posibles direcciones para futuros desarrollos si se decide continuar trabajando en él.
+
+
+\section{Conclusiones}
+Tras concluir el proyecto, hemos extraído las siguientes conclusiones:
+
+Por una parte, hemos desarrollado prácticamente todas las características que se propusieron inicialmente. Se ha creado un motor que, aunque sencillo, ofrece un rendimiento más que suficiente para la máxima carga de trabajo que le podemos pedir desde el frontend. Sin embargo, se ha quedado fuera la que quizá pudiera haber sido una de las características más interesantes de implementar. Se había propuesto que cada cliente que se conectara tuviese asignada una aeronave única que podrían controlar. Esto implicaría un acceso concurrente a los datos al tener, potencialmente, múltiples usuarios modificando las características de su aeronave a la vez. También estaría la parte de cómo implementar un sistema de tal manera que fuera fácil de entender para el usuario. La idea era aplicar el protocolo de búsqueda (que después se reutilizó para los agentes autónomos) a cada aeronave pero, finalmente, debido a las restricciones temporales, se desechó la idea. 
+
+De cualquier manera, se ha podido trabajar en un entorno generador de datos al cual podemos acceder desde un cliente ligero, lo cual considero un éxito. 
+
+También, ha servido para reforzar lo estudiado en la carrera: Java, sistemas distribuidos, control de calidad, etc; a la vez que se iban incorporando nuevos conceptos: Spring, Spring Boot, React... He podido aplicar conceptos como las metodologías ágiles, el TDD\footnote{Test Driven Development}, diseño web, contenedores de Docker y ampliar lo conocido gracias al alcance del proyecto.
+
+Además, trabajar en este proyecto me ha brindado una valiosa experiencia inicial en el desarrollo de proyectos a largo plazo, cubriendo desde la fase de planificación hasta su ejecución y mejora continua. He adquirido habilidades para estimar el esfuerzo necesario para diversas tareas y comprender mejor mi capacidad de trabajo dentro de diferentes plazos. 
+
+Si bien es cierto que estoy satisfecho con la versión actual del proyecto, hay varias ideas que se han quedado en el tintero y que me gustaría haber implementado si hubiese dispuesto de algo más de tiempo. Dichas ideas son descritas en la siguiente sección.
+
+
+\section{Líneas de trabajo futuras}
+
+Para expandir el alcance del proyecto e incorporar características adicionales, se proponen las siguientes posibles mejoras:
+
+\begin{itemize}
+    \item \textbf{Ampliar la cantidad de cuerpos disponibles y la manera de interactuar con ellos:} me hubiese gustado implementar un sistema en el cual se podría seleccionar cualquier cuerpo y poder cambiar sus características en tiempo real. Esto permitiría a la simulación ser más interactiva y que el usuario tuviese más control sobre ella.
+    \item \textbf{Aeronaves únicas por cada usuario:} cada usuario tendría asignada una aeronave única que podría controlar con el teclado y de esta manera interactuar con el resto de usuarios y la simulación. Sin embargo, al estar el cliente y el servidor separados, esto suponía una capa que podría introducir mucha latencia y habría que explorar más detenidamente las estrategias que podríamos implementar para poder ofrecer una experiencia más fluida y en tiempo real.
+    \item \textbf{Añadir una gestión de usuarios:} implementar un sistema de almacenamiento y autenticación de usuarios para que cada usuario pudiese acceder de forma privada a sus simulaciones. Esto supondría una importante cantidad de cambios en la arquitectura del sistema, suponiendo poder generar distintas instancias del motor por cada usuario y que cada una funcionase a pleno rendimiento.
+    \item \textbf{Añadir un editor el cual te permita crear y guardar escenarios de simulación:} como muchos motores ofrecen, crear un editor el cual permitiese al usuario diseñar un entorno con unas características determinadas a su gusto y poder guardarlo para ser reutilizado.
+    \item \textbf{Implementar algoritmos neuronales para que las aeronaves mejoren sus comportamientos:} añadir la capacidad de `sobrevivir` (y por ende, morir) a las aeronaves y que estas vayan mejorando los parámetros para sus rutinas de evitar colisiones.
+    \item \textbf{Paralelismo y concurrencia:} algo que he aprendido en el poco tiempo que llevo trabajando como desarrollador de software, es que el paralelismo, multithreading, la concurrencia, son cuchillas de doble filo; extremadamente potentes si se implementan correctamente, pero potencialmente detrimentales en el caso contrario. De todos modos, en la arquitectura propuesta, se han dividido ciertas tareas en procesos (o, cómo nosotros los hemos apodado, servicios) que llevan a cabo el cálculo de ciertas fuerzas que se aplican a los cuerpos. Estos servicios, por definición, ya están divididos en una estructura que es compatible con la concurrencia (\href{https://www.youtube.com/watch?v=oV9rvDllKEg}{\textit{Concurrency is not parallelism, Rob Pike}}); luego, tras estudiar detenidamente cual es la mejor manera (o mejor dicho, la más adecuada para el caso) de implementar un nivel de paralelismo que pueda mejorar el rendimiento del motor, podríamos invertir tiempo en introducir dicho paralelismo y comprobar que mejoras supone.
+\end{itemize}

@@ -1,6 +1,126 @@
 \capitulo{4}{Técnicas y herramientas}
 
-Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
+En el siguiente capítulo, se exponen las distintas metodologías aplicadas durante el desarrollo del proyecto, así como todas las herramientas utilizadas. Además, se discuten las diversas opciones que se contemplaron, explicando los motivos por los cuales prevaleció está opción sobre las otras.
 
 
+\section{Metodologías de trabajo}
+
+\subsection{Metodología ágil: Scrum}
+
+En el desarrollo de este proyecto, se ha elegido adoptar metodologías ágiles, con un enfoque particular en Scrum\cite{ScrumAgile}, frente a metodologías tradicionales como Waterfall.
+
+Scrum destaca por su naturaleza iterativa e incremental, garantizando que al final de cada iteración, o Sprint, se entregue una versión funcional del producto, enriquecida con más funcionalidades que la versión anterior. Esto se logra mediante la organización de los requisitos en tareas dentro del Product Backlog, priorizándolas y seleccionándolas para el Sprint Backlog al comienzo de cada Sprint. Los roles clave en Scrum incluyen el Product Owner, quien define los requisitos y el backlog en comunicación con el cliente, y el Scrum Master, que facilita el seguimiento del modelo Scrum, asegurando la solución de impedimentos que el equipo de desarrollo pueda encontrar. Además, se llevan a cabo diferentes tipos de reuniones para promover la eficiencia y la transparencia, incluyendo la planificación de Sprints, seguimiento diario y la revisión al final de cada Sprint.
+
+Para este proyecto, se implementaron Sprints de 1 semana con ciertas adaptaciones:
+
+\begin{itemize}
+    \item Durante los primeros sprints, cuando se analizó el problema y se estableció una arquitectura a implementar, no se generó ningún producto funcional.
+    \item Dado que estaba desarrollando el proyecto solo, no se estableció una división de roles estricta; asumí las responsabilidades de todos los roles, con el tutor interviniendo ocasionalmente como Product Owner.
+    \item No se realizaron reuniones diarias, ya que sería muy difícil coordinar los horarios entre el alumno y el tutor para poder llevarlas a cabo. Además, no creo que fueran de mucha utilidad, sabiendo que el proyecto estaba siendo desarrollado por una sola persona.
+    \item Se inició un seguimiento de las tareas en ZenHub, pero se abandonó al poco de comenzar el proyecto. Las tareas cambiaban a medida que se avanzaba y se descubrían nuevos errores de diseño en el producto.
+\end{itemize}
+
+La elección de Scrum sobre metodologías tradicionales se debe a su flexibilidad, la rápida entrega de un producto funcional, y la capacidad de adaptar y expandir el proyecto de manera ágil, aspectos cruciales para el éxito del proyecto.
+
+\subsection{Gestión del código: Git y GitHub}
+Para la gestión del código fuente y la colaboración en el proyecto, se evaluaron diversas plataformas de control de versiones y repositorios en línea, incluyendo opciones como GitLab, Mercurial, SVN, y Bitbucket. Sin embargo, se seleccionó \textbf{Git}\cite{Git} junto con \textbf{GitHub}\cite{Github} por varias razones fundamentales.
+
+Git es ampliamente reconocido por su eficiencia en la gestión de versiones de código, permitiendo un trabajo en equipo fluido y un control detallado sobre las revisiones del código. Su sistema de ramificación facilita la experimentación y el desarrollo paralelo de características sin afectar el código base principal.
+
+\textbf{GitHub}, por su parte, se distingue como la plataforma líder para alojamiento de repositorios Git, promoviendo la colaboración abierta. Su popularidad y la familiaridad previa que tenía con la plataforma durante mi formación académica y profesional simplifican la curva de aprendizaje y la integración en el flujo de trabajo del proyecto.
+
+La decisión de utilizar GitHub también se basa en su robusto ecosistema de integraciones y herramientas de terceros, lo que amplía significativamente las capacidades de gestión de proyectos y seguimiento de problemas. Además, la naturaleza pública preferida del repositorio del proyecto hizo que GitHub fuera especialmente atractivo, proporcionando visibilidad y facilitando una futura apertura a la colaboración abierta con la comunidad.
+
+Además, GitHub nos facilitaba a mi tutor y a mí compartir opiniones sobre el código sin tener que estar empaquetándolo y mandándolo por correo constantemente.
+
+\subsection{Calidad del código:}
+Para garantizar la calidad del código desarrollado, se utilizan diversas herramientas integradas con GitHub que revisan los archivos en los repositorios designados, identificando una serie de errores o prácticas no recomendadas. Cuanto menor sea la incidencia de estos errores, más legible, mantenible y funcional será el código, reflejando así una calidad superior.
+
+Entre las herramientas disponibles, se han seleccionado \textbf{Codacy}\cite{Codacy} y \textbf{CodeClimate Quality}\cite{CodeClimate} para esta tarea. Codacy sobresale por su capacidad para identificar un espectro más amplio de problemas y por su compatibilidad con una diversidad de tipos de archivos, incluyendo CSS. Sin embargo, ciertos aspectos como la complejidad cognitiva, que refiere a la dificultad para entender el código, son evaluados exclusivamente por CodeClimate. Esta complementariedad en el análisis de ambas herramientas fue determinante para su elección, asegurando una evaluación integral de la calidad del código.
+
+
+\section{Herramientas}
+ A continuación se detallan las herramientas que hemos utilizado durante el desarrollo del proyecto:
+
+\subsection{Lenguaje de programación para el backend: Java}
+ Uno de los objetivos a nivel personal del proyecto era permitirme seguir trabajando y formándome en Java, aplicando lo aprendido en la universidad y ampliando conocimientos al usar un framework de desarrollo como Spring. Además, muchas de las características que ofrece Spring se adecúan perfectamente a los objetivos del proyecto. Las librerías a nivel de backend utilizadas fueron:
+\begin{itemize}
+    \item \textbf{Spring Boot Starter Web:}\cite{SpringBootWeb} Proporciona todas las dependencias necesarias para construir aplicaciones web, incluyendo RESTful aplicaciones usando Spring MVC. Facilita la creación de servicios web de alta performance.
+    \item \textbf{Spring Boot Starter WebSocket:}\cite{SpringBootWebSocket} Ofrece soporte para funcionalidades de WebSocket, permitiendo el desarrollo de aplicaciones que requieren comunicaciones bidireccionales en tiempo real entre el cliente y el servidor.
+    \item \textbf{Spring Boot Starter Data JPA:}\cite{SpringBootDataJPA} Facilita la implementación de capas de persistencia de bases de datos utilizando Java Persistence API (JPA). Simplifica la configuración y el acceso a bases de datos para operaciones CRUD.
+    \item \textbf{JTS Core:}\cite{JTSCore} Una biblioteca para la creación y manipulación de geometrías en Java. Esencial para proyectos que requieren cálculos espaciales y geográficos complejos. Hemos utilizado el Quadtree de esta biblioteca.
+    \item \textbf{SockJS Client y Stomp WebSocket:}\cite{SockJS}\cite{StompWebSocket} Estas bibliotecas se utilizan conjuntamente para facilitar la comunicación sobre WebSockets en aplicaciones web, empleando SockJS para la compatibilidad del lado del cliente y STOMP para el protocolo de mensajería.
+    \item \textbf{Lombok:}\cite{Lombok} Reduce el boilerplate en Java, automatizando la generación de getters, setters, constructores y otros métodos comunes a través de anotaciones.
+    \item \textbf{Spring Boot Devtools:}\cite{SpringBootDevtools} Proporciona herramientas de desarrollo que facilitan la experiencia de programación, como el reinicio automático de aplicaciones para reflejar cambios en el código.
+    \item \textbf{Spring Boot Configuration Processor:}\cite{SpringBootConfigProcessor} Mejora la asistencia al desarrollador en la configuración de aplicaciones Spring Boot, proporcionando metadatos útiles para el autocompletado de propiedades en archivos de configuración.
+    \item \textbf{Spring Boot Starter Test:}\cite{SpringBootStarterTest} Incluye una amplia gama de herramientas de prueba, como JUnit, Hamcrest y Mockito, para facilitar la implementación de pruebas unitarias y de integración en aplicaciones Spring Boot.
+\end{itemize}
+
+\subsection{Lenguaje de programación para el frontend: HTML, CSS y Javascript}
+De cara al frontend, se utilizó una estructura básica de un proyecto de React, utilizando Javascript en vez de Typescript pero sin utilizar ningún tipo de librería externa para el frontend. Todo el CSS y el HTML se desarrolló `a mano`.
+\begin{itemize}
+    \item \textbf{stompjs:}\cite{stompjsFrontend} Utilizada para la comunicación sobre WebSockets, esta librería permite a las aplicaciones cliente suscribirse a los canales de mensajes y enviar mensajes a través de STOMP, un protocolo de mensajería simple que opera sobre WebSockets. Esencial para aplicaciones en tiempo real que requieren intercambio de datos fluido y eficiente.
+    \item \textbf{p5js:}\cite{p5js} Una librería de JavaScript que simplifica la programación de gráficos y visualizaciones interactivas en el navegador. Es ampliamente utilizada en proyectos creativos de codificación, educación en programación, y arte digital, proporcionando un lienzo flexible para la experimentación visual y la interacción.
+    
+    \item \textbf{React:}\cite{React} Una librería de JavaScript para construir interfaces de usuario. React facilita la creación de vistas para cada estado en la aplicación, actualizando y renderizando de forma eficiente los componentes correctos cuando los datos cambian. Es fundamental para el desarrollo de aplicaciones de página única (SPA) que requieren interfaces dinámicas y reactivas.
+    
+    \item \textbf{react-dom:}\cite{ReactDOM} Complementa a React al permitir la manipulación del DOM y la gestión eficiente del árbol de componentes en aplicaciones web. Esta librería es necesaria para integrar React en la página web, permitiendo que las interfaces de usuario de React interactúen con el navegador.
+    
+    \item \textbf{react-scripts:}\cite{ReactScripts} Forma parte de Create React App y proporciona un conjunto de scripts para automatizar tareas de desarrollo comunes, como la construcción, pruebas y lanzamiento de aplicaciones React. Simplifica la configuración inicial y reduce la necesidad de gestión de configuraciones complejas.
+    
+    \item \textbf{sockjs-client:}\cite{SockJSClient} Proporciona una alternativa a la API de WebSocket que puede trabajar en una amplia gama de navegadores, incluyendo aquellos que no soportan WebSocket. Es útil para garantizar que las aplicaciones web en tiempo real sean accesibles a todos los usuarios, independientemente de las limitaciones de su navegador.
+\end{itemize}
+
+\section{Entorno de desarrollo}
+Para este proyecto, la selección de un entorno de desarrollo integrado (IDE) adecuado es crucial para la eficiencia y efectividad del proceso de desarrollo. Se consideraron diversos IDEs tanto para el desarrollo del backend en Java como para el frontend utilizando React. A continuación, se detallan las decisiones tomadas para cada uno de estos componentes.
+
+\subsection{Backend: IntelliJ IDEA Ultimate}
+Para el desarrollo del backend en Java, se evaluaron varios IDEs, incluyendo:
+\begin{itemize}
+    \item Eclipse
+    \item IntelliJ IDEA Ultimate
+    \item Visual Studio Code
+\end{itemize}
+Después de una cuidadosa consideración, se seleccionó \textbf{IntelliJ IDEA Ultimate}\cite{IntelliJ} por las siguientes razones:
+\begin{itemize}
+    \item \textbf{Soporte avanzado para Java y frameworks relacionados:} IntelliJ IDEA Ultimate ofrece una integración profunda con el ecosistema Java, incluyendo soporte excepcional para frameworks populares como Spring, Spring Boot, Hibernate, y muchos otros, lo cual es indispensable para el desarrollo backend moderno.
+    \item \textbf{Herramientas de desarrollo y debugging integradas:} Esta versión proporciona herramientas avanzadas de debugging, perfiles, y testing, que son superiores a las ofrecidas por su versión Community o alternativas como Eclipse y NetBeans.
+    \item \textbf{Facilidades para el desarrollo de aplicaciones web y empresariales:} IntelliJ IDEA Ultimate viene con características específicas para el desarrollo de aplicaciones web y empresariales, tales como soporte para tecnologías de frontend, bases de datos, y herramientas de control de versiones integradas que simplifican el flujo de trabajo.
+    \item \textbf{Licencia gratuita:} JetBrains, la empresa que desarrolla IntelliJ IDEA, ofrece una licencia gratuita para estudiantes, por lo que aprovechamos la oportunidad y utilizamos la versión Ultimate.
+\end{itemize}
+La elección de IntelliJ IDEA Ultimate se justifica por su capacidad para mejorar significativamente la productividad del desarrollador, proporcionando un entorno de desarrollo cohesivo y potente para el backend Java.
+
+\subsection{Frontend: Visual Studio Code}
+Se optó por \textbf{Visual Studio Code}\cite{VSCode} debido a:
+\begin{itemize}
+    \item \textbf{Extensa biblioteca de extensiones:} Visual Studio Code ofrece una vasta gama de extensiones disponibles para el desarrollo en React, facilitando desde la sintaxis y el resaltado de código hasta la integración con sistemas de control de versiones y herramientas de debugging.
+    \item \textbf{Ligero pero potente:} A diferencia de IDEs más pesadas como WebStorm, Visual Studio Code es ligero, rápido al iniciar y ejecutar, pero al mismo tiempo ofrece funcionalidades poderosas para el desarrollo de aplicaciones web.
+    \item \textbf{Amplio soporte comunitario:} La popularidad de Visual Studio Code asegura un soporte comunitario extenso, lo que se traduce en una gran cantidad de recursos de aprendizaje, tutoriales, y plugins actualizados para mejorar el flujo de trabajo de desarrollo en React.
+\end{itemize}
+La combinación de estas características hace de Visual Studio Code una opción ideal para el desarrollo del frontend, equilibrando flexibilidad, potencia y facilidad de uso.
+
+\section{Gestión del repositorio: GitKraken}
+Para la gestión del repositorio Git del proyecto, se decidió utilizar \textbf{GitKraken}\cite{GitKraken}, una herramienta de interfaz gráfica de usuario (GUI) para Git, por varias razones clave que la distinguen de otras opciones disponibles:
+
+\begin{itemize}
+    \item \textbf{Interfaz de Usuario Intuitiva:} GitKraken presenta una interfaz visualmente atractiva y fácil de navegar que simplifica la visualización del historial de commits, ramas, y merges, lo cual es especialmente útil para equipos que incluyen miembros menos familiarizados con la línea de comandos de Git.
+    \item \textbf{Integración con Servicios de Repositorios:} Ofrece integración directa con servicios de repositorios populares como GitHub, GitLab, y Bitbucket, facilitando la clonación de repositorios, el push y el pull de cambios, y la gestión de pull requests sin salir de la aplicación.
+    \item \textbf{Funcionalidades Avanzadas de Gestión de Ramas:} GitKraken proporciona herramientas avanzadas para la gestión de ramas, incluyendo un fácil manejo de fusiones y resolución de conflictos, lo que mejora la eficiencia en el manejo de proyectos complejos y el trabajo colaborativo.
+\end{itemize}
+La elección de GitKraken se basó en su capacidad para hacer el proceso de gestión de Git más accesible y eficiente, gracias a su combinación de una interfaz de usuario amigable, integración con múltiples plataformas de hosting de código, y potentes herramientas de gestión de ramas y conflictos. Esto ha permitido al equipo centrarse más en el desarrollo y menos en los desafíos técnicos de la gestión de versiones, lo que en última instancia contribuye al éxito del proyecto.
+
+\section{Documentación}
+Se consideraron los siguientes programas para escribir esta documentación, dado que se nos había provisto de plantillas en formato \textit{.tex} y \textit{.odt}:
+\begin{itemize}
+    \item Microsoft Word
+    \item LibreOffice Writer
+    \item TexMaker
+    \item Overleaf
+\end{itemize}
+
+Finalmente, seleccionamos \textbf{Overleaf} por varias razones:
+\begin{itemize}
+    \item Es extremadamente flexible.
+    \item La curva de aprendizaje y facilidad de manejo es menos inclinada que la de TexMaker. Esto me permitió ser más eficiente a la hora de escribir y moverme entre ficheros, hecho mucho que me resultaba mucho más difícil en un entorno de TexMaker.
+    \item Nos permite trabajar en LaTeX, que ofrece una gran cantidad de posibilidades para textos académicos.
+\end{itemize}

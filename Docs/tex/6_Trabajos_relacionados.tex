@@ -1,3 +1,47 @@
 \capitulo{6}{Trabajos relacionados}
 
-Este apartado sería parecido a un estado del arte de una tesis o tesina. En un trabajo final grado no parece obligada su presencia, aunque se puede dejar a juicio del tutor el incluir un pequeño resumen comentado de los trabajos y proyectos ya realizados en el campo del proyecto en curso. 
+
+Este capítulo introduce diversos estudios relacionados con el ámbito del proyecto, proporcionando recursos adicionales para quienes estén interesados en explorar más a fondo los distintos temas tratados.
+
+Existen una amplia cantidad de trabajos y proyectos que abordan el problema de desarrollar un motor de físicas. Dependiendo del lenguaje, las estrategias a utilizar y el rendimiento obtenido varía drásticamente. Si nos centramos en Java, podemos encontrar unos cuantos proyectos con una considerable reputación y que pueden resultar muy interesantes para investigar. Debo añadir, que la complejidad de estos proyectos es ampliamente superior a la del nuestro, ya que el objetivo de estos es proveer una librería para el uso profesional/personal, completa y continuamente actualizada (en la mayoría de los casos).
+
+\subsection{dyn4j}\cite{dyn4j}
+Dyn4j es una biblioteca de físicas de código abierto para Java, diseñada para ser utilizada en proyectos de simulación y juegos. Su nombre proviene de "Dynamic" (Dinámico) y "4 Java", reflejando su propósito y el lenguaje de programación para el cual fue desarrollado. Esta biblioteca proporciona una sólida base para simular ambientes físicos, incluyendo soporte para la detección de colisiones, respuesta a colisiones, y dinámica de cuerpos rígidos.
+
+\subsubsection{Características principales}
+\begin{itemize}
+    \item Detección de Colisiones: Dyn4j incluye un sistema avanzado para la detección de colisiones entre objetos, utilizando algoritmos eficientes para calcular cuándo y cómo los objetos en un entorno simulado se intersectan.
+    \item Respuesta a Colisiones: Más allá de detectar colisiones, dyn4j gestiona las respuestas físicas a estas colisiones, asegurando que los objetos se comporten de manera realista al impactar unos con otros, aplicando fuerzas de reacción apropiadas según las leyes de la física.
+    \item Dinámica de Cuerpos Rígidos: La biblioteca permite simular la dinámica de cuerpos rígidos, incluyendo la rotación, fricción, y gravedad, proporcionando un modelado detallado del movimiento y la interacción de objetos sólidos.
+    \item Optimizado para Rendimiento: Diseñado con el rendimiento en mente, dyn4j es adecuado para juegos y aplicaciones que requieren simulaciones físicas en tiempo real sin sacrificar la fluidez o la calidad de la simulación.
+    \item Fácil de Usar: Aunque ofrece una amplia gama de funcionalidades avanzadas, dyn4j está diseñado para ser accesible para desarrolladores con distintos niveles de experiencia en programación física.
+\end{itemize}
+\subsubsection{Aplicaciones}
+Las aplicaciones de dyn4j son variadas, abarcando desde juegos hasta simulaciones de ingeniería y educativas. En el contexto de desarrollo de juegos, puede ser utilizado para añadir efectos realistas de física a personajes, objetos, y entornos. En el ámbito educativo o de investigación, dyn4j ofrece una plataforma para experimentar y aprender sobre la física de manera interactiva.
+\subsubsection{Comunidad y soporte}
+Dyn4j es apoyado por una comunidad activa de desarrolladores y usuarios que contribuyen a su desarrollo y mejora continua. La documentación, ejemplos de código, y foros de discusión están disponibles para ayudar a los usuarios a integrar dyn4j en sus proyectos.
+
+\subsection{JBox2D}\cite{JBox2D}
+
+JBox2D es una biblioteca de física de código abierto para Java, que es un \textit{port}\footnote{Un `port` consiste en adaptar o reescribir un proyecto desarrollado en una plataforma/lenguaje a otra.} del muy conocido motor de físicas Box2D, originalmente escrito en C++ por Erin Catto. Box2D se ha utilizado en numerosos juegos y simulaciones debido a su robusta implementación de la física de cuerpos rígidos, y JBox2D trae estas capacidades al ecosistema de Java, permitiendo a los desarrolladores incorporar física realista en aplicaciones y juegos Java.
+
+\subsubsection{Características principales}
+\begin{itemize}
+    \item Simulación de Cuerpos Rígidos: JBox2D maneja la dinámica de cuerpos rígidos, incluyendo la simulación de movimiento, rotación, y la aplicación de fuerzas, lo que permite crear simulaciones realistas de objetos interactuando en un entorno.
+    \item Detección y Respuesta de Colisiones: La biblioteca ofrece un sistema comprensivo para la detección de colisiones y la respuesta apropiada a estas, incluyendo el manejo de rebotes, fricción, y otras fuerzas relacionadas con colisiones.
+    \item Joint y Constraints: Permite la creación de joints (articulaciones) y constraints (restricciones) entre cuerpos, facilitando la simulación de objetos complejos que se mueven en conjunto, como vehículos, cadenas, y sistemas de poleas.
+    \item Sistema de Partículas: Algunas versiones y extensiones de JBox2D incluyen soporte para la simulación de partículas, permitiendo la creación de efectos como líquidos y gases.
+    \item Optimizado para Rendimiento: Aunque la física de simulación puede ser intensiva en recursos computacionales, JBox2D está optimizada para mantener un rendimiento sólido en aplicaciones en tiempo real.
+\end{itemize}
+\subsubsection{Aplicaciones}
+JBox2D es ampliamente utilizado en el desarrollo de juegos para Java, desde pequeños proyectos independientes hasta juegos más complejos que requieren física detallada. También se utiliza en contextos educativos para enseñar conceptos de física y programación, así como en la investigación para prototipar simulaciones de sistemas físicos.
+\subsubsection{Comunidad y soporte}
+Al ser un proyecto de código abierto, JBox2D cuenta con el apoyo de una comunidad activa de desarrolladores. Hay documentación disponible, tutoriales y ejemplos que ayudan a los nuevos usuarios a comenzar con la biblioteca. Los foros y plataformas de desarrollo colaborativo, como GitHub, proporcionan lugares para discusión, soporte y contribución al proyecto.
+
+
+\subsection{Game Physics: An Analysis of Physics Engines for First-Time Physics Developers}\cite{templet2020}
+Este artículo se centró en el análisis de motores de física para asistir a desarrolladores novatos en la implementación de física en videojuegos. Se realizó un estudio profundo sobre diferentes motores de física utilizados en la industria, como \textit{Box2D, PhysX y Bullet}, evaluando sus características en términos de usabilidad, conveniencia, flexibilidad, eficiencia, soporte de plataformas y extensibilidad. El trabajo abordó la complejidad de simular física desde un enfoque teórico hasta la implementación práctica en motores de juego, destacando los desafíos como la detección de colisiones y la resolución de contactos.
+
+Se introdujo el motor \textit{Esoteric}, desarrollado por el autor, que pretende facilitar a los desarrolladores la integración de física en aplicaciones, con especial atención en simplificar la arquitectura y optimización para rendimiento. Se discutió en detalle la arquitectura de este motor, incluyendo componentes de modelo, controlador y física, con el objetivo de proporcionar una herramienta elegante y fácil de usar para desarrolladores que abordan la física en aplicaciones por primera vez.
+
+Finalmente, el artículo resaltó las limitaciones actuales y futuras direcciones de trabajo en la detección y simulación de física en videojuegos, señalando la importancia de este estudio como punto de partida para futuras investigaciones en el campo. Este enfoque comprehensivo sobre la selección y evaluación de motores de física sirve como una guía valiosa para desarrolladores principiantes en la materia, promoviendo la innovación y creatividad en el diseño de videojuegos.
