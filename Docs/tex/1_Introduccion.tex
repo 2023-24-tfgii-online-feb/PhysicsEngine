@@ -1,3 +1,63 @@
 \capitulo{1}{Introducción}
 
-Descripción del contenido del trabajo y del estructura de la memoria y del resto de materiales entregados.
+Este proyecto nace a raíz de un objetivo personal de desarrollar un motor de físicas. Hace unos años, empecé a consumir contenido, tanto vídeos en Youtube como entradas en blogs, del Profesor Daniel Shiffman, de la Universidad de Nueva York, que se centraban en simular entornos naturales y producir arte a partir de código. Este tipo de proyectos siempre me habían resultado muy interesantes y atractivos, por lo que quería aprovechar esta oportunidad que me ofrece el trabajo de fin de grado como excusa para poder desarrollar algo similar.
+
+Habitualmente, un proyecto de este tipo se realizaría con un lenguaje más orientado hacia el rendimiento puro con el objetivo de conseguir que la simulación fuera lo más realista, generando el máximo de información posible por cada ciclo de CPU.
+Sin embargo, dadas las condiciones y el alcance del proyecto, he elegido Java para el núcleo del motor.
+Java es habitualmente considerado un lenguaje que ofrece un rendimiento inferior a otros tales como C, C++ o Rust, pero es suficientemente potente como para llevar a cabo una simulación de este calibre (y, invirtiendo más tiempo optimizando la arquitectura y operaciones, seguramente simulaciones mucho más complejas). Además, partiendo de que tengo más experiencia en Java que en el resto de lenguajes mencionados, esto supone un rendimiento mayor en \textbf{\textit{tiempo de desarrollo}}. 
+
+Lo que se propone en este trabajo es el desarrollo de un motor de físicas, un núcleo que gestione las entidades y realice todas las operaciones necesarias para la simulación que, además, sea agnóstico de la implementación de la visualización o de cómo se quiera utilizar la información que puede generar.
+
+Dadas las restricciones temporales que tengo para realizar el desarrollo, he optado por una selección más limitada de entidades (que llamaremos cuerpos) que maneja el sistema. En nuestro sistema existen tres tipos de cuerpos: 
+\begin{itemize}
+    \item Planetas: Cuerpos inicialmente estáticos (velocidad = 0) que están dotados de una gran masa. Pueden ser más o menos densos.
+
+    \item Asteroides: Cuerpos dotados de una velocidad y aceleración inicial aleatoria que están dotados de una masa inferior a la de los planetas. Se generan aleatoriamente una serie de "vértices" a la hora de crear el cuerpo que suponen una figura convexa irregular.
+
+    \item Aeronaves: Agentes autónomos que deambulan por el espacio, trazando trayectorias aleatorias e intentando esquivar al resto de cuerpos con los que se crucen. Pueden ser seleccionadas y dirigidas hacia un punto a voluntad del usuario. Este comportamiento (\textbf{SEEK}) sobrescribe al resto de rutinas mientras este activo.
+\end{itemize}
+
+
+
+
+El sistema se encargará de almacenar los cuerpos y las características de estos en memoria y realizar los cálculos que modificaran la velocidad de los mismos. Condiciones que se tendrán en cuenta: 
+\begin{itemize}
+    \item Fuerzas gravitacionales atractivas: cada cuerpo genera un campo gravitatorio cuya fuerza dependerá de las masas de los cuerpos y su distancia. 
+        \begin{displaymath} 
+            F=G\frac{{m_1}{m_2}}{{r^2}} 
+        \end{displaymath} 
+    
+    \item Colisiones: Se implementa un sencillo algoritmo que detecta colisiones a través de \textit{"bounding boxes"}\footnote{En nuestro caso, circunferencias que rodean a cuerpos con unas figuras más complejas que incrementarían la dificultad de detectar las colisiones.}. Si se detecta una colisión, se resuelve utilizando una respuesta de colisión basada en impulsos. 
+    \item En el caso de las aeronaves, las posibles interacciones que puedan tener con el resto de cuerpos.
+\end{itemize}
+
+También se ha desarrollado un cliente web basado en React para poder visualizar el estado de la simulación. Con el fin de tener una experiencia cercana a lo que está realizando el motor del servidor, el frontend se compone de una sección donde se renderiza la visualización y otra donde se muestra la información de cada cuerpo y con la que se pueden gestionar estos mismos.
+
+
+\section{Estructura de la memoria}
+La estructura de esta memoria es la siguiente:
+\begin{itemize}
+    \item \textbf{Introducción:} contiene una descripción del proyecto, además de una explicación de la estructura de la memoria y de los materiales complementarios.
+    \item \textbf{Objetivos del proyecto:} listado de los objetivos, tanto generales como específicos.
+    \item \textbf{Conceptos teóricos:} explicación de los principales conceptos teóricos necesarios para la comprensión del proyecto
+    \item \textbf{Técnicas y herramientas:} descripción de las técnicas, metodologías y herramientas utilizadas, indicando por qué han sido elegidas frente a sus alternativas.
+    \item \textbf{Aspectos relevantes del desarrollo del proyecto:} explicación de las diferentes decisiones tomadas durante el transcurso del proyecto, además de otras cuestiones que se consideren importantes.
+    \item \textbf{Trabajos relacionados:} 
+    \item \textbf{Conclusiones y líneas de trabajo futuras:} observaciones obtenidas después de haber completado el trabajo, y áreas en las que se puede profundizar o mejorar en caso de continuar el trabajo en el proyecto.
+\end{itemize}
+
+Además de la memoria, se cuenta con los siguientes apéndices:
+\begin{description}
+    \item[Apéndice A -] \textbf{Plan de proyecto software:} contiene tanto la planificación temporal del proyecto como los estudios de viabilidad realizados.
+    \item[Apéndice B -] \textbf{Especificación de requisitos:} lista los objetivos, requisitos y casos de uso del trabajo.
+    \item[Apéndice C -] \textbf{Especificación de diseño:} cubre las decisiones tomadas a la hora de diseñar los datos y procedimientos del sistema, además de una explicación detallada de su situación final.
+    \item[Apéndice D -] \textbf{Documentación técnica de programación:} incluye todos los aspectos que se consideren relevantes para los programadores, desde la estructura de directorios o las instalaciones necesarias hasta las características especiales de los ficheros fuente.
+    \item[Apéndice E -] \textbf{Documentación de usuario:} contiene un conjunto de explicaciones orientadas a los usuarios finales para que sean capaces de utilizar la aplicación correctamente y sin problemas.
+\end{description}
+
+\section{Materiales adicionales}
+
+Junto con estos documentos de memoria, se ha provisto un repositorio que alberga todo el código y los manuales necesarios para poder compilar y arrancar el proyecto.
+
+Dicho repositorio también se encuentra en el siguiente enlace: \url{https://github.com/dmm1005/PhysicsEngine}
+

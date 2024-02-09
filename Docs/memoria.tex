@@ -294,8 +294,8 @@
 	\setcounter{section}{0}
 	\setcounter{figure}{0}
 	\setcounter{table}{0}
-	\chapter*{\thechapter.\enskip #2}
-	\addcontentsline{toc}{chapter}{\thechapter.\enskip #2}
+	\chapter*{#2}
+	\addcontentsline{toc}{chapter}{#2}
 	\markboth{#2}{#2}
 }
 
@@ -352,12 +352,12 @@
   }
 \makeatother
 
-\newcommand{\nombre}{Nombre del alumno} %%% cambio de comando
+\newcommand{\nombre}{Daniel Meruelo Monzón} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{Motor de físicas basado en Java simulando un entorno natural}
 \author{\nombre}
-\tutor{nombre tutor}
+\tutor{Dr. Alejandro Merino Gómez}
 \date{\today}
 
 \begin{document}
@@ -374,11 +374,11 @@
 
 \noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
-\noindent D. nombre tutor, profesor del departamento de nombre departamento, área de nombre área.
+\noindent D. Alejandro Merino Gómez, profesor del departamento de nombre departamento, área de nombre área.
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI dni, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI 45573344V, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado Motor de físicas basado en Java. 
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -388,29 +388,11 @@ En Burgos, {\large \today}
 
 \vfill\vfill\vfill
 
-% Author and supervisor
-\begin{minipage}{0.45\textwidth}
-\begin{flushleft} %\large
-Vº. Bº. del Tutor:\\[2cm]
-D. nombre tutor
-\end{flushleft}
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-\begin{flushleft} %\large
-Vº. Bº. del co-tutor:\\[2cm]
-D. nombre co-tutor
-\end{flushleft}
-\end{minipage}
-\hfill
-
-\vfill
-
-% para casos con solo un tutor comentar lo anterior
-% y descomentar lo siguiente
-%Vº. Bº. del Tutor:\\[2cm]
-%D. nombre tutor
-
+\begin{center}
+    % Author and supervisor
+    Vº. Bº. del Tutor:\\[2cm]
+    D.  Alejandro Merino Gómez   
+\end{center}
 
 \newpage\null\thispagestyle{empty}\newpage
 
@@ -422,12 +404,14 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto.
+En este trabajo se propone el desarrollo de un sistema simulador de un entorno en dos dimensiones utilizando el lenguaje de programación Java. Con este esfuerzo, queremos explorar cuan complejo sería diseñar, desarrollar y trabajar con un sistema que trata de emular a uno natural. Aprovechándonos de las facilidades que nos permiten los frameworks actuales tanto para el despliegue como para la facilidad de desarrollo, hemos desarrollado un “motor” que calcula las interacciones entre unas entidades que pretenden emular a varios cuerpos celestes y que también hace las labores de servidor, ofreciendo una comunicación con posibles clientes a través de WebSockets, una tecnología que garantiza una comunicación más fluida que otros protocolos tales como REST o SOAP. 
+También, se ha desarrollado un cliente web basado en React que nos permitirá tanto visualizar como interactuar con la simulación. 
+ 
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-Palabras separadas por comas que identifiquen el contenido del proyecto Ej: servidor web, buscador de vuelos, android \ldots
+Motor de físicas, Java, Spring, WebSockets, React, simulación, espacio, interacciones... \ldots
 \end{abstract}
 
 \clearpage
@@ -435,12 +419,14 @@ Palabras separadas por comas que identifiquen el contenido del proyecto Ej: serv
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+This paper proposes the development of a two-dimensional environment simulator system using the Java programming language. With this effort, we want to explore how complex it would be to design, develop and work with a system that tries to emulate a natural one. Taking advantage of the facilities that current frameworks allow us for both deployment and ease of development, we have developed an "engine" that calculates the interactions between entities that pretend to emulate various celestial bodies and that also acts as a server, offering communication with potential clients through WebSockets, a technology that guarantees a more fluid communication than other protocols such as REST or SOAP. 
+Also, a React-based web client has been developed that will allow us to visualize and interact with the simulation.
+
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-keywords separated by commas.
+Physics engine, Java, Spring, WebSockets, React, simulation, space, interactions...
 \end{abstract}
 
 \clearpage

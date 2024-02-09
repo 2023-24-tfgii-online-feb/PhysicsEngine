@@ -1,83 +1,191 @@
 \capitulo{3}{Conceptos teóricos}
+Este capítulo introduce los conceptos teóricos fundamentales para la comprensión del proyecto. Se abordan tanto los principios físicos como las tecnologías de software utilizadas, con énfasis en cómo estos conceptos se interrelacionan para construir un entorno de simulación dinámica y autónoma.
 
-En aquellos proyectos que necesiten para su comprensión y desarrollo de unos conceptos teóricos de una determinada materia o de un determinado dominio de conocimiento, debe existir un apartado que sintetice dichos conceptos.
+\section{Motor de físicas}
 
-Algunos conceptos teóricos de \LaTeX{} \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
-
-\section{Secciones}
-
-Las secciones se incluyen con el comando section.
-
-\subsection{Subsecciones}
-
-Además de secciones tenemos subsecciones.
-
-\subsubsection{Subsubsecciones}
-
-Y subsecciones. 
-
-
-\section{Referencias}
-
-Las referencias se incluyen en el texto usando cite~\cite{wiki:latex}. Para citar webs, artículos o libros~\cite{koza92}, si se desean citar más de uno en el mismo lugar~\cite{bortolot2005, koza92}.
-
-
-\section{Imágenes}
-
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
-
-\imagen{escudoInfor}{Autómata para una expresión vacía}{.5}
-
-
-
-\section{Listas de items}
-
-Existen tres posibilidades:
+\subsection{Conceptos básicos}
+Un motor de físicas es un componente de software esencial en el desarrollo de videojuegos, simulaciones de realidad virtual y sistemas de entrenamiento virtual. Su propósito es simular las leyes físicas del mundo real en un entorno digital, permitiendo que objetos virtuales interactúen entre sí y reaccionen a fuerzas externas de manera realista. Los elementos clave incluyen:
 
 \begin{itemize}
-	\item primer item.
-	\item segundo item.
+    \item \textbf{Gravedad:} Simula la atracción gravitatoria que afecta a todos los objetos. En el motor de físicas, se puede ajustar la intensidad y dirección de la gravedad para replicar diferentes entornos, desde la Tierra hasta entornos sin gravedad en el espacio exterior.
+    
+    \item \textbf{Colisiones:} Detecta y maneja las interacciones entre objetos. Cuando dos objetos entran en contacto, el motor calcula la respuesta física, como rebotes, basándose en propiedades como la masa, velocidad, y coeficiente de restitución. Este proceso es crucial para crear interacciones convincentes entre los objetos de la simulación.
+    
+    \item \textbf{Fuerzas y momentos:} Permite la aplicación de fuerzas externas e internas a los objetos, como empujes, arrastres, y torsiones\footnote{En nuestro motor, las torsiones no han sido implementadas. No creo que aporten nada a una simulación tan sencilla como esta.}. Estas fuerzas alteran la velocidad y la orientación de los objetos, permitiendo simular acciones como el vuelo de una aeronave o el movimiento de un vehículo.
 \end{itemize}
 
-\begin{enumerate}
-	\item primer item.
-	\item segundo item.
-\end{enumerate}
+La simulación en un motor de físicas se realiza mediante la actualización continua del estado de cada objeto en función del tiempo. Este proceso, conocido como integración temporal, calcula la posición, velocidad, y orientación de los objetos en cada cuadro de la simulación, basándose en las fuerzas que actúan sobre ellos y sus interacciones mutuas.
 
-\begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
-\end{description}
-	
-\begin{itemize}
-\item 
-\end{itemize}
+Además, los motores de físicas modernos ofrecen optimizaciones como el \textbf{culling} de colisiones y la utilización de estructuras de datos espaciales, como los árboles cuaternarios o los octrees, para mejorar el rendimiento al simular un gran número de objetos. Esto es especialmente importante en entornos complejos y detallados, donde se requiere un alto grado de precisión y realismo.
 
-\section{Tablas}
+\subsection{Conceptos físicos}
 
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
+\subsubsection{Fuerzas y vectores}
+Las fuerzas en el universo de la simulación se modelan como vectores que tienen tanto magnitud como dirección, influyendo directamente en el estado de movimiento de los cuerpos. Por ejemplo, la aplicación de una fuerza sobre un objeto puede ser representada matemáticamente tal como se muestra en la equación \ref{eq1}:
+\begin{equation}
+\label{eq1}
+    \vec{F} = m \cdot \vec{a}
+\end{equation}
 
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+
+donde \(F\) es el vector fuerza aplicado sobre el cuerpo, \(m\) es la masa del cuerpo, y \(a\) es la aceleración resultante. Este principio se utiliza para simular todo, desde el empuje de un motor de cohete hasta el efecto de un golpe.
+
+En el proyecto, utilizamos vectores para representar no solo las fuerzas sino también las velocidades y las posiciones de los objetos, facilitando el cálculo de las interacciones físicas y el movimiento. Por ejemplo, la posición \(\vec{p}\) de un objeto en cualquier instante se actualiza basándose en su velocidad \(\vec{v}\) como:
+
+\begin{equation}
+\label{eq2}
+    \vec{p}_{nuevo} = \vec{p} + \vec{v} \cdot \Delta t
+\end{equation}
+
+donde \(\Delta t\) es el paso de tiempo entre cada actualización de la simulación. En nuestro caso, se omite \textit{t} porque manejamos la integración de otra manera. Tenemos un servicio ejecutor que actualiza la simulación 150 veces por segundo (\textit{150Hz}).
+
+\subsubsection{Atracción gravitacional}
+La simulación de la atracción gravitacional se basa en la ley de gravitación universal de Newton, que se expresa como:
+
+\begin{equation}
+\label{eq3}
+    F = G \cdot \frac{m_1 \cdot m_2}{r^2}
+\end{equation}
+
+donde \(F\) es la magnitud de la fuerza gravitatoria entre dos cuerpos, \(G\) es la constante gravitacional, \(m_1\) y \(m_2\) son las masas de los dos cuerpos, y \(r\) es la distancia entre los centros de masa de los cuerpos.
+
+\imagen{newtonGravity}{Diagrama de la Ley de Gravitación Universal. Wikipedia.}{}
+En nuestro motor de físicas, cada objeto en la simulación experimenta una fuerza gravitatoria hacia cada otro objeto, lo que resulta en trayectorias realistas de cuerpos en el espacio, como planetas orbitando estrellas o la caída de objetos hacia la tierra.
+
+\subsubsection{Colisiones}
+El manejo de colisiones es fundamental para simular interacciones realistas entre objetos. Primero determinamos si dos cuerpos ocupan el mismo espacio en un momento dado mediante la detección de colisiones, que implementamos a través de pruebas de intersección de bounding boxes o esferas de colisión.
+
+Una vez detectada una colisión, aplicamos principios de conservación del momento y energía para calcular las velocidades resultantes. Si \(m_1\) y \(m_2\) son las masas de los cuerpos colisionantes y \(\vec{v}_1\) y \(\vec{v}_2\) sus velocidades antes de la colisión, las nuevas velocidades \(\vec{v}_1'\) y \(\vec{v}_2'\) después de una colisión elástica se determinan utilizando las ecuaciones de conservación del momento y energía cinética.
+
+Por simplificación, en colisiones elásticas donde los objetos rebotan sin perder energía, las velocidades post-colisión se pueden calcular directamente a partir de las masas y las velocidades pre-colisión, ajustando por el coeficiente de restitución que determina la 'elasticidad' de la colisión.
+
+El tratamiento de colisiones en nuestro proyecto no solo considera el impacto directo y la respuesta inmediata sino también cómo estas interacciones afectan a la trayectoria y orientación futuras de los objetos, proporcionando así una simulación dinámica y continua de interacciones físicas.
+
+El manejo de colisiones en nuestro motor de físicas se realiza en varios pasos, comenzando con la detección del vector normal entre dos cuerpos y finalizando con la aplicación de un vector de impulso que ajusta sus velocidades post-colisión para simular un rebote realista.
+
+\paragraph{Paso 1: Cálculo del vector normal y la velocidad relativa}
+El primer paso involucra el cálculo del vector normal entre los dos cuerpos colisionantes, que apunta desde el cuerpo 1 al cuerpo 2, y se normaliza para tener una magnitud unitaria. Esto se logra mediante:
+
+\begin{equation}
+\label{eq4}
+    \vec{n} = \frac{\vec{p}_2 - \vec{p}_1}{||\vec{p}_2 - \vec{p}_1||}
+\end{equation}
+donde \(\vec{p}_1\) y \(\vec{p}_2\) son las posiciones de los cuerpos 1 y 2, respectivamente. Luego, calculamos la velocidad relativa como:
+
+
+\begin{equation}
+\label{eq5}
+    \vec{v}_{rel} = \vec{v}_2 - \vec{v}_1
+\end{equation}
+
+donde \(\vec{v}_1\) y \(\vec{v}_2\) son las velocidades de los cuerpos 1 y 2.
+
+\paragraph{Paso 2: Velocidad relativa a lo largo del normal}
+Determinamos la componente de la velocidad relativa en la dirección del vector normal:
+
+\begin{equation}
+\label{eq6}
+    v_{rel\_n} = \vec{v}_{rel} \cdot \vec{n}
+\end{equation}
+
+Si \(v_{rel\_n} > 0\), significa que los cuerpos se están separando, y no se realiza ningún cálculo adicional.
+
+\paragraph{Paso 3: Cálculo del impulso}
+El impulso se calcula con base en el coeficiente de restitución, que determina la `elasticidad` de la colisión, y la velocidad relativa a lo largo del normal:
+
+\begin{equation}
+\label{eq7}
+    j = \frac{-(1 + e) \cdot v_{rel\_n}}{\frac{1}{m_1} + \frac{1}{m_2}}
+\end{equation}
+
+donde \(e\) es el coeficiente de restitución (en este caso, 0.8), y \(m_1\) y \(m_2\) son las masas de los cuerpos 1 y 2.
+
+\paragraph{Paso 4: Aplicación del vector de impulso}
+Finalmente, aplicamos el impulso calculado a los cuerpos para modificar sus velocidades post-colisión:
+
+\begin{equation}
+\label{eq8}
+    \vec{v}_1' = \vec{v}_1 - \frac{j}{m_1} \cdot \vec{n}
+\end{equation}
+\begin{equation}
+\label{eq9}
+    \vec{v}_2' = \vec{v}_2 + \frac{j}{m_2} \cdot \vec{n}
+\end{equation}
+
+donde \(\vec{v}_1'\) y \(\vec{v}_2'\) son las nuevas velocidades de los cuerpos 1 y 2 tras la colisión.
+
+Esta metodología asegura que las colisiones en la simulación no solo sean realistas en términos de conservación de momento y energía, sino que también permitan ajustar el efecto de rebote mediante el coeficiente de restitución.
+
+\subsection{Agentes autónomos (Aeronaves)}
+
+Los agentes autónomos en nuestro proyecto, \textbf{aeronaves}, están diseñados para simular comportamientos inteligentes mediante algoritmos que les permiten interactuar con el entorno de manera dinámica. Estos comportamientos incluyen wandering (deambulación), evasión, y búsqueda, cada uno con su propia implementación y propósito específico dentro de la simulación.
+
+\subsubsection{Wandering (deambulación)}
+El wandering es un comportamiento que imita el movimiento aleatorio o exploratorio sin un destino fijo. Para implementarlo, se utiliza un vector aleatorio que se añade a la dirección actual del agente para alterar su trayectoria de forma gradual, evitando cambios bruscos que resultarían en movimientos no naturales. Matemáticamente, este vector se recalcula en cada tick del simulador, siguiendo la fórmula:
+
+\begin{equation}
+\label{eq10}
+    \vec{v}_{deambulacion} = \vec{v}_{actual} + \vec{v}_{aleatoria}
+\end{equation}
+
+donde \(\vec{v}_{deambulacion}\) es el nuevo vector de velocidad después de aplicar wandering, \(\vec{v}_{actual}\) es el vector de velocidad actual, \(\vec{aleatoria}\) es un vector unitario con dirección aleatoria.
+
+\subsubsection{Evasión}
+La evasión permite a las aeronaves detectar objetos cercanos potencialmente peligrosos y maniobrar para evitar colisiones. Este comportamiento se basa en la predicción de la trayectoria de los objetos cercanos y la generación de un vector de escape. Si la distancia prevista entre el agente y cualquier objeto es menor que un umbral definido, el agente calcula un vector de evasión como:
+
+\begin{equation}
+\label{eq11}
+    \vec{v}_{evasion} = \vec{v}_{actual} - \vec{v}_{peligro}
+\end{equation}
+
+\(\vec{v}_{peligro}\) es el vector de velocidad del objeto que se aproxima. Este vector de evasión se suma al vector de movimiento actual para ajustar la trayectoria del agente.
+
+\subsubsection{Búsqueda}
+Búsqueda es un comportamiento dirigido que permite a las aeronaves dirigirse hacia un objetivo específico. Se implementa calculando el vector directriz hacia el objetivo y ajustando la velocidad del agente para minimizar la distancia al objetivo con cada actualización. La fórmula para calcular el vector de búsqueda es:
+
+\begin{equation}
+\label{eq12}
+    \vec{v}_{búsqueda} = {normalizar}(\vec{objetivo} - \vec{posicion}) \cdot v_{max}
+\end{equation}
+
+donde \(\vec{objetivo}\) es la posición del objetivo, \(\vec{posicion}\) es la posición actual del agente, y \(v_{max}\) es la velocidad máxima del agente. Este vector de búsqueda reemplaza la velocidad actual del agente, orientándolo directamente hacia el objetivo.
+
+Estos comportamientos no solo dotan a las aeronaves de una apariencia de autonomía y propósito, sino que también permiten interacciones complejas dentro de la simulación, como la navegación en entornos con obstáculos, la persecución de objetivos o la evasión de amenazas, proporcionando una experiencia dinámica y realista.
+
+
+\subsection{Spring y SpringBoot}
+Spring Framework es una plataforma integral para el desarrollo de aplicaciones Java con énfasis en la flexibilidad y la inversión de control a través de inyección de dependencias. Facilita el desarrollo de aplicaciones robustas, testables y mantenibles al proporcionar una arquitectura de aplicación cohesiva.
+
+Spring Boot, por su parte, es una herramienta de Spring que ofrece una forma rápida y fácil de configurar y ejecutar aplicaciones basadas en Spring, eliminando la necesidad de configuraciones XML extensas. Ofrece un conjunto de herramientas y convenciones predefinidas que permiten levantar un proyecto rápidamente, enfocándose en la simplicidad y el rápido desarrollo. Con Spring Boot, es posible crear microservicios, aplicaciones web, y más, con mínima configuración.
+
+En nuestro proyecto, utilizamos Spring Boot por su capacidad para automatizar la configuración de proyectos basados en Spring, lo que nos permite enfocarnos en la lógica del negocio en lugar de la configuración del entorno de desarrollo. Spring Boot facilita la integración de WebSockets, seguridad, acceso a datos, y otras funcionalidades críticas para la aplicación, proporcionando un robusto soporte para la construcción de nuestro simulador físico.
+
+El uso de Spring Boot ha permitido simplificar la configuración de los componentes de la aplicación, incluyendo el servidor de aplicaciones y la configuración de WebSockets, lo que resulta en un despliegue rápido y eficiente de la aplicación. La anotación y el escaneo de componentes de Spring Boot también han simplificado significativamente el proceso de inyección de dependencias, permitiéndonos desarrollar un código más limpio y modular.
+
+\subsection{WebSockets}
+WebSockets es un protocolo avanzado que facilita la comunicación bidireccional y en tiempo real entre clientes y servidores a través de una única conexión persistente. Esta tecnología es fundamental en aplicaciones web que requieren interacciones en tiempo real, como juegos en línea, chat en vivo, y, en nuestro caso, simulaciones físicas interactivas.
+
+La implementación de WebSockets en nuestro proyecto permite que los estados de la simulación se sincronicen en tiempo real entre el servidor y los clientes. Cuando ocurre un evento en el servidor, como una actualización de estado debido a la simulación de fuerzas físicas o colisiones, este cambio se envía inmediatamente a todos los clientes conectados, asegurando que todos los usuarios vean una representación consistente y actualizada de la simulación.
+
+Para integrar WebSockets en nuestra aplicación, utilizamos el soporte integrado en Spring Boot, específicamente el módulo \textbf{`spring-boot-starter-websocket`} Esto nos permitió definir puntos de conexión y manipuladores de mensajes con anotaciones simples, facilitando la implementación de la lógica de comunicación en tiempo real sin tener que lidiar con los detalles de bajo nivel del protocolo WebSocket.
+
+Además, hemos implementado mecanismos de control de flujo y gestión de sesiones para manejar múltiples conexiones de clientes de manera eficiente, permitiendo que nuestra simulación escale y sea accesible por numerosos usuarios simultáneamente. Esta capacidad de comunicación en tiempo real ha sido crucial para proporcionar una experiencia de usuario dinámica y interactiva, permitiendo a los usuarios observar y manipular los elementos de la simulación en vivo.
+
+
+\section{Cliente}
+
+La interacción con la simulación de físicas se realiza a través de un cliente web. Este enfoque permite a los usuarios acceder y manipular la simulación desde cualquier dispositivo con un navegador web, sin necesidad de instalar software adicional. El cliente web ofrece una plataforma accesible y versátil para visualizar y experimentar con los modelos físicos en tiempo real.
+
+\subsection{Tipos de clientes. Clientes Web}
+El cliente web es diseñado para ser universalmente accesible, aprovechando las tecnologías web estándar para garantizar compatibilidad y rendimiento. Se basa en HTML5, CSS3 y JavaScript, permitiendo una rica interacción con la simulación a través de interfaces gráficas intuitivas. Este tipo de cliente hace posible que usuarios con distintos niveles de habilidad puedan explorar conceptos físicos complejos de manera sencilla y directa.
+
+\subsection{React}
+Para la implementación del cliente web, se ha elegido React, una biblioteca de JavaScript desarrollada por Facebook. React destaca por su eficiencia en la actualización y renderizado de componentes, lo cual es fundamental para representar los estados dinámicos de la simulación de físicas. Utilizando el modelo de componentes de React, la interfaz del usuario se organiza en elementos reutilizables y autónomos que responden de manera fluida a los cambios en los datos de la simulación, ofreciendo una experiencia de usuario interactiva y responsive.
+
+React también facilita el manejo del estado de la aplicación y la comunicación entre componentes, lo cual es crucial para sincronizar los datos de la simulación con la representación visual en el cliente. A través de WebSockets, React recibe actualizaciones en tiempo real del servidor, lo que permite a los usuarios observar y manipular la simulación de físicas con una retroalimentación instantánea.
+
+\subsubsection{Adquirir los datos}
+La adquisición de datos desde el servidor se realiza mediante una conexión WebSocket, estableciendo un canal de comunicación bidireccional y en tiempo real entre el cliente y el servidor. Esta tecnología es esencial para transmitir eficientemente los estados actualizados de la simulación, como posiciones, velocidades, y otros parámetros relevantes de los objetos simulados.
+
+\subsubsection{Representar los datos}
+Una vez recibidos, los datos se utilizan en dos secciones distintas: el canvas, dónde se realiza la visualización gráfica de la simulación; y una sección donde se presenta la información de cada cuerpo en una tarjeta diferente. Las tarjetas son seleccionables y, una vez seleccionada, se resaltará el cuerpo asociado con la tarjeta en la simulación. Así mismo, pinchar en un cuerpo de la simulación, resaltará qué tarjeta es la suya. 

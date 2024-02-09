@@ -1,3 +1,28 @@
 \capitulo{2}{Objetivos del proyecto}
 
-Este apartado explica de forma precisa y concisa cuales son los objetivos que se persiguen con la realización del proyecto. Se puede distinguir entre los objetivos marcados por los requisitos del software a construir y los objetivos de carácter técnico que plantea a la hora de llevar a la práctica el proyecto.
+Este proyecto cuenta con varios objetivos: 
+
+\section{Objetivos Generales:}
+
+\begin{itemize}
+    \item Diseñar y desarrollar un motor de físicas que simule un entorno natural simplificado, en dos dimensiones y que ofrezca una interfaz para que se puedan conectar clientes  y poder interactuar con la simulación.
+    \item Crear una interfaz gráfica que permita visualizar la simulación y que se pueda interactuar con ella.
+\end{itemize}
+
+ 
+ \section{Objetivos Específicos:}
+ 
+ 
+ \begin{enumerate}
+     
+     \item Aprender a desarrollar y desplegar un proyecto con Spring Boot, pudiendo aplicar las técnicas y procesos factibles al desarrollo del proyecto.
+    
+     \item Diseñar e implementar un motor que sea agnóstico de como se quiera representar la información visualmente. El motor cuenta de un modelo y de unos procesos que se podrían extender en el caso de querer añadir funcionalidad extra al sistema en futuras versiones, pero estas están completamente desacopladas de la parte externa que se encargará de tratar esta información.
+
+    \item Se debe ofrecer una interfaz con la que un cliente pueda interactuar con el motor.
+     
+     \item Ofrecer una forma de visualizar el estado de la simulación, representando los cuerpos que existan en ella y su estado actual por cada iteración\footnote{Con iteración, nos referimos a los "ticks" de la simulación; es decir, el número de veces por segundo que el motor cálcula y actualiza el estado de la simulación.} de la simulación (tiempo real\footnote{Entendiéndose tiempo real como el hecho de que se pide al motor la información más actualizada que pueda ofrecer. Existe una latencia entre el cliente y el servidor que impide que sea tiempo real. }).
+     
+     \item Proporcionar una interfaz, a modo de demostración, que ofrezca una visualización de la simulación y elementos que permitan interactuar con el sistema.
+     
+ \end{enumerate}
