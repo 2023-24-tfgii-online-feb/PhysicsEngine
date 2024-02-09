@@ -1,7 +1,173 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+Este capítulo aborda los elementos clave del proceso de desarrollo del proyecto, desde la elección del tema y la planificación inicial hasta los desafíos encontrados durante su realización. Se detalla el razonamiento detrás de las decisiones adoptadas a lo largo de este proceso.
+
+\section{Origen de la idea}
+Este proyecto se concibió con el objetivo de llevar a cabo una de las ideas que llevaban un tiempo rondando mi cabeza. Desde jóven, los videojuegos han sido un elemento fundamental de mi vida y, poco a poco, mi interés se fue orientando hacia el \textbf{\textit{cómo}}, las técnicas, estrategias y herramientas que se utilizan para desarrollarlos. Mi interés en este tema se fue avivando viendo vídeos sobre cómo se utilizaban ciertas técnicas para optimizar videojuegos para consolas de anterior generación, sobre cómo conseguir obtener el máximo rendimiento de un hardware limitado, sobre como comprimir un juego en un cartucho...\footnote{Por ejemplo, este vídeo de \href{https://www.youtube.com/watch?v=BaX5YUZ5FLk}{Modern Vintage Gamer} donde se consigue comprimir un juego de PSX (CD) en un cartucho de N64.}
+
+Poco después, descubrí el trabajo de Daniel Shiffman, profesor asociado de artes en la Escuela artística TISCH de la Universidad de Nueva York, dónde se propone la creación de obras artísticas a través de la programación y de conceptos matemáticos. Gracias a sus vídeos, fui introducido a The Nature of Code \cite{shiffman12}, un libro en el que se explora la representación de entornos naturales y sus componentes a través de Processing \cite{processing}, una librería de Java para desarrollar `sketches` y diseños. En él, se abordan temas como las leyes del movimiento de Newton, agentes autónomos y demás conceptos que después he utilizado en el proyecto. 
+
+Combinando estos dos hechos, y dada la necesidad de escoger un tema para mi trabajo de fin de grado, consideré que era la oportunidad adecuada para invertir el tiempo y esfuerzo necesario para desarrollar un pequeño motor de físicas, inspirado en los sistemas que se proponen en The Nature of Code.
+
+
+\section{Primeros pasos. Análisis del problema.}
+Una vez decidido que iba a desarrollar el motor, surgen varios problemas a resolver:
+\begin{itemize}
+    \item \textbf{Arquitectura y estrategia.}
+    Para este primer punto, hubo que hacer un ejercicio de investigación para establecer un punto de arranque. Tras revisar libros(\cite{GregoryGameEngine}Game Engine Architecture, Jason Gregory) y estrategias que implementaban otros motores (\cite{dyn4j}dyn4j) de videojuegos, se optó por un modelo relativamente sencillo que se apoyase en una arquitectura simplificada basada en un motor clásico. En este, se trabajaría con un \textit{game loop}, básicamente un bucle infinito, en el que en cada iteración se toma el estado actual del modelo y se actualiza basándose en cálculos sobre este mismo. También, se estableció que el cliente web, utilizaría una estrategia de \textit{polling}\footnote{El \textit{polling} en programación se refiere a la técnica de sondeo activo donde un programa o dispositivo constantemente verifica el estado de uno o varios recursos externos o condiciones para determinar si algún trabajo específico necesita ser ejecutado. Esta técnica es comúnmente utilizada para monitorear la disponibilidad de nuevos datos en un buffer, verificar el estado de una conexión de red, o esperar por un evento específico.} para pedir datos continuamente al backend, pero al ritmo que pueda el cliente, eliminando el problema del \textit{back pressure}\footnote{El \textit{back pressure} se refiere a la situación en sistemas de programación asíncrona o basados en flujos donde un componente recibe datos a un ritmo más rápido de lo que puede procesar. Esto puede llevar a una acumulación de datos no procesados, afectando negativamente el rendimiento del sistema y potencialmente causando la pérdida de datos si el buffer se llena. Para manejar este problema, los sistemas pueden implementar mecanismos que permitan regular la velocidad de entrada de datos, pausando o ralentizando la fuente de datos hasta que el componente pueda procesar la acumulación.}.
+    \item \textbf{Herramientas. Lenguaje de programación. Plataforma.}
+    Respecto al lenguaje de programación, partíamos de que queríamos utilizar Java para construir nuestro motor, luego no surgieron dudas\footnote{Lenguajes como Kotlin, que también se ejecutan en la JVM (Máquina Virtual de Java), representan opciones válidas para el desarrollo debido a su interoperabilidad con Java, permitiendo un uso mixto de ambos lenguajes en el mismo proyecto.}. Además, esto también esclarecía la cuestión de la plataforma, ya que en un lenguaje JVM\footnote{Java Virtual Machine}, solo tienes que programar de cara a la JVM, sin importar arquitectura o sistema operativo. Sin embargo, sí que hubo que realizar un análisis para determinar que framework podría ayudarnos a atajar el problema de la forma más eficiente, equilibrando el rendimiento real con la dificultad de adaptarse al framework y su curva de dificultad. En este caso, se eligió Spring por encima de otros como Quarkus dado que tenía unas nociones previas en el framework y nos ofrecía un conjunto de herramientas en Spring Boot que iban a simplificar el despliegue y desarrollo de la aplicación notablemente. De cara al frontend, haremos un breve resumen en el siguiente apartado.
+    \item \textbf{Interacción con el usuario.} 
+    De cara a la interacción con el usuario, aquí surgieron varios problemas. No tenía apenas experiencia previa en el mundo del desarrollo web y hay \textit{muchas} opciones. La cantidad de frameworks, librerías, lenguajes, etc, disponibles para el desarrollo web puede resultar apabullante. Debido a esto, al principio propuse realizar el cliente frontend en puro HTML+Javascript, pero pronto me di cuenta de que había ciertas cuestiones de diseño que serían mucho más fáciles de resolver utilizando una librería o un framework. Tras experimentar un poco con unas cuantas opciones, al final me decanté por desarrollar una pequeña aplicación utilizando React, que también era nuevo para mí, pero que tiene una comunidad enorme y un montón de tutoriales información disponibles para ayudarme a desarrollar. 
+\end{itemize}
+
+\section{Arquitectura de la aplicación}
+Se incluye un diagrama describiendo la arquitectura de la aplicación:
+\begin{landscape}
+    \imagen{memoria//arch.png}{Arquitectura de la aplicación.}{1.5}
+\end{landscape}
+\section{Backend}
+El backend del motor de físicas, desarrollado con Spring Boot y complementado con servicios especializados, constituye el núcleo de la simulación física. Este sistema se encarga de gestionar la lógica de simulación, el procesamiento de entidades físicas, y la comunicación en tiempo real con el frontend a través de WebSockets.
+El backend se estructura alrededor de varios componentes clave que colaboran para simular un entorno físico dinámico:
+\begin{itemize}
+    \item \textbf{PhysicsEngine:} Punto de entrada de la aplicación, define las dimensiones del espacio de simulación y configura un executor programado para actualizar la simulación a una tasa fija (tickRate). Este enfoque asegura que la simulación avance de manera consistente y predecible.
+    \imagen{memoria/executor.png}{ExecutorService, ticks}{}
+    \item \textbf{PhysicsService:} Corazón de la lógica de simulación, coordina las operaciones esenciales como la configuración inicial del entorno, la actualización periódica de estados (tick), y la ejecución de algoritmos para resolver atracciones, colisiones y movimientos. Este servicio interactúa con varios resolutores especializados y un servicio de datos para manejar el ciclo de vida y la dinámica de las entidades.
+    \imagen{memoria/tick.png}{Procedimiento `tick`}{}
+    \item \textbf{DataService y BodyDAOImpl:} Gestionan el almacenamiento, recuperación y manipulación de las entidades físicas (Body). Permiten la adición, actualización y eliminación de cuerpos, además de generar entidades aleatorias para dinamizar la simulación.
+    \item \textbf{Resolutores (AttractionResolver, CollisionResolver, MovementResolver):} Implementan los algoritmos específicos para calcular fuerzas gravitacionales, detectar y resolver colisiones, y actualizar el movimiento de las entidades, respectivamente. Estos componentes aplican las leyes de la física para modelar interacciones realistas entre cuerpos.
+    \item \textbf{QuadtreeService:}  Optimiza la detección de colisiones mediante la división del espacio de simulación en sectores. Este enfoque reduce significativamente el número de comparaciones necesarias al identificar posibles colisiones solo entre cuerpos cercanos.
+\end{itemize}
+De cara a la comunicación en tiempo real con el cliente, la integración de WebSockets, configurada en \textbf{WebSocketConfig}, facilita la comunicación bidireccional y en tiempo real entre el backend y el frontend. 
+\imagen{memoria/configWebsocket.png}{Declaración del endpoint y topics}{}
+Esto permite:
+\begin{itemize}
+    \item \textbf{Transmisión de estados:} El estado actualizado de la simulación se envía al frontend, permitiendo a los usuarios visualizar los cambios en tiempo real.
+    \item \textbf{Recepción de requests:} El backend recibe y procesa comandos del frontend, como la adición de cuerpos o la modificación de parámetros de simulación, ofreciendo una experiencia interactiva y dinámica.
+\end{itemize}
+Estos comandos o `requests` se gestionan desde una clase controlador. En concreto, `WebSocketController`, maneja los mensajes entrantes de los clientes, ejecutando acciones como agregar nuevas entidades o modificar las existentes. Esto incluye comandos para generar cuerpos aleatorios, seleccionar o mover entidades específicas, y actualizar la vista del cliente con los cambios en el estado de la simulación.
+\imagen{memoria/requestExample.png}{Ejemplo de una request al backend}{}
+
+\subsection{Modelo}
+El modelo del proyecto en nuestro motor de físicas desarrollado en Java, específicamente diseñado para la simulación de entornos dinámicos, se basa en la representación y manejo de entidades denominadas "cuerpos" (Body). Estos cuerpos interactúan entre sí y con su entorno bajo reglas físicas definidas, incluyendo gravedad, colisiones, y movimientos dirigidos.
+\imagen{memoria/model.png}{Diagrama UML del modelo}{}
+\subsubsection{\textbf{Body:}}
+La clase abstracta Body es el núcleo del modelo, representando cualquier objeto físico dentro de la simulación. Cada Body posee propiedades fundamentales como posición (position), velocidad (velocity), aceleración (acceleration), masa (mass), y un cuadro delimitador (BoundingBox) para detección de colisiones. La capacidad de ser seleccionado (selected) permite interactuar con cuerpos específicos dentro de la simulación, facilitando su manipulación o estudio detallado.
+\begin{itemize}
+    \item \textbf{Aplicación de fuerzas:} Los cuerpos pueden tener fuerzas aplicadas a ellos, alterando su estado de movimiento conforme a la segunda ley de Newton. La implementación facilita la simulación de interacciones como empujes y atracciones.
+    \item \textbf{Restricciones de tamaño:} La verificación de restricciones asegura que los cuerpos permanezcan dentro de los límites espaciales definidos, evitando que escapen del entorno visible de la simulación.
+    \item \textbf{Actualización de su estado:} La dinámica del cuerpo se actualiza en cada ciclo del motor, recalculando su posición basándose en su velocidad y aceleración actuales.
+\end{itemize}
+\subsubsection{\textbf{BoundingBox}}
+El BoundingBox proporciona una representación simplificada del espacio ocupado por un cuerpo, crucial para la detección eficiente de colisiones. La intersección de cuadros delimitadores indica una potencial colisión, un paso preliminar antes de realizar cálculos de colisión más detallados.
+\subsubsection{\textbf{Especializaciones de Body}}
+\begin{itemize}
+    \item \textbf{Planet:} Representa cuerpos celestes con masa significativa y generalmente estacionarios. Su radius define el tamaño visible y la influencia gravitacional.
+    \item \textbf{Asteroid:} Cuerpos más pequeños y posiblemente irregulares que pueden tener trayectorias complejas. Se caracterizan por un conjunto de vértices que definen su forma y un factor de rotación (spin), añadiendo realismo a su representación visual.
+    \item \textbf{Spaceship:} Entidades controlables dentro de la simulación, capaces de comportamientos autónomos como deambular, evitar colisiones y buscar objetivos. Las aeronaves utilizan una combinación de fuerzas para simular movimiento dirigido y maniobrabilidad.
+\end{itemize}
+\subsubsection{Vector2D}
+La clase Vector2D, una representación de vectores bidimensionales, es una de las piezas fundamentales en el desarrollo del motor de físicas. Esta entidad no solo modela la posición, velocidad, y aceleración de objetos en el espacio bidimensional, sino que también facilita la implementación de operaciones vectoriales esenciales para la simulación de dinámicas físicas.
+`Vector2D encapsula las coordenadas \textit{x} e \textit{y} de un vector, proveyendo una base para representar direcciones y magnitudes en el plano. A través de sus constructores, se permite la inicialización a valores predeterminados (0,0) o a coordenadas específicas, otorgando flexibilidad en la creación y manipulación de vectores.
+La clase ofrece las siguientes operaciones vectoriales:
+\begin{itemize}
+    \item \textbf{Producto escalar:} a capacidad de calcular el producto escalar entre vectores es crucial para determinar la orientación relativa y la proyección de un vector sobre otro, aplicaciones que van desde la detección de colisiones hasta el cálculo de fuerzas.
+    \item \textbf{Magnitud y Normalización:} Estas operaciones permiten determinar la longitud de un vector y ajustarlo a una magnitud unitaria, respectivamente. La normalización es especialmente útil para mantener consistentes las magnitudes de las fuerzas aplicadas en la simulación, garantizando un comportamiento físico coherente.
+    \item \textbf{Adición y Sustracción:} Facilitan la composición y descomposición de vectores, operaciones fundamentales en el cálculo de velocidades y aceleraciones resultantes de la aplicación de múltiples fuerzas.
+    \item \textbf{Multiplicación y División por Escalar:} Estas operaciones ajustan la magnitud de los vectores, permitiendo escalar las fuerzas aplicadas y las distancias recorridas sin alterar su dirección.
+    \item \textbf{Distancia:} La función de distancia entre dos vectores apoya el cálculo de separaciones espaciales, esencial para determinar la proximidad entre objetos y gestionar interacciones como atracciones gravitacionales o repulsiones.
+    \item \textbf{Limitación:} Restringir la magnitud de un vector a un valor máximo es vital para controlar velocidades y prevenir comportamientos físicos no realistas dentro de la simulación.
+\end{itemize}
+\subsection{Atracción}
+Para simular la atracción gravitacional en nuestro motor de físicas, desarrollamos el componente AttractionResolver. Este componente es responsable de calcular y aplicar la fuerza de atracción gravitacional entre todos los cuerpos presentes en la simulación. El proceso se realiza en dos pasos principales:
+\begin{enumerate}
+    \item \textbf{Cálculo de la Fuerza de Atracción:} Para cada par de cuerpos, calculamos la dirección y magnitud de la fuerza de atracción entre ellos. Utilizamos la posición relativa de los cuerpos para determinar la dirección de la fuerza y aplicamos la fórmula de la ley de gravitación para calcular su magnitud. Este cálculo toma en consideración la distancia entre los cuerpos para asegurar que la fuerza disminuye con el cuadrado de la distancia, tal como dicta la ley de Newton.
+    \item \textbf{Aplicación de la Fuerza:} Una vez calculada la fuerza de atracción, la aplicamos a los cuerpos afectados. Esto se traduce en una modificación de sus vectores de velocidad según la segunda ley de movimiento de Newton, que establece que la aceleración de un objeto es directamente proporcional a la fuerza neta actuante sobre él e inversamente proporcional a su masa.
+    \imagen{memoria/attract1.png}{Proceso del cálculo de todas las fuerzas atractivas}{}
+    \imagen{memoria/attract2.png}{Cálculo de la fuerza atractiva entre dos cuerpos}{}
+\end{enumerate}
+Para mejorar la eficiencia del proceso de cálculo de atracciones y evitar la computación innecesaria de interacciones entre cuerpos distantes con efectos despreciables, integramos un servicio de Quadtree. Este servicio nos permite consultar rápidamente los cuerpos cercanos a un objeto dado y limitar el cálculo de la fuerza gravitacional solo a aquellos pares de cuerpos con una probabilidad significativa de influirse mutuamente.
+
+\subsection{Colisiones}
+El tratamiento de colisiones es un componente fundamental en la simulación de físicas para lograr interacciones realistas entre objetos. En nuestro motor, este proceso se divide en dos etapas principales: la detección de colisiones y su resolución.
+\subsubsection{Detectar}
+La detección de colisiones comienza con una evaluación preliminar para identificar pares de cuerpos que potencialmente interactúan. Implementamos esta fase utilizando un servicio de Quadtree, una estructura de datos que divide el espacio de simulación en cuadrantes para optimizar las consultas espaciales. Para cada cuerpo, consultamos el Quadtree para obtener una lista de cuerpos cercanos y luego examinamos si hay intersección entre sus volúmenes de contención, típicamente representados por bounding boxes o esferas.
+\imagen{memoria/detect.png}{Detectamos si dos cuerpos están colisionando}{}
+Para determinar si dos cuerpos están colisionando, calculamos la distancia entre los centros de sus bounding boxes o esferas. Si esta distancia es menor o igual a la suma de sus radios, concluimos que los cuerpos están colisionando.
+\subsubsection{Resolver}
+Una vez detectada una colisión, procedemos a resolverla calculando las fuerzas involucradas y ajustando las velocidades de los cuerpos para reflejar el impacto. Este proceso se basa en las leyes de conservación del momento y la energía cinética.
+\begin{enumerate}
+    \item \textbf{Calculamos el vector normal} de la colisión, que es un vector unitario que apunta desde un cuerpo hacia el otro. Este vector es fundamental para determinar la dirección de las fuerzas aplicadas como resultado de la colisión.
+    \imagen{memoria/col1.png}{Calculamos el vector normal}{}
+    \item \textbf{Determinamos la velocidad relativa} de los cuerpos en la dirección del vector normal. Si esta velocidad es positiva, indica que los cuerpos se están separando y no se requiere más acción.
+    \imagen{memoria/col2.png}{Determinamos la velocidad relativa}{}
+    \imagen{memoria/col3.png}{Descartamos cuerpos}{}
+    \item \textbf{Calculamos el impulso escalar} necesario para resolver la colisión. Este valor depende de la velocidad relativa de los cuerpos, sus masas, y el coeficiente de restitución, que representa la "elasticidad" de la colisión. Un coeficiente de restitución de 1 indica una colisión perfectamente elástica, mientras que un valor de 0 indica una colisión perfectamente inelástica.
+    \imagen{memoria/col4.png}{Calculamos el impulso escalar}{}
+    \item \textbf{Aplicamos el impulso} calculado a cada cuerpo, ajustando sus velocidades en la dirección del vector normal. Esto simula el efecto del rebote y asegura que los cuerpos se separen tras la colisión.
+    \imagen{memoria/col5.png}{Aplicamos el impulso}{}
+\end{enumerate}
+\subsection{Aeronaves}
+Estas entidades están diseñadas para navegar el entorno de simulación, interactuando tanto con objetos estáticos como dinámicos. La implementación de estos comportamientos se basa en principios  tales como deambulación aleatoria, evasión de obstáculos y seguimiento de objetivos, que se detallan a continuación.
+\subsubsection{Deambular}
+El comportamiento de deambulación proporciona a las aeronaves una capacidad para moverse de manera exploratoria sin un destino predeterminado. Este mecanismo se implementa mediante la generación de una fuerza aleatoria que modifica la trayectoria actual de la aeronave en cada ciclo de actualización del motor. Este vector de fuerza aleatoria, aplicado continuamente, resulta en un movimiento impredecible y variado, simulando la tendencia natural de un organismo a explorar su entorno. La magnitud de esta fuerza se ajusta para garantizar que el movimiento resultante sea suave y coherente, evitando cambios bruscos de dirección que podrían romper la inmersión del usuario en la simulación.
+\begin{enumerate}
+    \item \textbf{Generación de la Fuerza Aleatoria:} En cada ciclo de actualización, se genera un vector de fuerza aleatorio que determina la nueva dirección de movimiento. Esta fuerza simula una decisión espontánea de cambio de dirección, imitando el comportamiento exploratorio en seres vivos o vehículos autónomos.
+    \item \textbf{Aplicación de la Fuerza al Movimiento:} La fuerza aleatoria se aplica a la aeronave, modificando su vector de velocidad actual. Esto resulta en cambios graduales en la dirección de movimiento, permitiendo a la aeronave deambular de forma natural por el espacio de simulación. 
+\end{enumerate}
+\imagen{memoria/wander.png}{Exploración o deambulación}{}
+
+\subsubsection{Evitar al resto de cuerpos}
+Para simular la percepción espacial y la capacidad de las aeronaves para reaccionar ante la presencia de obstáculos, se implementa el comportamiento de evasión. Este proceso involucra la detección de objetos cercanos y la generación de una fuerza de evasión que redirige la aeronave, evitando colisiones. La dirección de esta fuerza es opuesta a la del objeto detectado, y su magnitud es inversamente proporcional a la distancia al objeto, lo que significa que cuanto más cerca esté el obstáculo, mayor será la fuerza aplicada para evitarlo. Este mecanismo es esencial para mantener la integridad física de las aeronaves en entornos densamente poblados o complejos.
+\begin{enumerate}
+    \item \textbf{Detección de Obstáculos Cercanos:} mediante el uso de sensores virtuales o consultas al sistema de cuadros (como Quadtree), la aeronave identifica objetos cercanos que potencialmente representan una amenaza de colisión.
+    \item \textbf{Cálculo de la Fuerza de Evasión:} para cada objeto detectado, se calcula una fuerza de evasión proporcional a la distancia al objeto. Esta fuerza tiene dirección opuesta al objeto detectado, empujando a la aeronave en la dirección segura.
+    \item \textbf{Aplicación de la Fuerza de Evasión:} la fuerza de evasión calculada se suma al vector de fuerza actual de la aeronave, alterando su trayectoria para evitar el obstáculo.
+\end{enumerate}
+\imagen{memoria/avoidCollisions.png}{Evasión}{}
+\subsubsection{Buscar}
+La capacidad de las aeronaves para identificar y dirigirse hacia un objetivo específico es fundamental para simular comportamientos dirigidos, como la persecución o el seguimiento de rutas. Este comportamiento se modela calculando un vector de deseo que apunta hacia el objetivo desde la posición actual de la aeronave. La velocidad de la aeronave se ajusta entonces para alinearla con este vector de deseo, permitiendo una aproximación suave y controlada hacia el objetivo. A medida que la aeronave se acerca a su destino, la magnitud de la fuerza aplicada se reduce para simular una desaceleración natural, facilitando un aterrizaje o una parada precisa.
+El vector objetivo se adquiere a través de la entrada del usuario, que puede pinchar en cualquier sección del canvas desde el cliente y se mandan unas coordenadas que después serán convertidas en un vector:
+\imagen{memoria/seekRequest.png}{Llamada al backend con el vector objetivo}{}
+\imagen{memoria/targetPositionDTO.png}{Tratamiento de la entrada del usuario recibida desde el frontend}{}
+\begin{enumerate}
+    \item \textbf{Cálculo del vector objetivo:} Se calcula un vector objetivo que apunta directamente desde la aeronave hacia el objetivo. Este vector guía el movimiento de la aeronave, indicando la dirección óptima hacia el objetivo.
+    \item \textbf{Ajuste de la velocidad hacia el objetivo:} La velocidad de la aeronave se modifica en función del vector objetivo. A medida que la aeronave se acerca al objetivo, la magnitud de la fuerza aplicada se ajusta para simular una desaceleración, permitiendo una llegada suave o un acercamiento preciso.
+    \item \textbf{Maniobra de acercamiento:} En la zona de acercamiento, se aplican fuerzas de dirección y magnitud calculadas para reducir la velocidad de manera proporcional a la distancia restante hasta el objetivo, facilitando una transición fluida desde el movimiento rápido hasta el estado de llegada o estacionamiento.
+\end{enumerate}
+\imagen{memoria/seek.png}{Búsqueda}{}
+\section{Desarrollo del frontend}
+El desarrollo del frontend para nuestro motor de físicas se ha llevado a cabo utilizando React, un popular framework de JavaScript, lo que facilita la creación de interfaces de usuario interactivas y dinámicas. El frontend se compone de varios elementos clave diseñados para proporcionar una visualización rica y control sobre la simulación física ejecutándose en el backend.
+La interacción entre el frontend y el backend se establece mediante WebSockets, utilizando las librerías SockJS y Stomp. Esta conexión bidireccional permite una comunicación en tiempo real, esencial para transmitir el estado actual de la simulación física al usuario y recibir comandos del usuario para influir en la simulación.
+\subsection{Establecer una conexión con el backend.}
+\subsubsection{\textbf{Implementación:}}
+\begin{enumerate}
+    \item \textbf{Inicialización de la conexión WebSocket:} Al iniciar la aplicación, se configura y abre una conexión WebSocket al backend. Esta conexión se mantiene activa para facilitar la comunicación continua durante la sesión del usuario.
+    \imagen{memoria/websocketCon.png}{Conexión al websocket del backend}{}
+    \item \textbf{Suscripción a topics:} El cliente se suscribe a topics específicos en el servidor (por ejemplo, "/topic/bodies"), lo que le permite recibir actualizaciones en tiempo real sobre los cuerpos físicos en la simulación.
+    \imagen{memoria/topicsInfo.png}{Suscripción a un topic}{}
+    \item \textbf{Envío de requests:} El usuario puede interactuar con la simulación a través de la interfaz, como mover naves espaciales o seleccionar cuerpos, enviando comandos específicos al backend a través de la conexión WebSocket.
+    \imagen{memoria/message.png}{Ejemplos de requests al backend}{}
+\end{enumerate}
+\subsection{Componentes}
+La interfaz de usuario se compone de varios componentes React, incluidos Header, Footer, Canvas, InfoSection, y SimulationControl. Cada componente cumple con una función específica dentro de la aplicación:
+\begin{itemize}
+    \item \textbf{Header y Footer:} contienen información del alumno, tutor y título del TFG.
+    \item \textbf{Canvas:} Un componente clave donde se visualiza la simulación física. Utiliza la biblioteca p5 para dibujar los cuerpos físicos en un lienzo HTML5, representando su posición, movimiento y colisiones en tiempo real.
+    \item \textbf{InfoSection:} Muestra información detallada sobre los cuerpos físicos presentes en la simulación, como su masa y velocidad. También permite al usuario interactuar con la simulación, por ejemplo, seleccionando y eliminando cuerpos.
+    \item \textbf{SimulationControl:} conjunto de botones que nos permite añadir los distintos tipos de cuerpos a la simulación.
+\end{itemize}
+\subsection{Canvas}
+El componente Canvas es donde se lleva a cabo la representación visual de la simulación. A través de la integración con p5, este componente dibuja en tiempo real los cuerpos físicos, basándose en los datos recibidos del backend.
+\subsubsection{Funcionalidades:}
+\begin{itemize}
+    \item \textbf{Visualización dinámica:} Se actualiza constantemente para reflejar el estado actual de la simulación, proporcionando una visualización interactiva de los cuerpos físicos y su comportamiento.
+    \item \textbf{Interacción con el usuario:} Permite a los usuarios interactuar directamente con la simulación, como seleccionar cuerpos o definir objetivos, mediante acciones del ratón.
+\end{itemize}
+\subsection{Tarjetas de información}
+Las tarjetas de información, presentadas en el componente InfoSection, ofrecen una vista detallada de los atributos y el estado de los cuerpos individuales dentro de la simulación. Cada tarjeta muestra datos específicos como el ID del cuerpo, tipo, masa y velocidad, y permite al usuario realizar acciones como seleccionar o eliminar cuerpos de la simulación.
+\subsubsection{Características:}
+\begin{itemize}
+    \item \textbf{Actualización en tiempo real:} La información se actualiza dinámicamente para reflejar cualquier cambio en el estado de los cuerpos físicos, asegurando que el usuario tenga acceso a la información más reciente.
+    \item \textbf{Interactividad:} Las tarjetas permiten a los usuarios interactuar con elementos específicos de la simulación, facilitando la localización y borrado de cuerpos.
+\end{itemize}
