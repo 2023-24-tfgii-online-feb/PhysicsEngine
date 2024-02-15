@@ -9,12 +9,12 @@ Un motor de físicas es un componente de software esencial en el desarrollo de v
 \begin{itemize}
     \item \textbf{Gravedad:} Simula la atracción gravitatoria que afecta a todos los objetos. En el motor de físicas, se puede ajustar la intensidad y dirección de la gravedad para replicar diferentes entornos, desde la Tierra hasta entornos sin gravedad en el espacio exterior.
     
-    \item \textbf{Colisiones:} Detecta y maneja las interacciones entre objetos. Cuando dos objetos entran en contacto, el motor calcula la respuesta física, como rebotes, basándose en propiedades como la masa, velocidad, y coeficiente de restitución. Este proceso es crucial para crear interacciones convincentes entre los objetos de la simulación.
+    \item \textbf{Colisiones:} Detecta y maneja las interacciones entre objetos. Cuando dos objetos entran en contacto, el motor calcula la respuesta física, como rebotes, basándose en propiedades como la masa, velocidad y coeficiente de restitución. Este proceso es crucial para crear interacciones convincentes entre los objetos de la simulación.
     
-    \item \textbf{Fuerzas y momentos:} Permite la aplicación de fuerzas externas e internas a los objetos, como empujes, arrastres, y torsiones\footnote{En nuestro motor, las torsiones no han sido implementadas. No creo que aporten nada a una simulación tan sencilla como esta.}. Estas fuerzas alteran la velocidad y la orientación de los objetos, permitiendo simular acciones como el vuelo de una aeronave o el movimiento de un vehículo.
+    \item \textbf{Fuerzas y momentos:} Permite la aplicación de fuerzas externas e internas a los objetos como empujes, arrastres y torsiones\footnote{En nuestro motor, las torsiones no han sido implementadas debido a que su aportación es mínima o irrelevante en una simulación tan sencilla como esta.}. Estas fuerzas alteran la velocidad y la orientación de los objetos, permitiendo simular acciones como el vuelo de una aeronave o el movimiento de un vehículo.
 \end{itemize}
 
-La simulación en un motor de físicas se realiza mediante la actualización continua del estado de cada objeto en función del tiempo. Este proceso, conocido como integración temporal, calcula la posición, velocidad, y orientación de los objetos en cada cuadro de la simulación, basándose en las fuerzas que actúan sobre ellos y sus interacciones mutuas.
+La simulación en un motor de físicas se realiza mediante la actualización continua del estado de cada objeto en función del tiempo. Este proceso, conocido como integración temporal, calcula la posición, velocidad y orientación de los objetos en cada cuadro de la simulación, basándose en las fuerzas que actúan sobre ellos y sus interacciones mutuas.
 
 Además, los motores de físicas modernos ofrecen optimizaciones como el \textbf{culling} de colisiones y la utilización de estructuras de datos espaciales, como los árboles cuaternarios o los octrees, para mejorar el rendimiento al simular un gran número de objetos. Esto es especialmente importante en entornos complejos y detallados, donde se requiere un alto grado de precisión y realismo.
 
@@ -47,7 +47,7 @@ La simulación de la atracción gravitacional se basa en la ley de gravitación 
     F = G \cdot \frac{m_1 \cdot m_2}{r^2}
 \end{equation}
 
-donde \(F\) es la magnitud de la fuerza gravitatoria entre dos cuerpos, \(G\) es la constante gravitacional, \(m_1\) y \(m_2\) son las masas de los dos cuerpos, y \(r\) es la distancia entre los centros de masa de los cuerpos.
+donde \(F\) es la magnitud de la fuerza gravitatoria entre dos cuerpos; \(G\) es la constante gravitacional; \(m_1\) y \(m_2\) son las masas de los dos cuerpos; y \(r\) es la distancia entre los centros de masa de los cuerpos.
 
 \imagen{memoria/newtonGravity}{Diagrama de la Ley de Gravitación Universal. Wikipedia.}{}
 En nuestro motor de físicas, cada objeto en la simulación experimenta una fuerza gravitatoria hacia cada otro objeto, lo que resulta en trayectorias realistas de cuerpos en el espacio, como planetas orbitando estrellas o la caída de objetos hacia la tierra.
@@ -91,14 +91,14 @@ Determinamos la componente de la velocidad relativa en la dirección del vector 
 Si \(v_{rel\_n} > 0\), significa que los cuerpos se están separando, y no se realiza ningún cálculo adicional.
 
 \paragraph{Paso 3: Cálculo del impulso}
-El impulso se calcula con base en el coeficiente de restitución, que determina la `elasticidad` de la colisión, y la velocidad relativa a lo largo del normal:
+El impulso se calcula con base en el coeficiente de restitución, que determina la `elasticidad` de la colisión y la velocidad relativa a lo largo de la normal:
 
 \begin{equation}
 \label{eq7}
     j = \frac{-(1 + e) \cdot v_{rel\_n}}{\frac{1}{m_1} + \frac{1}{m_2}}
 \end{equation}
 
-donde \(e\) es el coeficiente de restitución (en este caso, 0.8), y \(m_1\) y \(m_2\) son las masas de los cuerpos 1 y 2.
+donde \(e\) es el coeficiente de restitución (en este caso, 0.8); y \(m_1\) y \(m_2\) son las masas de los cuerpos 1 y 2.
 
 \paragraph{Paso 4: Aplicación del vector de impulso}
 Finalmente, aplicamos el impulso calculado a los cuerpos para modificar sus velocidades post-colisión:
@@ -118,7 +118,7 @@ Esta metodología asegura que las colisiones en la simulación no solo sean real
 
 \subsection{Agentes autónomos (Aeronaves)}
 
-Los agentes autónomos en nuestro proyecto, \textbf{aeronaves}, están diseñados para simular comportamientos inteligentes mediante algoritmos que les permiten interactuar con el entorno de manera dinámica. Estos comportamientos incluyen wandering (deambulación), evasión, y búsqueda, cada uno con su propia implementación y propósito específico dentro de la simulación.
+Los agentes autónomos en nuestro proyecto, \textbf{aeronaves}, están diseñados para simular comportamientos inteligentes mediante algoritmos que les permiten interactuar con el entorno de manera dinámica. Estos comportamientos incluyen wandering (deambulación), evasión y búsqueda, cada uno con su propia implementación y propósito específico dentro de la simulación.
 
 \subsubsection{Wandering (deambulación)}
 El wandering es un comportamiento que imita el movimiento aleatorio o exploratorio sin un destino fijo. Para implementarlo, se utiliza un vector aleatorio que se añade a la dirección actual del agente para alterar su trayectoria de forma gradual, evitando cambios bruscos que resultarían en movimientos no naturales. Matemáticamente, este vector se recalcula en cada tick del simulador, siguiendo la fórmula:
@@ -156,20 +156,20 @@ Estos comportamientos no solo dotan a las aeronaves de una apariencia de autonom
 \subsection{Spring y SpringBoot}
 Spring Framework es una plataforma integral para el desarrollo de aplicaciones Java con énfasis en la flexibilidad y la inversión de control a través de inyección de dependencias. Facilita el desarrollo de aplicaciones robustas, testables y mantenibles al proporcionar una arquitectura de aplicación cohesiva.
 
-Spring Boot, por su parte, es una herramienta de Spring que ofrece una forma rápida y fácil de configurar y ejecutar aplicaciones basadas en Spring, eliminando la necesidad de configuraciones XML extensas. Ofrece un conjunto de herramientas y convenciones predefinidas que permiten levantar un proyecto rápidamente, enfocándose en la simplicidad y el rápido desarrollo. Con Spring Boot, es posible crear microservicios, aplicaciones web, y más, con mínima configuración.
+Spring Boot, por su parte, es una herramienta de Spring que ofrece una forma rápida y fácil de configurar y ejecutar aplicaciones basadas en Spring, eliminando la necesidad de configuraciones XML extensas. Ofrece un conjunto de herramientas y convenciones predefinidas que permiten levantar un proyecto rápidamente, enfocándose en la simplicidad y el rápido desarrollo. Con Spring Boot, es posible crear microservicios, aplicaciones web y más, con mínima configuración.
 
-En nuestro proyecto, utilizamos Spring Boot por su capacidad para automatizar la configuración de proyectos basados en Spring, lo que nos permite enfocarnos en la lógica del negocio en lugar de la configuración del entorno de desarrollo. Spring Boot facilita la integración de WebSockets, seguridad, acceso a datos, y otras funcionalidades críticas para la aplicación, proporcionando un robusto soporte para la construcción de nuestro simulador físico.
+En nuestro proyecto, utilizamos Spring Boot por su capacidad para automatizar la configuración de proyectos basados en Spring, lo que nos permite enfocarnos en la lógica del negocio en lugar de la configuración del entorno de desarrollo. Spring Boot facilita la integración de WebSockets, seguridad, acceso a datos y otras funcionalidades críticas para la aplicación, proporcionando un robusto soporte para la construcción de nuestro simulador físico.
 
 El uso de Spring Boot ha permitido simplificar la configuración de los componentes de la aplicación, incluyendo el servidor de aplicaciones y la configuración de WebSockets, lo que resulta en un despliegue rápido y eficiente de la aplicación. La anotación y el escaneo de componentes de Spring Boot también han simplificado significativamente el proceso de inyección de dependencias, permitiéndonos desarrollar un código más limpio y modular.
 
 \subsection{WebSockets}
-WebSockets es un protocolo avanzado que facilita la comunicación bidireccional y en tiempo real entre clientes y servidores a través de una única conexión persistente. Esta tecnología es fundamental en aplicaciones web que requieren interacciones en tiempo real, como juegos en línea, chat en vivo, y, en nuestro caso, simulaciones físicas interactivas.
+WebSockets es un protocolo avanzado que facilita la comunicación bidireccional y en tiempo real entre clientes y servidores a través de una única conexión persistente. Esta tecnología es fundamental en aplicaciones web que requieren interacciones en tiempo real, como juegos en línea, chat en vivo y, en nuestro caso, simulaciones físicas interactivas.
 
 La implementación de WebSockets en nuestro proyecto permite que los estados de la simulación se sincronicen en tiempo real entre el servidor y los clientes. Cuando ocurre un evento en el servidor, como una actualización de estado debido a la simulación de fuerzas físicas o colisiones, este cambio se envía inmediatamente a todos los clientes conectados, asegurando que todos los usuarios vean una representación consistente y actualizada de la simulación.
 
-Para integrar WebSockets en nuestra aplicación, utilizamos el soporte integrado en Spring Boot, específicamente el módulo \textbf{`spring-boot-starter-websocket`} Esto nos permitió definir puntos de conexión y manipuladores de mensajes con anotaciones simples, facilitando la implementación de la lógica de comunicación en tiempo real sin tener que lidiar con los detalles de bajo nivel del protocolo WebSocket.
+Para integrar WebSockets en nuestra aplicación, utilizamos el soporte integrado en Spring Boot, específicamente el módulo \textbf{``spring-boot-starter-websocket''}. Esto nos permitió definir puntos de conexión y manipuladores de mensajes con anotaciones simples, facilitando la implementación de la lógica de comunicación en tiempo real sin tener que lidiar con los detalles de bajo nivel del protocolo WebSocket.
 
-Además, hemos implementado mecanismos de control de flujo y gestión de sesiones para manejar múltiples conexiones de clientes de manera eficiente, permitiendo que nuestra simulación escale y sea accesible por numerosos usuarios simultáneamente. Esta capacidad de comunicación en tiempo real ha sido crucial para proporcionar una experiencia de usuario dinámica y interactiva, permitiendo a los usuarios observar y manipular los elementos de la simulación en vivo.
+Además, hemos implementado mecanismos de control de flujo y gestión de sesiones para manejar múltiples conexiones de clientes de manera eficiente, permitiendo que nuestra simulación escale y sea accesible por numerosos usuarios simultáneamente. Esta capacidad de comunicación en tiempo real ha sido crucial para proporcionar una experiencia de usuario dinámica e interactiva, permitiendo a los usuarios observar y manipular los elementos de la simulación en vivo.
 
 
 \section{Cliente}
@@ -180,12 +180,12 @@ La interacción con la simulación de físicas se realiza a través de un client
 El cliente web es diseñado para ser universalmente accesible, aprovechando las tecnologías web estándar para garantizar compatibilidad y rendimiento. Se basa en HTML5, CSS3 y JavaScript, permitiendo una rica interacción con la simulación a través de interfaces gráficas intuitivas. Este tipo de cliente hace posible que usuarios con distintos niveles de habilidad puedan explorar conceptos físicos complejos de manera sencilla y directa.
 
 \subsection{React}
-Para la implementación del cliente web, se ha elegido React, una biblioteca de JavaScript desarrollada por Facebook. React destaca por su eficiencia en la actualización y renderizado de componentes, lo cual es fundamental para representar los estados dinámicos de la simulación de físicas. Utilizando el modelo de componentes de React, la interfaz del usuario se organiza en elementos reutilizables y autónomos que responden de manera fluida a los cambios en los datos de la simulación, ofreciendo una experiencia de usuario interactiva y responsive.
+Para la implementación del cliente web, se ha elegido React, una biblioteca de JavaScript desarrollada por Facebook. React destaca por su eficiencia en la actualización y renderizado de componentes, lo cual es fundamental para representar los estados dinámicos de la simulación de físicas. Utilizando el modelo de componentes de React, la interfaz del usuario se organiza en elementos reutilizables y autónomos que responden de manera fluida a los cambios en los datos de la simulación, ofreciendo una experiencia de usuario interactiva y responsiva.
 
-React también facilita el manejo del estado de la aplicación y la comunicación entre componentes, lo cual es crucial para sincronizar los datos de la simulación con la representación visual en el cliente. A través de WebSockets, React recibe actualizaciones en tiempo real del servidor, lo que permite a los usuarios observar y manipular la simulación de físicas con una retroalimentación instantánea.
+React también facilita el manejo del estado de la aplicación y la comunicación entre componentes, lo cual es crucial para sincronizar los datos de la simulación con la representación visual del cliente. A través de WebSockets, React recibe actualizaciones en tiempo real del servidor, lo que permite a los usuarios observar y manipular la simulación de físicas con una retroalimentación instantánea.
 
 \subsubsection{Adquirir los datos}
-La adquisición de datos desde el servidor se realiza mediante una conexión WebSocket, estableciendo un canal de comunicación bidireccional y en tiempo real entre el cliente y el servidor. Esta tecnología es esencial para transmitir eficientemente los estados actualizados de la simulación, como posiciones, velocidades, y otros parámetros relevantes de los objetos simulados.
+La adquisición de datos desde el servidor se realiza mediante una conexión WebSocket, estableciendo un canal de comunicación bidireccional y en tiempo real entre el cliente y el servidor. Esta tecnología es esencial para transmitir eficientemente los estados actualizados de la simulación, como posiciones, velocidades y otros parámetros relevantes de los objetos simulados.
 
 \subsubsection{Representar los datos}
 Una vez recibidos, los datos se utilizan en dos secciones distintas: el canvas, dónde se realiza la visualización gráfica de la simulación; y una sección donde se presenta la información de cada cuerpo en una tarjeta diferente. Las tarjetas son seleccionables y, una vez seleccionada, se resaltará el cuerpo asociado con la tarjeta en la simulación. Así mismo, pinchar en un cuerpo de la simulación, resaltará qué tarjeta es la suya. 

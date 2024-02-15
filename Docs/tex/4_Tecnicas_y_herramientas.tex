@@ -16,14 +16,14 @@ Para este proyecto, se implementaron Sprints de 1 semana con ciertas adaptacione
 \begin{itemize}
     \item Durante los primeros sprints, cuando se analizó el problema y se estableció una arquitectura a implementar, no se generó ningún producto funcional.
     \item Dado que estaba desarrollando el proyecto solo, no se estableció una división de roles estricta; asumí las responsabilidades de todos los roles, con el tutor interviniendo ocasionalmente como Product Owner.
-    \item No se realizaron reuniones diarias, ya que sería muy difícil coordinar los horarios entre el alumno y el tutor para poder llevarlas a cabo. Además, no creo que fueran de mucha utilidad, sabiendo que el proyecto estaba siendo desarrollado por una sola persona.
+    \item No se realizaron reuniones diarias, ya que sería muy difícil coordinar los horarios entre el alumno y el tutor para poder llevarlas a cabo. Además, se consideró que no serían necesarias, sabiendo que el proyecto estaba siendo desarrollado por una sola persona.
     \item Se inició un seguimiento de las tareas en ZenHub, pero se abandonó al poco de comenzar el proyecto. Las tareas cambiaban a medida que se avanzaba y se descubrían nuevos errores de diseño en el producto.
 \end{itemize}
 
 La elección de Scrum sobre metodologías tradicionales se debe a su flexibilidad, la rápida entrega de un producto funcional, y la capacidad de adaptar y expandir el proyecto de manera ágil, aspectos cruciales para el éxito del proyecto.
 
 \subsection{Gestión del código: Git y GitHub}
-Para la gestión del código fuente y la colaboración en el proyecto, se evaluaron diversas plataformas de control de versiones y repositorios en línea, incluyendo opciones como GitLab, Mercurial, SVN, y Bitbucket. Sin embargo, se seleccionó \textbf{Git}\cite{Git} junto con \textbf{GitHub}\cite{Github} por varias razones fundamentales.
+Para la gestión del código fuente y la colaboración en el proyecto, se evaluaron diversas plataformas de control de versiones y repositorios en línea, incluyendo opciones como GitLab, Mercurial, SVN y Bitbucket. Sin embargo, se seleccionó \textbf{Git}\cite{Git} junto con \textbf{GitHub}\cite{Github} por varias razones fundamentales.
 
 Git es ampliamente reconocido por su eficiencia en la gestión de versiones de código, permitiendo un trabajo en equipo fluido y un control detallado sobre las revisiones del código. Su sistema de ramificación facilita la experimentación y el desarrollo paralelo de características sin afectar el código base principal.
 
@@ -60,7 +60,7 @@ Entre las herramientas disponibles, se han seleccionado \textbf{Codacy}\cite{Cod
 De cara al frontend, se utilizó una estructura básica de un proyecto de React, utilizando Javascript en vez de Typescript pero sin utilizar ningún tipo de librería externa para el frontend. Todo el CSS y el HTML se desarrolló `a mano`.
 \begin{itemize}
     \item \textbf{stompjs:}\cite{stompjsFrontend} Utilizada para la comunicación sobre WebSockets, esta librería permite a las aplicaciones cliente suscribirse a los canales de mensajes y enviar mensajes a través de STOMP, un protocolo de mensajería simple que opera sobre WebSockets. Esencial para aplicaciones en tiempo real que requieren intercambio de datos fluido y eficiente.
-    \item \textbf{p5js:}\cite{p5js} Una librería de JavaScript que simplifica la programación de gráficos y visualizaciones interactivas en el navegador. Es ampliamente utilizada en proyectos creativos de codificación, educación en programación, y arte digital, proporcionando un lienzo flexible para la experimentación visual y la interacción.
+    \item \textbf{p5js:}\cite{p5js} Una librería de JavaScript que simplifica la programación de gráficos y visualizaciones interactivas en el navegador. Es ampliamente utilizada en proyectos creativos de codificación, educación en programación y arte digital, proporcionando un lienzo flexible para la experimentación visual y la interacción.
     
     \item \textbf{React:}\cite{React} Una librería de JavaScript para construir interfaces de usuario. React facilita la creación de vistas para cada estado en la aplicación, actualizando y renderizando de forma eficiente los componentes correctos cuando los datos cambian. Es fundamental para el desarrollo de aplicaciones de página única (SPA) que requieren interfaces dinámicas y reactivas.
     
@@ -83,9 +83,9 @@ Para el desarrollo del backend en Java, se evaluaron varios IDEs, incluyendo:
 \end{itemize}
 Después de una cuidadosa consideración, se seleccionó \textbf{IntelliJ IDEA Ultimate}\cite{IntelliJ} por las siguientes razones:
 \begin{itemize}
-    \item \textbf{Soporte avanzado para Java y frameworks relacionados:} IntelliJ IDEA Ultimate ofrece una integración profunda con el ecosistema Java, incluyendo soporte excepcional para frameworks populares como Spring, Spring Boot, Hibernate, y muchos otros, lo cual es indispensable para el desarrollo backend moderno.
-    \item \textbf{Herramientas de desarrollo y debugging integradas:} Esta versión proporciona herramientas avanzadas de debugging, perfiles, y testing, que son superiores a las ofrecidas por su versión Community o alternativas como Eclipse y NetBeans.
-    \item \textbf{Facilidades para el desarrollo de aplicaciones web y empresariales:} IntelliJ IDEA Ultimate viene con características específicas para el desarrollo de aplicaciones web y empresariales, tales como soporte para tecnologías de frontend, bases de datos, y herramientas de control de versiones integradas que simplifican el flujo de trabajo.
+    \item \textbf{Soporte avanzado para Java y frameworks relacionados:} IntelliJ IDEA Ultimate ofrece una integración profunda con el ecosistema Java, incluyendo soporte excepcional para frameworks populares como Spring, Spring Boot, Hibernate y muchos otros, lo cual es indispensable para el desarrollo backend moderno.
+    \item \textbf{Herramientas de desarrollo y debugging integradas:} Esta versión proporciona herramientas avanzadas de debugging, perfiles y testing, que son superiores a las ofrecidas por su versión Community o alternativas como Eclipse y NetBeans.
+    \item \textbf{Facilidades para el desarrollo de aplicaciones web y empresariales:} IntelliJ IDEA Ultimate viene con características específicas para el desarrollo de aplicaciones web y empresariales, tales como soporte para tecnologías de frontend, bases de datos y herramientas de control de versiones integradas que simplifican el flujo de trabajo.
     \item \textbf{Licencia gratuita:} JetBrains, la empresa que desarrolla IntelliJ IDEA, ofrece una licencia gratuita para estudiantes, por lo que aprovechamos la oportunidad y utilizamos la versión Ultimate.
 \end{itemize}
 La elección de IntelliJ IDEA Ultimate se justifica por su capacidad para mejorar significativamente la productividad del desarrollador, proporcionando un entorno de desarrollo cohesivo y potente para el backend Java.
@@ -95,7 +95,7 @@ Se optó por \textbf{Visual Studio Code}\cite{VSCode} debido a:
 \begin{itemize}
     \item \textbf{Extensa biblioteca de extensiones:} Visual Studio Code ofrece una vasta gama de extensiones disponibles para el desarrollo en React, facilitando desde la sintaxis y el resaltado de código hasta la integración con sistemas de control de versiones y herramientas de debugging.
     \item \textbf{Ligero pero potente:} A diferencia de IDEs más pesadas como WebStorm, Visual Studio Code es ligero, rápido al iniciar y ejecutar, pero al mismo tiempo ofrece funcionalidades poderosas para el desarrollo de aplicaciones web.
-    \item \textbf{Amplio soporte comunitario:} La popularidad de Visual Studio Code asegura un soporte comunitario extenso, lo que se traduce en una gran cantidad de recursos de aprendizaje, tutoriales, y plugins actualizados para mejorar el flujo de trabajo de desarrollo en React.
+    \item \textbf{Amplio soporte comunitario:} La popularidad de Visual Studio Code asegura un soporte comunitario extenso, lo que se traduce en una gran cantidad de recursos de aprendizaje, tutoriales y plugins actualizados para mejorar el flujo de trabajo de desarrollo en React.
 \end{itemize}
 La combinación de estas características hace de Visual Studio Code una opción ideal para el desarrollo del frontend, equilibrando flexibilidad, potencia y facilidad de uso.
 
@@ -103,11 +103,11 @@ La combinación de estas características hace de Visual Studio Code una opción
 Para la gestión del repositorio Git del proyecto, se decidió utilizar \textbf{GitKraken}\cite{GitKraken}, una herramienta de interfaz gráfica de usuario (GUI) para Git, por varias razones clave que la distinguen de otras opciones disponibles:
 
 \begin{itemize}
-    \item \textbf{Interfaz de Usuario Intuitiva:} GitKraken presenta una interfaz visualmente atractiva y fácil de navegar que simplifica la visualización del historial de commits, ramas, y merges, lo cual es especialmente útil para equipos que incluyen miembros menos familiarizados con la línea de comandos de Git.
-    \item \textbf{Integración con Servicios de Repositorios:} Ofrece integración directa con servicios de repositorios populares como GitHub, GitLab, y Bitbucket, facilitando la clonación de repositorios, el push y el pull de cambios, y la gestión de pull requests sin salir de la aplicación.
+    \item \textbf{Interfaz de Usuario Intuitiva:} GitKraken presenta una interfaz visualmente atractiva y fácil de navegar que simplifica la visualización del historial de commits, ramas y merges, lo cual es especialmente útil para equipos que incluyen miembros menos familiarizados con la línea de comandos de Git.
+    \item \textbf{Integración con Servicios de Repositorios:} Ofrece integración directa con servicios de repositorios populares como GitHub, GitLab y Bitbucket, facilitando la clonación de repositorios, el push y el pull de cambios y la gestión de pull requests sin salir de la aplicación.
     \item \textbf{Funcionalidades Avanzadas de Gestión de Ramas:} GitKraken proporciona herramientas avanzadas para la gestión de ramas, incluyendo un fácil manejo de fusiones y resolución de conflictos, lo que mejora la eficiencia en el manejo de proyectos complejos y el trabajo colaborativo.
 \end{itemize}
-La elección de GitKraken se basó en su capacidad para hacer el proceso de gestión de Git más accesible y eficiente, gracias a su combinación de una interfaz de usuario amigable, integración con múltiples plataformas de hosting de código, y potentes herramientas de gestión de ramas y conflictos. Esto ha permitido al equipo centrarse más en el desarrollo y menos en los desafíos técnicos de la gestión de versiones, lo que en última instancia contribuye al éxito del proyecto.
+La elección de GitKraken se basó en su capacidad para hacer el proceso de gestión de Git más accesible y eficiente, gracias a su combinación de una interfaz de usuario amigable, integración con múltiples plataformas de hosting de código y potentes herramientas de gestión de ramas y conflictos. Esto ha permitido al equipo centrarse más en el desarrollo y menos en los desafíos técnicos de la gestión de versiones, lo que en última instancia contribuye al éxito del proyecto.
 
 \section{Documentación}
 Se consideraron los siguientes programas para escribir esta documentación, dado que se nos había provisto de plantillas en formato \textit{.tex} y \textit{.odt}:
@@ -121,6 +121,6 @@ Se consideraron los siguientes programas para escribir esta documentación, dado
 Finalmente, seleccionamos \textbf{Overleaf} por varias razones:
 \begin{itemize}
     \item Es extremadamente flexible.
-    \item La curva de aprendizaje y facilidad de manejo es menos inclinada que la de TexMaker. Esto me permitió ser más eficiente a la hora de escribir y moverme entre ficheros, hecho mucho que me resultaba mucho más difícil en un entorno de TexMaker.
+    \item La curva de aprendizaje y facilidad de manejo es menos inclinada que la de TexMaker. Esto me permitió ser más eficiente a la hora de escribir y moverme entre ficheros, hecho que me resultaba mucho más difícil en un entorno de TexMaker.
     \item Nos permite trabajar en LaTeX, que ofrece una gran cantidad de posibilidades para textos académicos.
 \end{itemize}
