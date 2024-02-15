@@ -18,9 +18,10 @@ En cada Sprint, el objetivo era poder entregar una versión tanto del backend co
 
 \begin{enumerate}
     \item Primero, se decidió obtener una conexión funcional entre el backend y el frontend. Se desarrollaron las configuraciones de WebSocket y unos endpoints temporales para comprobar que se podían hacer llamadas desde el cliente web.
-    \item Después, se desarrolló el modelo y una versión primitiva del integrador. Junto a ello, se integró p5js en el frontend para renderizar los contenidos que llegaban desde el backend. Aprovechamos el bucle de dibujo de p5js para hacer llamadas continuamente al backend.
-    \item A partir de aquí, se empezaron a implementar los distintos tipos de cuerpos e implementaciones de los algoritmos. A la vez, se desarrolló la sección de tarjetas de información del frontend.
-    \item Finalmente, se trabajó en el aspecto estético del cliente (CSS) y se produjeron refinamientos en el comportamiento de las aeronaves.
+    En este punto, se obtuvo un proyecto mínimo, con una interfaz web mínima, la cual mostraba por consola la conexión por WebSocket al backend y las \textit{llamadas} y \textit{respuestas} que propagaba el backend al topic al cual nos habíamos suscrito.
+    \item Después, se desarrolló el modelo y una versión primitiva del integrador. Junto a ello, se integró p5js en el frontend para renderizar los contenidos que llegaban desde el backend. Aprovechamos el bucle de dibujo de p5js para hacer llamadas continuamente al backend, con lo cual no fatigamos al backend con llamadas, ya que llamamos al ritmo que puede el cliente web (que siempre va a ser más lento que nuestro servidor). Se desarrolló un procedimiento que renderizaba distintas formas geométricas en función del tipo de cuerpo que llegase desde el servidor. 
+    \item A partir de aquí, se empezaron a implementar los distintos tipos de cuerpos e implementaciones de los algoritmos. Se desarrollaron los resolutores y los comportamientos primitivos de las aeronaves. A la vez, se desarrolló la estructura de componentes del frontend y cómo podíamos propagar nuestra conexión websocket por ellos. Se desarrolló la sección de información y el control de la simulación.
+    \item Finalmente, se trabajó en el aspecto estético del cliente (CSS) y se produjeron refinamientos en el comportamiento de las aeronaves. Se añadió la rutina de búsqueda y se la posibilidad de seleccionar cuerpos.
 \end{enumerate}
 \section{Estudio de viabilidad}
 \subsection{Viabilidad Económica}
