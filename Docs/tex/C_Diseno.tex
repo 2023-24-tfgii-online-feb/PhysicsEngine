@@ -1,11 +1,122 @@
 \apendice{Especificación de diseño}
-
 \section{Introducción}
-
+En este anexo se detallan las decisiones de diseño adoptadas para desarrollar un programa que satisfaga los requisitos especificados previamente. Se abordan las estructuras de datos empleadas en el programa, cómo se interrelacionan, las operaciones que llevan a cabo, y su organización a lo largo de los módulos del proyecto.
 \section{Diseño de datos}
+En esta sección se abordan las consideraciones respecto a cómo representar y almacenar los datos del programa que se han tomado en este proyecto. Dada la naturaleza del proyecto, no se ha considerado necesario la existencia de una base de datos (en un futuro, si se añaden usuarios o almacenaje de entornos, se podría considerar), así que se explicará el diseño de los datos del modelo y de algunos detalles de los algoritmos.
+\subsection{La clase Body}
+La clase \textbf{Body} representa los objetos físicos dentro de la simulación, como planetas, asteroides y naves espaciales. Cada \textit{Body} tiene atributos clave que definen sus propiedades físicas y su estado en el entorno simulado:
+\begin{itemize}
+    \item \textbf{ID:} Identificador único para cada cuerpo.
+    \item \textbf{Position:} Ubicación del objeto en el espacio, representada por un \textit{Vector2D}.
+    \item \textbf{Velocity:} Velocidad actual del objeto, también un \textit{Vector2D}.
+    \item \textbf{Acceleration:} Aceleración actual, representada igualmente por un \textit{Vector2D}.
+    \item \textbf{Mass:} Masa del objeto, influencia cómo interactúa gravitacionalmente con otros objetos.
+    \item \textbf{Bbox (Bounding Box):} Caja delimitadora que facilita la detección de colisiones.
+    \item \textbf{BodyType:} Tipo de cuerpo (Planeta, Asteroide, Nave Espacial), que determina comportamientos específicos.
+    \item \textbf{Selected:} Indica si el objeto está seleccionado en la interfaz de usuario.
+\end{itemize}
+\textit{Body} es una clase abstracta, con varias subclases como \textit{Planet}, \textit{Asteroid}, y \textit{Spaceship} que especifican comportamientos y propiedades adicionales. Por ejemplo, los asteroides tienen un atributo \textit{spin} que representa su rotación, y las naves espaciales tienen métodos específicos como \textit{wander}, \textit{avoidCollisions}, y \textit{seek}.
+\subsubsection{Especificaciones de Body}
+En el motor de físicas de nuestro proyecto, las clases \textit{Planet}, \textit{Asteroid}, y \textit{Spaceship} son especializaciones de la clase abstracta \textit{Body}, cada una representando diferentes entidades con comportamientos y propiedades específicas dentro de la simulación. A continuación, se realiza un análisis más detallado de estas clases.
+\begin{itemize}
+    \item \textbf{La clase Planet:} La clase \textit{Planet} representa los cuerpos celestes con masa significativa que ejercen una fuerza gravitacional sobre otros objetos. Los planetas son objetos estáticos dentro de la simulación, lo que significa que su velocidad inicial y aceleración son cero. Cada planeta tiene un \textit{radius} que determina su tamaño visual en la simulación y su \textit{BoundingBox} (Bbox), que se utiliza para las detecciones de colisión. La masa del planeta afecta la magnitud de la fuerza gravitacional que ejerce sobre otros cuerpos.
+    \item \textbf{La clase Asteroid:} Los asteroides son cuerpos más pequeños y menos masivos que los planetas, con la capacidad de moverse a través del espacio. La clase \textit{Asteroid} introduce el concepto de \textit{spin}, que representa la rotación del asteroide sobre su eje. Esta rotación es puramente visual y no afecta la dinámica física del modelo. Los asteroides tienen una lista de \textit{vertices} que define su forma irregular, la cual se calcula al instanciar el asteroide y se actualiza con el tiempo para simular la rotación. Al igual que los planetas, los asteroides tienen una masa y un radio que influyen en las interacciones gravitacionales y las colisiones.
+    \item \textbf{La clase Spaceship:} La clase \textit{Spaceship} modela naves espaciales controlables dentro de la simulación, capaces de realizar movimientos complejos gracias a métodos como \textit{wander} (para moverse de forma aleatoria), \textit{avoidCollisions} (para esquivar otros cuerpos), y \textit{seek} (para dirigirse hacia un objetivo específico). Estos comportamientos se implementan aplicando fuerzas al vector de aceleración de la nave. La capacidad de maniobra de la nave está limitada por su \textit{maxVelocity} y \textit{maxForce}, que restringen la velocidad máxima y la fuerza máxima de aceleración que la nave puede alcanzar, respectivamente. Además, el método \textit{applyDamping} simula una resistencia al movimiento, reduciendo gradualmente la velocidad de la nave para evitar que acelere indefinidamente.
+\end{itemize}
+Cada una de estas clases encapsula los datos y comportamientos específicos de los diferentes tipos de cuerpos dentro de la simulación, permitiendo una rica interacción entre ellos. La implementación detallada de estas clases facilita la simulación de un entorno dinámico donde la gravedad, las colisiones, y los movimientos dirigidos juegan un papel crucial en la evolución del sistema simulado. La flexibilidad de este diseño permite la fácil expansión del modelo para incluir nuevos tipos de cuerpos o comportamientos en futuras versiones del proyecto.
+\subsection{La Clase Vector2D}
+\textbf{Vector2D} es fundamental para el modelado de la física en el motor, proporcionando una representación de vectores en dos dimensiones que permite calcular posición, velocidad, y aceleración. Los métodos incluidos permiten operaciones vectoriales básicas como la adición, sustracción, multiplicación por un escalar, división, normalización, y cálculo de magnitud y distancia.
+
+\subsection{Los algoritmos de físicas}
+Los algoritmos de físicas se encapsulan en clases dedicadas a ``resolver" aspectos específicos del comportamiento físico, tales como las atracciones gravitacionales, las colisiones, y el movimiento de las aeronaves.
+\begin{itemize}
+    \item \textbf{Attraction Resolver}:
+    \begin{itemize}
+        \item Propósito: Gestiona las fuerzas de atracción gravitatoria entre los cuerpos. Es fundamental para simular la interacción gravitacional que afecta el movimiento de los objetos en el espacio.
+        \item Funcionamiento: Calcula la fuerza de atracción entre cada par de cuerpos y aplica la fuerza resultante a sus aceleraciones. Utiliza la ley de gravitación universal para determinar la magnitud de la fuerza basada en la masa de los cuerpos y la distancia entre ellos.
+        \item Interacción con \textbf{\textit{PhysicsService:}} El ``PhysicsService" invoca a ``AttractionResolver" durante cada tick de la simulación para actualizar las fuerzas gravitatorias que actúan sobre los cuerpos.
+    \end{itemize}
+    \item \textbf{Collision Resolver}:
+    \begin{itemize}
+        \item Propósito: Detecta y maneja las colisiones entre cuerpos, asegurando una respuesta física realista como el rebote o la absorción.
+        \item Funcionamiento: Verifica la intersección entre las áreas ocupadas por los cuerpos, determinando si ha ocurrido una colisión. Calcula el vector normal de la colisión y utiliza la conservación del momento para resolver la colisión, modificando las velocidades de los cuerpos involucrados.
+        \item Interacción con \textbf{\textit{PhysicsService:}} Se encarga de revisar y resolver colisiones después de actualizar las posiciones de los cuerpos en cada ciclo de simulación.
+    \end{itemize}
+    \item \textbf{Movement Resolver}: 
+    \begin{itemize}
+        \item Propósito: Controla el movimiento específico de las aeronaves, permitiendo comportamientos como el deambular, evitar obstáculos y buscar objetivos.
+        \item Funcionamiento: Implementa algoritmos para mover las aeronaves de acuerdo a sus objetivos y el entorno circundante, ajustando su velocidad y dirección en base a factores como la evitación de colisiones y la navegación hacia puntos de interés.
+        \item Interacción con \textbf{\textit{PhysicsService:}} Es utilizado para actualizar el estado de movimiento de las aeronaves en base a su lógica específica dentro del ciclo global de la simulación.
+    \end{itemize}
+\end{itemize}
+\imagen{anexos/tick.png}{Ciclo de actualización constante}{}
+\subsubsection{El Quadtree}
+El Quadtree es una estructura de datos que divide el espacio de simulación en cuadrantes para optimizar la detección de colisiones y las interacciones entre objetos. Su implementación permite reducir la complejidad computacional al limitar las comprobaciones de colisiones y atracciones solo entre objetos cercanos.
+
+La estructura del Quadtree se actualiza dinámicamente con la inserción y consulta de los objetos (Body) mediante sus \textit{envoltorios de colisión} (BoundingBox). La inserción de un objeto se realiza mediante la creación de un \textit{envelope} que encapsula su BoundingBox, permitiendo su clasificación en el cuadrante correspondiente.
+Para la consulta de objetos cercanos, se genera un \textit{envelope} de consulta alrededor del BoundingBox del objeto de interés, recuperando una lista de objetos potencialmente colisionables o afectados por la gravedad. Este método optimiza significativamente las operaciones de detección y resolución al concentrar los cálculos en áreas locales.
+La implementación del Quadtree facilita una gestión eficiente del espacio y los objetos dentro del simulador, mejorando el rendimiento y la precisión de la simulación de físicas en entornos densamente poblados.
+\subsection{Diagrama de clases}
+El diagrama de clases de este proyecto es un tanto complejo, por lo que se ha incluido una versión simplificada, sin métodos ni atributos, para mejorar la visibilidad.
+\imagen{anexos/classDiagram.png}{Diagrama de clases simplificado}{}
+
+También incluimos una imagen de alta resolución del diagrama completo:
+\imagen{anexos/classDiagramFull.png}{Diagrama de clases completo}{}
 
 \section{Diseño procedimental}
+El diseño procedimental del motor de físicas es un aspecto crucial que dicta cómo se estructuran y se ejecutan las diversas operaciones y procesos dentro del sistema. Esta sección detalla los procedimientos fundamentales que componen el motor de físicas, explicando cómo interactúan las entidades y cómo se simulan las leyes físicas.
+
+\subsection{Procedimientos Clave}
+Para el funcionamiento efectivo del motor de físicas, se han definido varios procedimientos clave que gestionan desde el movimiento de las entidades hasta la resolución de colisiones y la aplicación de fuerzas gravitacionales.
+
+\subsubsection{Inicialización del Sistema}
+El primer paso en la simulación física es la inicialización del sistema, donde se crean y configuran una serie de entidades (planetas, asteroides y naves espaciales) con sus propiedades iniciales. Este proceso también incluye la configuración del espacio de simulación y la inicialización del Quadtree para optimizar las consultas espaciales.
+
+\subsubsection{Simulación de Movimientos}
+El movimiento de cada entidad se simula mediante la actualización de sus vectores de posición y velocidad, basándose en sus aceleraciones actuales y las fuerzas aplicadas por otras entidades. Para las naves espaciales, este proceso también involucra la ejecución de comportamientos específicos como la evasión y la búsqueda.
+
+\subsubsection{Detección y Resolución de Colisiones}
+Una parte esencial del procedimiento es la detección de colisiones entre entidades. Cuando dos entidades colisionan, el sistema calcula el resultado de la colisión, ajustando sus vectores de velocidad según las leyes de conservación de la energía y el momento. 
+
+\subsubsection{Aplicación de Fuerzas Gravitacionales}
+Las fuerzas gravitacionales entre las entidades se calculan y se aplican en cada tick de la simulación, afectando sus aceleraciones y, por ende, sus movimientos futuros. Este procedimiento simula la atracción mutua entre masas, permitiendo la creación de sistemas orbitales y la interacción dinámica entre objetos.
+
+\subsubsection{Optimización del Rendimiento con Quadtree}
+Para mejorar el rendimiento de la detección de colisiones y la aplicación de fuerzas, se utiliza un Quadtree para segmentar el espacio de simulación. Esto permite al sistema realizar consultas espaciales eficientes, reduciendo el número de comparaciones necesarias al determinar las interacciones entre entidades cercanas.
+
+\subsection{Ciclo de Simulación}
+El motor de físicas ejecuta estos procedimientos en un ciclo de simulación continuo, donde cada iteración representa un ``tick" en el tiempo de simulación. En cada tick, el sistema actualiza el estado de todas las entidades, aplica las fuerzas gravitacionales, detecta y resuelve colisiones, y procesa los movimientos y comportamientos específicos de las entidades. Este ciclo permite la simulación de un universo físico dinámico y interactivo.
+
+\subsection{Procedimientos de Interfaz}
+Además de los procesos internos, el motor de físicas proporciona interfaces para la manipulación y observación del sistema. Esto incluye funciones para agregar o eliminar entidades, modificar propiedades, y visualizar el estado del sistema. Estas interfaces facilitan la integración del motor de físicas con aplicaciones de usuario y permiten la experimentación y el análisis de diferentes configuraciones y escenarios físicos.
+
+Este diseño procedimental asegura que el motor de físicas sea capaz de simular entornos complejos con precisión y eficiencia, manteniendo al mismo tiempo la flexibilidad necesaria para adaptarse a requisitos específicos de simulación y exploración de conceptos físicos.
 
 \section{Diseño arquitectónico}
+En este apartado, se detalla la estructura arquitectónica adoptada para el desarrollo del motor de físicas. Esta arquitectura ha sido diseñada con el objetivo de maximizar la reusabilidad del código, la claridad conceptual y la flexibilidad para futuras ampliaciones o modificaciones.
 
+\subsection{Arquitectura General}
 
+El proyecto se ha estructurado basándonos en la arquitectura de microservicios\cite{microservices_io}, aprovechando la división en componentes con responsabilidades bien definidas para facilitar el desarrollo, la prueba y el mantenimiento del sistema. A continuación, se describen los principales componentes del sistema:
+
+\subsubsection{Modelo de Entidades Físicas}
+El núcleo del motor de físicas se basa en la definición de entidades físicas, representadas por la clase abstracta \texttt{Body} y sus derivados \texttt{Planet}, \texttt{Asteroid} y \texttt{Spaceship}. Cada una de estas entidades posee atributos como posición, velocidad, masa y un identificador único, permitiendo simular su comportamiento en el espacio de simulación.
+
+\subsubsection{Gestión de Colisiones}
+Para gestionar las interacciones entre entidades, se implementa el componente \texttt{CollisionResolver}, responsable de detectar colisiones entre entidades y de resolver sus efectos aplicando cambios en sus velocidades y posiciones según las leyes físicas.
+
+\subsubsection{Simulación de Fuerzas}
+El componente \texttt{AttractionResolver} se encarga de calcular y aplicar fuerzas gravitacionales entre las entidades, permitiendo simular atracciones o repulsiones que afectan el movimiento de las mismas.
+
+\subsubsection{Control de Movimientos de Aeronaves}
+Mediante el componente \texttt{MovementResolver}, se especializa el tratamiento de las entidades tipo \texttt{Spaceship}, aplicando lógicas de movimiento como deambulación, evasión y búsqueda, para simular comportamientos más complejos.
+
+\subsubsection{Optimización Espacial con Quadtree}
+La gestión eficiente del espacio de simulación se realiza a través del uso de un Quadtree, implementado en el servicio \texttt{QuadtreeService}. Este componente permite realizar consultas espaciales rápidas para la detección de colisiones y la búsqueda de entidades cercanas, optimizando el rendimiento del motor de físicas.
+
+\subsubsection{Servicio de Físicas}
+El \texttt{PhysicsService} actúa como orquestador de los diferentes resolvers (\texttt{AttractionResolver}, \texttt{CollisionResolver}, \texttt{MovementResolver}) y del \texttt{QuadtreeService}, coordinando la simulación de un tick y actualizando el estado del sistema.
+
+\subsection{Arquitectura de Software}
+Para el desarrollo del proyecto, se ha utilizado Spring Boot, facilitando la configuración y el despliegue del servicio. La estructura del proyecto se divide en paquetes bien diferenciados para modelos, servicios, controladores y configuraciones, promoviendo la separación de responsabilidades y facilitando la comprensión y mantenimiento del código.
+\imagen{anexos/arch.png}{Arquitectura}{}

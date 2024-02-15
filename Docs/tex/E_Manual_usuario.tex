@@ -1,11 +1,49 @@
 \apendice{Documentación de usuario}
-
 \section{Introducción}
-
+Este anexo proporciona una descripción detallada de los requisitos previos para la ejecución de la aplicación, así como las instrucciones para su instalación y activación. Adicionalmente, se ofrece una guía destinada a facilitar la navegación del usuario a través de las diversas interfaces de la aplicación.
 \section{Requisitos de usuarios}
-
+Los requisitos para ejecutar la aplicación son:
+\begin{itemize}
+    \item Un sistema operativo compatible con Docker.
+    \item Un navegador de internet para acceder al cliente web.
+    \item OPCIONAL: Conexión a internet para construir la imagen, en vez de descargarla desde el repositorio.
+\end{itemize}
 \section{Instalación}
-
+Para instalar y ejecutar tanto el motor como el cliente web, se deberán seguir estos pasos:
+\subsubsection{En caso de querer construir la imagen}
+\begin{enumerate}
+    \item Asegurarse que se cumplen todos los requisitos. Estos se encuentran disponibles en la página del repositorio.
+    \item Clonar el repositorio del proyecto. Esto puede hacerse con el siguiente comando:
+        \begin{verbatim}
+            git clone https://github.com/dmm1005/PhysicsEngine.git
+        \end{verbatim}
+    \item Acceder al directorio del repositorio.
+    \item Una vez dentro, se deberá usar ejecutar el script correspondiente al entorno que esté utilizando el usuario:
+    \begin{itemize}
+        \item \texttt{build.sh}: para entornos Linux (bash). Es posible que haya que dar permisos de ejecución (chmod +x) al script.
+        \item \texttt{build.ps1}: para entornos Windows (PowerShell).
+    \end{itemize}
+\end{enumerate}
+\subsubsection{En caso de querer descargarse la imagen de Docker}
+\begin{enumerate}
+    \item Acceder a este \href{https://drive.google.com/file/d/11hbKN6zqK2H_rMa-Nu0u6VWxvEAaimy7/view?usp=sharing}{Drive} y descargar la imagen del proyecto.
+    \item Asegure que Docker Engine está arrancado y ejecutar estos comandos:
+    \begin{verbatim}
+        docker load -i [ruta_a_la_imagen.tar]
+    \end{verbatim}
+    \begin{verbatim}
+        docker run -it -P [puerto de la máquina host]:3100 tfg-latest
+    \end{verbatim}
+\end{enumerate}
+De esta manera, se guardará la imagen del proyecto en el repositorio local de la máquina host y se creará un contenedor con el motor y el cliente web publicados en el puerto especificado por el usuario.
 \section{Manual del usuario}
-
-
+La interfaz del cliente web ha sido diseñada para mantenerla lo más sencillo posible. Aún así, se incluye una pequeña descripción de las características menos evidentes para el usuario.
+\subsection{Seleccionar cuerpos}
+Si queremos comprobar a qué representación gráfica se está refiriendo un cuerpo de la lista, podemos hacer click en la tarjeta que contiene la información. Al hacer esto, tanto la tarjeta como la representación visual del cuerpo cambiarán de color, permitiéndonos una más sencilla localización.
+Esto también se puede realizar de la manera inversa; si se hace click en un cuerpo en la visualización, se marcarán tanto él, como la tarjeta.
+\imagen{anexos/selectedBody.png}{Ejemplo de cuerpo seleccionado junto a uno no seleccionado}{}
+\imagen{anexos/selectedCard.png}{Ejemplo de tarjeta seleccionada junto a tarjetas no seleccionadas}{}
+\subsubsection{Establecer un punto de búsqueda para las aeronaves}
+Una de las características de las aeronaves es que pueden establecer un protocolo de búsqueda y dirigirse hacia un punto objetivo a gusto del usuario.
+Cuando el usuario hace click en cualquier parte de la representación gráfica de la simulación, se dibujará un marcador rojo en ese mismo punto. Esa será la localización objetivo para las aeronaves. Para que las aeronaves utilicen ese comportamiento, primero deberán ser seleccionadas. De esta manera, sólo las aeronaves seleccionadas pasarán a modo búsqueda, mientras que el resto permanecerá ejecutando sus rutinas habituales.
+\imagen{anexos/selectedShips.png}{Ejemplo de aeronaves dirigiéndose al punto de búsqueda junto a una aeronave siguiendo una rutina normal}{}

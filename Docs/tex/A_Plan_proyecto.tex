@@ -1,13 +1,128 @@
 \apendice{Plan de Proyecto Software}
 
 \section{Introducción}
-
+Este apartado se centra en la organización del proyecto. Se aborda la programación temporal y las distintas tareas previstas, junto con los análisis de viabilidad económica y legal realizados para garantizar la factibilidad del proyecto.
 \section{Planificación temporal}
+La organización temporal se diseñó siguiendo una adaptación de la metodología ágil Scrum. Se ajustó a las necesidades del proyecto:
+\begin{itemize}
+    \item Se eliminaron las reuniones diarias.
+    \item Se eliminaron los roles de scrum master y product owner.
+    \item Se utilizó como herramienta orientativa para dividir el trabajo.
+\end{itemize}
 
+El desarrollo se estructuró en iteraciones o Sprints, cada uno culminando en una versión incrementalmente mejorada y más completa del motor de físicas. La duración de los Sprints se estableció inicialmente en dos semanas. Sin embargo, para optimizar la gestión del trabajo y mejorar la respuesta a los desafíos emergentes durante la fase final del proyecto, los Sprints se ajustaron a una duración de una semana.
+
+Inicialmente, se realizó un ejercicio de identificación y creación de tareas en la plataforma ZenHub. Sin embargo, debido a su cambio de política, no ofreciendo un plan para estudiantes y la limitada disponibilidad temporal, se decidió abandonar el uso de la plataforma. 
+
+En cada Sprint, el objetivo era poder entregar una versión tanto del backend como del frontend. Con esto en mente, se decidió dividir el proyecto en fases:
+
+\begin{enumerate}
+    \item Primero, se decidió obtener una conexión funcional entre el backend y el frontend. Se desarrollaron las configuraciones de WebSocket y unos endpoints temporales para comprobar que se podían hacer llamadas desde el cliente web.
+    \item Después, se desarrolló el modelo y una versión primitiva del integrador. Junto a ello, se integró p5js en el frontend para renderizar los contenidos que llegaban desde el backend. Aprovechamos el bucle de dibujo de p5js para hacer llamadas continuamente al backend.
+    \item A partir de aquí, se empezaron a implementar los distintos tipos de cuerpos e implementaciones de los algoritmos. A la vez, se desarrolló la sección de tarjetas de información del frontend.
+    \item Finalmente, se trabajó en el aspecto estético del cliente (CSS) y se produjeron refinamientos en el comportamiento de las aeronaves.
+\end{enumerate}
 \section{Estudio de viabilidad}
+\subsection{Viabilidad Económica}
+Este apartado examina el impacto económico de desarrollar el proyecto del motor de físicas con fines comerciales, incluyendo un desglose de los costes asociados.
 
-\subsection{Viabilidad económica}
+\subsubsection{Costes de Personal}
+El desarrollo del motor de físicas fue realizado por un programador a lo largo de 2 meses, con una dedicación a tiempo completo. Tomando en cuenta un salario bruto anual de 35000 euros y añadiendo los costes relacionados con el IRPF y la cotización a la seguridad social, el coste total se calcula de la siguiente forma:
 
-\subsection{Viabilidad legal}
+\begin{table}[h]
+\centering
+\begin{tabular}{| l | r |}
+\hline
+Concepto & Coste \\ \hline
+Salario mensual neto & 2332,45€ \\
+Retención IRPF (20,03\%) & 7010,5€ \\
+Seguridad Social (32,4\%) & 11340,00€ \\
+Salario mensual bruto & 2916,70€ \\
+Salario anual bruto (12 pagas) & 35000€ \\ \hline
+\textbf{Total 2 meses} & \textbf{7.723,40€} \\ \hline
+\end{tabular}
+\caption{Costes de personal}
+\end{table}
 
+Para los cálculos de la cotización a la seguridad social, se han tomado en cuenta los porcentajes correspondientes a contingencias comunes, desempleo, y formación profesional, sumando un total aproximado de 29,9\%\cite{seg-social}.
+\imagen{/anexos/ss.png}{Régimen general de la Seguridad Social}{}
+
+\subsubsection{Costes de Equipamiento}
+El proyecto requirió el uso exclusivo de un portátil valorado en 500 euros, operando con Arch Linux como sistema operativo. Al ser Arch Linux gratuito y de código abierto, no se han contemplado costes adicionales por software. La amortización del portátil, estimada al 26\% anual durante 2 meses, resulta en:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{| l | r | r | r |}
+\hline
+Concepto & Coste & Amortización (1 mes) & Amortización (2 meses) \\ \hline
+Portátil & 500€ & 10,83€ & 21,66€ \\ \hline
+\textbf{Total} & \textbf{500€} & \textbf{10,83€} & \textbf{21,66€} \\ \hline
+\end{tabular}
+\caption{Costes de equipamiento}
+\end{table}
+
+\subsubsection{Costes de Página Web}
+La presentación del proyecto se planteó con la adquisición de un dominio .com por un coste de 10 euros anuales, sin considerar gastos adicionales de renovación en esta evaluación.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{| l | r |}
+\hline
+Concepto & Coste \\ \hline
+Registro dominio & 10,00€ \\ \hline
+\textbf{Total} & \textbf{10,00€} \\ \hline
+\end{tabular}
+\caption{Costes de página web}
+\end{table}
+
+\subsubsection{Coste Total}
+Al sumar los costes identificados previamente, el coste total del proyecto sería:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{| l | r |}
+\hline
+Concepto & Coste \\ \hline
+Costes de personal & 7.723,40€€ \\
+Costes de equipamiento & 21,66€ \\
+Costes de página web & 10,00€ \\ \hline
+\textbf{Total} & \textbf{7.755,06€} \\ \hline
+\end{tabular}
+\caption{Coste total}
+\end{table}
+
+\subsubsection{Posibles Fuentes de Ingreso}
+Las potenciales fuentes de ingreso para el motor de físicas incluirían la venta de licencias del software a desarrolladores y estudios de videojuegos, servicios de personalización y soporte técnico, así como la posibilidad de ofrecer una API en modelo SaaS (Software as a Service) para simulaciones físicas en la nube. Adicionalmente, se podría considerar la implementación de cursos y tutoriales pagos sobre cómo integrar y optimizar el uso del motor de físicas en proyectos de desarrollo de videojuegos.
+
+\subsection{Viabilidad Legal}
+La selección de una licencia adecuada para el motor de físicas es crucial para proteger la propiedad intelectual del proyecto y definir los términos bajo los cuales otros pueden usar, modificar y distribuir el software. La adopción de una licencia de código abierto, como MIT o GPL, podría fomentar una comunidad activa de colaboradores, mientras que una licencia comercial proporcionaría control exclusivo sobre el uso comercial del software. Será importante también considerar las licencias de terceros para asegurarse de que el uso de bibliotecas y herramientas externas esté en conformidad con los objetivos legales y comerciales del proyecto.
+
+\subsubsection{Licencia}
+Las licencias de las dependencias y librerías utilizadas en el proyecto son:
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{| l | >{\raggedright\arraybackslash}X | l |}
+\hline
+\textbf{Dependencia} & \textbf{Descripción} & \textbf{Licencia} \\ \hline
+    JDK 17\cite{jdk17_adoptium_license} & Eclipse Adoptium & GPLv2 \\ \hline
+    Spring Boot\cite{springboot_license} & Framework para simplificar la configuración y ejecución de aplicaciones Spring & Apache License 2.0 \\ \hline
+    JTS Core\cite{jtscore_license} & Biblioteca para el manejo de geometrías espaciales & EDL/BSD \\ \hline
+    SockJS Client\cite{sockjsclient_license} & Biblioteca para facilitar la comunicación entre cliente y servidor sobre WebSockets & MIT \\ \hline
+    Stomp WebSocket\cite{stompwebsocket_license} & Protocolo de mensajería para facilitar la comunicación basada en suscripciones & Apache License 2.0 \\ \hline
+    Lombok\cite{lombok_license} & Utilidad para minimizar el código repetitivo en Java & MIT \\ \hline
+    React\cite{react_license} & Biblioteca de JavaScript para construir interfaces de usuario & MIT \\ \hline
+    react-dom\cite{reactdom_license} & Paquete de React para el manejo del DOM & MIT \\ \hline
+    react-scripts \cite{reactscripts_license}& Conjunto de scripts y configuración utilizados por Create React App & MIT \\ \hline
+    p5js\cite{p5js_license} & Biblioteca de JavaScript que facilita la programación creativa en el canvas del navegador & LGPL \\ \hline
+    stompjs\cite{stompjs_license} & Implementación del protocolo STOMP en JavaScript & Apache License 2.0 \\ \hline
+\end{tabularx}
+\caption{Dependencias del motor de físicas y sus licencias}
+\label{tab:licencias}
+\end{table}
+
+\newpage
+Dada la diversidad de licencias, desde BSD hasta MIT y Apache License 2.0, se optó por seleccionar una licencia que fuera compatible con todas ellas y adecuada para el proyecto. Se decidió utilizar la \textbf{licencia BSD de 3 cláusulas} para el proyecto. Esta licencia es conocida por su simplicidad y por permitir un amplio uso, redistribución y modificación del código fuente, incluyendo aplicaciones en software propietario, siempre que se cumplan las tres condiciones principales: no utilizar los nombres de los autores y contribuyentes para promocionar productos derivados sin permiso previo, incluir el aviso de copyright en redistribuciones del código fuente, y también en redistribuciones en forma binaria.
+
+La elección de la licencia BSD-3 se alinea con las posibles vias de expansión futuras donde buscaríamos fomentar la colaboración abierta y ofrecer flexibilidad para el desarrollo futuro del proyecto, incluyendo aplicaciones comerciales. Esta licencia asegura que el motor de físicas pueda ser utilizado y adaptado de manera amplia, respetando las contribuciones de la comunidad y los requisitos de las dependencias utilizadas, a la vez que protege el proyecto de posibles usos indebidos del nombre de los contribuyentes.
 

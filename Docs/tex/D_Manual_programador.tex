@@ -1,11 +1,149 @@
 \apendice{Documentación técnica de programación}
-
 \section{Introducción}
-
+En este apéndice se detallarán los elementos importantes para los desarrolladores, abarcando desde la organización de la estructura de directorios hasta las dependencias necesarias que deben ser instaladas en situaciones específicas, así como la funcionalidad de los diversos archivos presentes en el repositorio.
 \section{Estructura de directorios}
-
-\section{Manual del programador}
-
+\begin{itemize}
+    \item \verb|src|:
+    Este directorio contiene todo el código fuente, tanto el backend, como el frontend que se despliega junto al motor.
+    \item \verb|src/main/java/com/dmm/tfg|: 
+    Este directorio contiene el código fuente pertinente al motor de la aplicación.
+    \item \verb|src/main/java/com/dmm/tfg/config|: 
+    Este directorio contiene el código fuente pertinente a la configuración de los endpoints de websocket.
+    \item \verb|src/main/java/com/dmm/tfg/controller|: 
+    Este directorio contiene el código fuente pertinente a los controladores de requests procedentes del frontend.
+    \item \verb|src/main/java/com/dmm/tfg/engine|: 
+    Este directorio contiene el código fuente pertinente al modelo y a los algoritmos.
+    \item \verb|src/main/java/com/dmm/tfg/service|: 
+    Este directorio contiene el código fuente pertinente a los modulos que manejan tanto el sistema como la simulación.
+    \item \verb|src/main/resources|: 
+    Este directorio contiene el código pertinente a las propiedades del proyecto tanto como a la aplicación de frontend que se despliega junto al backend.
+    \item \verb|src/test/java/com/dmm/tfg|: 
+    Este directorio contiene todos los ficheros con los tests de la aplicación.
+    \item \verb|Docs|: 
+    Este directorio contiene la memoria, anexos y todos los ficheros que la componen.
+    \item \verb|WebApp|: 
+    Este directorio contiene el código fuente de la aplicación de frontend, a partir de la cual obtenemos la \textit{build} que copiamos a \textit{src/main/resources/static} y desplegamos junto al motor.
+    \item \verb|gradle/wrapper|: 
+    Este directorio contiene el wrapper de Gradle necesario para poder compilar y construir la aplicación sin tener que instalar Gradle.
+    \item \verb|.gitignore|: 
+    Fichero gitignore, que contiene la configuración de ficheros que no se subirán al repositio al hacer los commits.
+    \item \verb|Dockerfile|: 
+    Fichero que contiene las instrucciones para construir la imagen de Docker que servirá para desplegar todo el aplicativo en un contenedor virtualizado.
+    \item \verb|LICENSE|: 
+    Fichero que contiene la licencia del proyecto.
+    \item \verb|README.md|: 
+    Fichero que contiene la descripción del repositorio en GitHub.
+    \item \verb|build.gradle|: 
+    Fichero de configuración de Gradle, que especifica las dependencias e instrucciones para compilar el proyecto.
+    \item \verb|build.ps1|: 
+    Script facilitado a los usuarios que quieran compilar y ejecutar la aplicación en Windows.
+    \item \verb|build.sh|: 
+    Script facilitado a los usuario que quieran compilar y ejecutar la aplicación en un entorno Unix con bash.
+    \item \verb|gradlew|: 
+    Script del wrapper de Gradle.
+    \item \verb|gradlew.bat|: 
+    Script del wrapper de Gradle para Windows.
+    \item \verb|settings.gradle|: 
+    Configuración del proyecto de Gradle.
+\end{itemize}
 \section{Compilación, instalación y ejecución del proyecto}
+Este documento proporciona una guía detallada para configurar y ejecutar las diferentes partes del proyecto, desde la aplicación web hasta el backend, destacando las dependencias necesarias y los pasos específicos para cada componente.
+\subsection{Preparación del Entorno para Docker}
+Para aquellos que prefieran un despliegue simplificado y contenerizado, se recomienda utilizar Docker. Este método asegura un entorno uniforme y facilita tanto la compilación como la ejecución.
+\subsubsection{Construcción de la Imagen Docker}
+Primero, asegúrate de tener Docker instalado en tu sistema. Posteriormente, puedes construir la imagen Docker necesaria para ejecutar la aplicación. Para ello, navega hasta el directorio que contiene el Dockerfile y ejecuta:
+\begin{verbatim}
+docker build -t [nombre-de-la-imagen] .
+\end{verbatim}
+\subsubsection{Ejecución del Contenedor Docker}
+Una vez construida la imagen, puedes iniciar el contenedor con el siguiente comando:
+\begin{verbatim}
+docker run -it -p [puerto]:3100 [nombre-de-la-imagen]
+\end{verbatim}
+Este comando publicará la aplicación en el puerto especificado de tu máquina host, permitiendo el acceso a través del navegador.
+\subsection{Despliegue Tradicional}
+Para un despliegue más tradicional, que implica ejecutar la aplicación directamente en tu máquina host, seguir los siguientes pasos:
+\subsubsection{Requisitos}
+Backend: JDK 17 o superior. Asegúrate de que la variable JAVA HOME apunta a la versión adecuada del JDK, ya que versiones superiores a la 21 pueden no ser compatibles. Esto es debido a que existe un bug con Lombok en la versión 21. Puede que cuando lo despliegues ya se haya solucionado. No es necesario instalar Gradle, la compilación se hace a través del Wrapper.
+Frontend: Node.js 20 LTS o superior para la aplicación web.
+\subsubsection{Instalación y Ejecución}
+Aplicación Web: Dentro del directorio del proyecto web, ejecuta 
+\begin{verbatim}
+    npm install
+\end{verbatim} 
+para instalar las dependencias y 
+\begin{verbatim}
+    npm build
+\end{verbatim} 
+para construir la aplicación. Luego, copia el resultado de la compilación al directorio src/main/resources/static/ del backend.
+Servidor: Utiliza el comando 
+\begin{verbatim}
+    gradle build
+\end{verbatim} 
+para compilar el backend. Inicia la aplicación con 
+\begin{verbatim}
+    java -jar build/libs/TFG-1.0.0-RELEASE.jar
+\end{verbatim}
+\subsection{Compilación y despliegue independiente de la WebApp}
+Para compilar y lanzar la WebApp de forma independiente al backend, es crucial modificar el punto de conexión del WebSocket para asegurar la comunicación correcta entre ambos. Edita el archivo WebApp/src/App.js reemplazando la función getWebSocketUrl por:
+\imagen{anexos/getWebSocket.png}{Función a reemplazar/modificar para determinar la conexión al backend}{}
+Después de realizar esta modificación, puedes proceder a compilar la WebApp con 
+\begin{verbatim}
+    npm build
+\end{verbatim} 
+Para servir la WebApp, puedes utilizar cualquier servidor HTTP de tu elección, como serve en Node.js, configurándolo para servir los archivos estáticos generados en el directorio de build.
+\subsection{Lanzamiento de la WebApp}
+Una vez compilada y configurada para apuntar al backend adecuadamente, la WebApp puede ser lanzada utilizando:
+\begin{verbatim}
+    npm run deploy
+\end{verbatim}
+Asegúrate de abrir el puerto especificado en tu firewall si es necesario para permitir el acceso externo a la aplicación web.
+\section{Manual del programador}
+\subsection{Desarrollo del backend}
+El proyecto de backend cuenta con un fichero build.gradle que ya está configurado para ser importado en cualquier entorno de desarrollo y poder compilar y ejecutar la aplicación. Cuenta también con tareas para tests y para generar reportes Jacoco, que serán utilizados para el control de calidad. En mi caso, he utilizado IntelliJ IDEA Ultimate para el desarrollo del proyecto. Encuentro que tiene muchas características útiles para desarrollar un proyecto de este estilo. Se puede acceder a las tareas de Gradle desde una interfaz gráfica, genera diagramas y analiza estáticamente el código. Además, se pueden instalar plugins para cualquier otra funcionalidad necesaria. 
+
+\imagen{anexos/fileTree.png}{Estructura de ficheros del proyecto en IntelliJ IDEA}{}
+
+Los algoritmos para los distintos tipos de conceptos físicos que se han aplicado han sido implementados en diferentes clases y después manejados desde un servicio principal (\textbf{\textit{PhysicsService}}). De este modo, resulta más sencillo realizar modificaciones a las propiedades de los algoritmos o añadir nuevos conceptos al motor. 
+\imagen{anexos/engine.png}{Paquete \textit{Engine}. Aquí se pueden incluir o modificar nuevos algoritmos.}{}
+\imagen{anexos/service.png}{Paquete \textit{Service}. Aquí se puede modificar cómo se usan los distintos algoritmos o la configuración inicial.}{}
+\imagen{anexos/physicsService.png}{Este es el servicio que se encarga de correr la simulación.}{}
+
+Otro factor a considerar es la configuración de Spring. En nuestro proyecto, es idéntica a la que viene por defecto con Spring Boot, pero puede que en un futuro, se decida modificar. El fichero que contiene esta configuración esta en \texttt{src/main/resources/application.properties}. Aquí, por ejemplo, se podría cambiar el puerto en el que se despliega el servidor de Tomcat que aloja a la aplicación.
+\imagen{anexos/applicationProperties.png}{Aquí se pueden realizar cambios en la configuración de la aplicación.}{}
+\subsection{Desarrollo del frontend}
+De cara al desarrollo del front, personalmente he utilizado VSCode, pero se podría utilizar cualquier editor a preferencia del usuario. Sin embargo, recomiendo VSCode ya que tiene un rico ecosistema de plugins que ha facilitado mucho el desarrollo del cliente web. 
+
+Entre los aspectos importantes a recalcar, encontramos:
+\begin{itemize}
+    \item El punto de entrada principal se encuentra en el fichero \texttt{WebApp/src/App.js}. Este es el fichero que contiene la lógica de conexión al backend y que genera la estructura de componentes que, después, se renderizan en el HTML.
+    \item Los componentes se encuentran en \texttt{WebApp/src/components}. Se pueden modificar individualmente, gracias a su diseño modular. Se puede añadir más funcionalidad añadiendo más componentes e incorporándolos al fichero App.js.
+    \item No se ha utilizado ninguna herramienta externa para el CSS (Como Tailwind o Bootstrap). Se ha intentado desarrollar la aplicación de la manera más sencilla posible, para poder centrar toda la carga en el motor.
+\end{itemize}
+
+\subsection{Control de calidad}
+Para el proyecto, se han utilizado dos herramientas para garantizar la calidad del código: Codacy y CodeClimate Quality.
+
+Codacy ofrece una amplia gama de plantillas para el análisis de calidad, proporcionando revisiones automáticas para identificar problemas de seguridad, patrones de diseño ineficientes y errores de compilación en una variedad de lenguajes y formatos de archivo, incluidos Java, JavaScript, y archivos de configuración específicos del proyecto. 
+
+Code Climate, por su parte, se centra en aspectos cruciales para la mantenibilidad del código. Evalúa la complejidad del código, la longitud de los métodos y la claridad del código, facilitando la identificación de áreas que requieren refactorización o simplificación. Esta herramienta es especialmente útil para garantizar que el código se mantenga accesible y manejable a lo largo del tiempo.
+
+Adicionalmente, hemos incorporado Codacy para el seguimiento de la cobertura de código, lo que nos permite asegurar que nuestros tests alcanzan una amplia gama del código fuente.
+
+Durante el desarrollo, se hizo necesario deshabilitar ciertos patrones de análisis, especialmente aquellos relacionados con las importaciones en Java. Las políticas de importación de IntelliJ IDEA Ultimate y Codacy entraban en conflicto continuamente. Codacy consideraba que jamás se debería utilizar el asterisco en las sentencias de importación, mientras que IntelliJ consideraba propio utilizarlo si se importaban todas las clases de un paquete. He decidido desactivarlo porque considero que solo reduce la visibilidad de los verdaderos errores.
+\imagen{anexos/codacy.png}{Análisis final de Codacy}{}
+\imagen{anexos/codeclimate.png}{Análisis final de Code Climate}{}
 
 \section{Pruebas del sistema}
+\subsection{Pruebas unitarias}
+Para asegurar la integridad y funcionalidad del código en nuestro proyecto, se implementaron pruebas unitarias que validan el comportamiento de los distintos componentes y métodos. Estas pruebas se organizan dentro del directorio \verb|/src/test/java|, siguiendo la convención de nombrado \verb|[NombrDelComponente]Test.java|, donde [NombreDelComponente] corresponde a la clase o funcionalidad específica bajo prueba. Actualmente, se cubre el 92\% del código, excluyendo las clases de configuración.
+
+Durante el proceso de desarrollo, se empleó JUnit como el framework principal para la creación de estas pruebas unitarias, asignando un archivo de pruebas específico para cada clase de la aplicación. También se utilizó Mockito para la generación de mocks. En total, se generaron múltiples casos de prueba, abarcando desde la lógica de negocio hasta la interacción con el frontend, cuando corresponda. Cada archivo de test contiene casos detallados que cubren los escenarios esperados y excepcionales, acompañados de comentarios descriptivos que facilitan su comprensión y mantenimiento.
+
+Este enfoque sistemático hacia las pruebas unitarias no solo permite validar el correcto funcionamiento de los componentes aislados del sistema, sino que también contribuye a la detección temprana de errores y a la mejora continua del código, asegurando un desarrollo robusto y confiable del proyecto.
+
+Sin embargo, estas pruebas no son suficientes para asegurar el correcto funcionamiento de la aplicación. Dado que hay tantas partes móviles y el entorno está separado en dos partes bien diferenciadas: backend y frontend; debemos realizar una serie de pruebas de integración para asegurarnos de que no se haya producido ninguna regresión.
+\imagen{anexos/tests.png}{Reporte de la ejecución de los tests del proyecto}{}
+
+\subsection{Pruebas de integración}
+Cada vez que se modificaba un componente del sistema, si se pasaban los test unitarios, se realizaban unas pruebas de validación para comprobar tanto su correcto funcionamiento como que no se había producido ninguna regresión. Este proceso se realizaba de forma manual, testeando tanto el funcionamiento como la capacidad de compilar y lanzar tanto el backend como el cliente de frontend. Para este proceso, las pruebas se hacían con un cliente de frontend desplegado en un entorno separado al del motor, para garantizar que la integridad de la conexión no se veía afectada por los cambios. 
