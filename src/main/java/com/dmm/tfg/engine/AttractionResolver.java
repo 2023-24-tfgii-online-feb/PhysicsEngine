@@ -7,13 +7,21 @@ import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+/**
+ * Component responsible for calculating gravitational attractions between bodies in the physics simulation.
+ * Utilizes the Quadtree structure for efficient querying of nearby bodies to simulate gravitational forces.
+ */
 @Component
 public class AttractionResolver {
 
-
     /**
+     * Calculates and applies gravitational attractions between all bodies in the simulation.
+     * This method iterates through each body, queries for nearby bodies using the quadtree service,
+     * and applies a gravitational pull force between them.
      *
-     * @param bodies List of bodies of the system, all bodies are attracted among them.
+     * @param bodies          The list of bodies within the simulation to calculate attractions for.
+     * @param quadtreeService The quadtree service used for efficiently finding nearby bodies.
      */
     public void calculateAttractions(List<Body> bodies, @NonNull QuadtreeService quadtreeService) {
         for (Body body : bodies) {
@@ -30,10 +38,13 @@ public class AttractionResolver {
 
 
     /**
+     * Calculates the gravitational pull force exerted by an attractor body on a mover body.
+     * Uses the universal law of gravitation formula to compute the force based on the mass of the bodies
+     * and the distance between them.
      *
-     * @param attractor Body entity that exhorts the gravitational pull.
-     * @param mover     Body entity that is pulled towards the attractor.
-     * @return          A Vector2D object which represents said force.
+     * @param attractor The body exerting the gravitational force.
+     * @param mover     The body being attracted towards the attractor.
+     * @return          The calculated gravitational force as a {@link Vector2D}.
      */
     private Vector2D gravitationalPull(@NonNull Body attractor, @NonNull Body mover) {
         //1. Calculate the direction of the force

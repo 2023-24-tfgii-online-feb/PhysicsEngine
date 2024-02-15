@@ -15,6 +15,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import static com.dmm.tfg.PhysicsEngine.SPACE_HEIGHT;
 import static com.dmm.tfg.PhysicsEngine.SPACE_WIDTH;
 
+/**
+ * Implementation of the {@link BodyDAO} interface. Provides concrete data access operations to manage {@link Body} entities
+ * using an in-memory data store with a {@link ConcurrentHashMap}.
+ */
 @Repository
 public class BodyDAOImpl implements BodyDAO {
 
@@ -49,6 +53,13 @@ public class BodyDAOImpl implements BodyDAO {
         bodies.remove(id);
     }
 
+    /**
+     * Generates a random body instance. The type of body (PLANET, ASTEROID, or SPACESHIP)
+     * is selected randomly, and its properties are initialized to random values within their
+     * respective ranges.
+     *
+     * @return A new instance of a Body, with type and properties randomly determined.
+     */
     public Body randomBody() {
         BodyType bodyType = BodyType.values()[ThreadLocalRandom.current().nextInt(3)];
 
@@ -59,6 +70,12 @@ public class BodyDAOImpl implements BodyDAO {
         };
     }
 
+    /**
+     * Generates a random planet with properties set to random values suitable for a planet.
+     * The mass and radius are selected randomly within a range that is reasonable for planets.
+     *
+     * @return A new instance of a Planet with random properties.
+     */
     public Body randomPlanet() {
         Vector2D position = genRandomPos();
 
@@ -74,6 +91,12 @@ public class BodyDAOImpl implements BodyDAO {
         return new Planet(position, mass, radius);
     }
 
+    /**
+     * Generates a random asteroid with properties set to random values suitable for an asteroid.
+     * This includes mass, radius, and initial velocity, all chosen randomly within reasonable ranges.
+     *
+     * @return A new instance of an Asteroid with random properties.
+     */
     public Body randomAsteroid() {
         Vector2D position = genRandomPos();
         Vector2D velocity = genRandomVel();
@@ -90,6 +113,12 @@ public class BodyDAOImpl implements BodyDAO {
         return new Asteroid(position, velocity, mass, radius);
     }
 
+    /**
+     * Generates a random spaceship with properties set to random values suitable for a spaceship.
+     * The mass is chosen randomly, and initial velocity is set to ensure dynamic movement.
+     *
+     * @return A new instance of a Spaceship with random properties.
+     */
     public Spaceship randomSpaceship() {
         Vector2D position = genRandomPos();
         Vector2D velocity = genRandomVel();
