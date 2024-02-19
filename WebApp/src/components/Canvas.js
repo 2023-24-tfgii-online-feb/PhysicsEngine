@@ -37,11 +37,14 @@ const Canvas = ({ stompClient }) => {
             drawBody(p, body);
           }
           if (isMousePressed.current) {
-            // Draw a red circle at the mouse position
-            p.fill(255, 0, 0);
-            p.ellipse(p.mouseX, p.mouseY, 10, 10);
-            // Continuously send the target position
-            sendTargetPosition(p.mouseX, p.mouseY);
+            // Check if the mouse position is within the canvas bounds
+            if (p.mouseX >= 0 && p.mouseX <= 1240 && p.mouseY >= 0 && p.mouseY <= 720) {
+                // Draw a red circle at the mouse position
+                p.fill(255, 0, 0);
+                p.ellipse(p.mouseX, p.mouseY, 10, 10);
+                // Continuously send the target position
+                sendTargetPosition(p.mouseX, p.mouseY);
+            }
           }
         };
 
