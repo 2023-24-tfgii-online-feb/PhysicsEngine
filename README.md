@@ -63,7 +63,7 @@ Requerimientos:
 - No es necesario tener instalado Gradle, se utiliza el wrapper.
 - Node 20 LTS o superior.
 
-Es necesario ejecutar los scripts en la raíz del proyecto.
+Es necesario ejecutar los scripts en la raíz del proyecto y como administrador.
 
 _AVISO: Debido a un bug con Lombok, no se puede compilar el proyecto con JDK 21. Aseguraos de que la variable de entorno JAVA_HOME está apuntando a un JDK inferior a la versión 21._
 
